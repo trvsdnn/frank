@@ -1,0 +1,22 @@
+!!! Strict
+%html
+  %head
+    %title= "500 &ndash; Internal Server Error"
+    %style{:type=>'text/css'}
+      :plain
+        body { color: #222; font:14px "Helvetica", "Arial"; line-height: 20px; }
+        #wrapper { margin:0px auto; width:600px; }
+        h1 { margin: 0px -30px 10px -3px; font: bold 48px Georgia; line-height:48px;}
+        img { margin: 60px 0px 0px -51px; }
+        tt, pre { color:#666; font-family: Inconsolata, Monaco, monospace; }
+        pre { width:600px; padding-bottom:40px; }
+        p.summary { font-size:18px; border-bottom:1px #ccc solid; margin-bottom:60px; padding-bottom:20px; }
+    %script{:type=>'text/javascript'}
+  %body
+    #wrapper
+      %img{:src=>'/__frank__/frank-500.png'}
+      %h1= "Something&#146;s Wrong&mdash;"
+      %p.summary= "The error, &laquo; <tt>#{exception.message.gsub('<','&lt;')}</tt> &raquo;<br /> occurred in <tt>#{exception.backtrace.first.split(':')[0..1].join('</tt> on line <tt>')}</tt>."
+      %pre
+        :preserve
+          #{ exception.backtrace.join("\n") }

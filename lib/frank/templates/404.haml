@@ -1,0 +1,16 @@
+!!! Strict
+%html
+  %head
+    %title= "404 &ndash; Not Found"
+    %style{:type=>'text/css'}
+      :plain
+        body { color: #222; font:14px "Helvetica", "Arial"; line-height: 20px; }
+        #wrapper { margin:0px auto; width:300px; }
+        h1 { margin: 24px -30px 10px -3px; font: bold 48px Georgia; line-height:48px;}
+        img { margin: 60px 0px 0px -22px; }
+        tt { color: #4D9EEF; color:#999; font-family: Inconsolata, Monaco, monospace }
+  %body
+    #wrapper
+      %img{:src=>'/__frank__/frank-404.png'}
+      %h1= "Not Found&mdash;"
+      %p= "Try creating <tt>#{request['REQUEST_PATH'][1..-1]}.haml</tt> in the <tt>views</tt> folder."

@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'frank'
+
+begin
+  settings = YAML.load_file('settings.yml')
+  Frank.new do
+    settings.each do |name, value|
+      set name.to_s, value
+    end
+  end
+rescue Errno::ENOENT
+  puts "Frank could not find settings.yml."
+end

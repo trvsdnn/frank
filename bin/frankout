@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+require 'frank'
+
+if ARGV.empty?
+  puts "Usage: frankout [DUMP_DIR]"
+  puts "Compiles and dumps a project and it\'s static files to given folder"
+  exit
+end
+
+output_folder = ARGV.first
+
+if File.exists? output_folder
+  print "Folder: #{output_folder} already exists... do you want to overwrite it? (y|n) "
+  resp = STDIN.gets.chomp.strip
+  exit if resp.downcase.strip != 'y'
+  FileUtils.rm_rf(output_folder)
+end
+
+begin
+  settings = YAML.load_file('settings.yml')
+  proj_dir = Dir.pwd
+  
+  Frank::Output.new do
+    settings.each do |name, value|
+      set name.to_s, value
+    end
+    set :output_folder, output_folder
+    set :proj_dir, proj_dir
+  end.dump
+  
+rescue Errno::ENOENT
+  puts "Frank could not find settings.yml."
+end

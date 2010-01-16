@@ -1,5 +1,5 @@
 module Tilt
-  VERSION = '0.4'
+  VERSION = '0.5'
 
   @template_mappings = {}
 
@@ -324,6 +324,25 @@ module Tilt
   end
   register 'sass', SassTemplate
 
+
+  # Lessscss template implementation. See:
+  # http://lesscss.org/
+  #
+  # Less templates do not support object scopes, locals, or yield.
+  class LessTemplate < Template
+    def initialize_engine
+      require_template_library 'less' unless defined? ::Less::Engine
+    end
+
+    def compile!
+      @engine = ::Less::Engine.new(data)
+    end
+
+    def evaluate(scope, locals, &block)
+      @engine.to_css
+    end
+  end
+  register 'less', LessTemplate
 
   # Builder template implementation. See:
   # http://builder.rubyforge.org/

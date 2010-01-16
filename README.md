@@ -3,11 +3,10 @@ Frank
 
 Inspired by [Sinatra][0]'s simplicity and ease of use, Frank lets you build
 static sites using your favorite libs, painlessly. It uses [Tilt][1], so it
-comes with support for [Haml & Sass][2], [Builder][3], [ERB][4],
+comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
 [Liquid][5], & [Mustache][6].
 
-Frank also supports [CoffeeScript][7] for writing JavaScript in style, and
-[LESS][8] is planned for the near future.
+Frank also supports [CoffeeScript][7] for writing JavaScript in style.
 
 Overview
 --------
@@ -125,3 +124,4 @@ Installation
 [7]: http://jashkenas.github.com/coffee-script/
 [8]: http://lesscss.org/
 [9]: http://rack.rubyforge.org/
+[10]: http://lesscss.org/

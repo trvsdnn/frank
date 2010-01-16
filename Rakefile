@@ -7,6 +7,9 @@ begin
     gemspec.email = "travis.dunn@thisismedium.com"
     gemspec.homepage = "http://github.com/blahed/frank"
     gemspec.authors = ["blahed", "nwah"]
+    gemspec.add_dependency 'rack'
+    gemspec.add_dependency 'mongrel'
+    gemspec.add_dependency 'haml'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

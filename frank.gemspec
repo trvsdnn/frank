@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-01-15}
+  s.date = %q{2010-01-16}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -40,7 +40,6 @@ Gem::Specification.new do |s|
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
-     "lib/template/dynamic/js/frank.coffee",
      "lib/template/dynamic/layout.haml",
      "lib/template/helpers.rb",
      "lib/template/settings.yml",
@@ -57,9 +56,18 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rack>, [">= 0"])
+      s.add_runtime_dependency(%q<mongrel>, [">= 0"])
+      s.add_runtime_dependency(%q<haml>, [">= 0"])
     else
+      s.add_dependency(%q<rack>, [">= 0"])
+      s.add_dependency(%q<mongrel>, [">= 0"])
+      s.add_dependency(%q<haml>, [">= 0"])
     end
   else
+    s.add_dependency(%q<rack>, [">= 0"])
+    s.add_dependency(%q<mongrel>, [">= 0"])
+    s.add_dependency(%q<haml>, [">= 0"])
   end
 end
 

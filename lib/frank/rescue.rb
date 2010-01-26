@@ -6,7 +6,7 @@ module Frank
       
       @response['Content-Type'] = 'text/html'
       @response.status = 404
-      @response.body = tilt_lang(template, 'haml', Object.new, locals = { :request => @env, :params => @request.params })
+      @response.body = tilt_lang(template, 'haml', Object.new, locals = { :request => @env, :params => @request.params, :dynamic_folder => @dynamic_folder })
       
       log_request('404')
     end

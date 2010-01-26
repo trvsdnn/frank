@@ -13,4 +13,4 @@
     #wrapper
       %img{:src=>'/__frank__/frank-404.png'}
       %h1= "Not Found&mdash;"
-      %p= "Try creating <tt>#{request['REQUEST_PATH'][1..-1]}.haml</tt> in the <tt>views</tt> folder."
+      %p= "Try creating <tt>#{request['REQUEST_PATH'][1..-1]}.haml</tt> in the <tt>#{dynamic_folder}</tt> folder."

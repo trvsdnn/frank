@@ -178,8 +178,10 @@ module Frank
     server.run(builder, :Port => server_settings['port'], :Host => server_settings['hostname']) do
       trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }
     end
-    
-    base
+        
+  rescue Errno::EADDRINUSE
+    puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{server_settings['port']}\033[0m\n\n"
+      
   end
   
 end

@@ -31,7 +31,7 @@ module Frank
     def copy_static
       puts "Copying over your static content"
       static_folder = File.join(@proj_dir, @static_folder)
-      FileUtils.cp_r(static_folder, @output_path) 
+      FileUtils.cp_r(File.join(static_folder, '/.'), @output_path) 
     end
   
     def dump

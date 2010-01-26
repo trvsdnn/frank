@@ -1,0 +1,68 @@
+# -----------------------------------------------
+#  Frank settings:
+#
+#  These settings will apply to this project only.
+#  If you would like to use this project as a
+#  template for new projects, just copy this
+#  project folder to `~/.frank` and it will be
+#  duplicated for you every time you run the
+# `frank` command.
+#
+#  Feel free to trash all these comments, too.
+#
+
+
+# ----------------------
+#  Server settings:
+#
+#  Change the server host/port to bind rack to.
+# 'server' can be any Rack-supported server, e.g.
+#  Mongrel, Thin, WEBrick
+#
+server:
+  handler: mongrel
+  hostname: 0.0.0.0
+  port: 3601
+
+
+# ----------------------
+#  Static folder:
+#
+#  All files in this folder will be served up
+#  directly, without interpretation
+#
+static_folder: static
+
+# ----------------------
+#  Dynamic folder:
+#
+#  Frank will try to interpret any of the files
+#  in this folder based on their extension
+#
+dynamic_folder: dynamic
+
+# ----------------------
+#  Templates:
+# 
+# 'extension' is appended to requests to find
+#  a template. For example, if you request
+# '/blog/archive', Frank will look in the
+# 'blog' folder for 'archive.haml'.
+#
+# 'default' is the optional default template to
+#  serve from a folder (include the root folder)
+#
+# 'layouts' is a list of layouts to use, where
+# 'name' is the filename (without extension).
+#  You can also use multiple layouts, and limit
+#  their scopes like so:
+#      - name: blog_layout
+#        only: [blog]
+#      - name: normal
+#        not: [blog, ajax]
+templates:
+    extension: haml
+    default: index
+    layouts:
+        - name: layout
+

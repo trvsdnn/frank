@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-01-16}
+  s.date = %q{2010-01-30}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -44,13 +44,31 @@ Gem::Specification.new do |s|
      "lib/template/helpers.rb",
      "lib/template/settings.yml",
      "lib/template/static/images/frank-med.png",
-     "lib/template/static/js/frank.js"
+     "lib/template/static/js/frank.js",
+     "test/helper.rb",
+     "test/suite.rb",
+     "test/template/dynamic/css/frank.sass",
+     "test/template/dynamic/index.haml",
+     "test/template/dynamic/layout.haml",
+     "test/template/helpers.rb",
+     "test/template/settings.yml",
+     "test/template/static/images/frank-med.png",
+     "test/template/static/js/frank.js",
+     "test/test_config.rb"
   ]
   s.homepage = %q{http://github.com/blahed/frank}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Stupidly Simple Static Slinger}
+  s.test_files = [
+    "test/helper.rb",
+     "test/suite.rb",
+     "test/template/helpers.rb",
+     "test/test_base.rb",
+     "test/test_config.rb",
+     "test/test_render.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

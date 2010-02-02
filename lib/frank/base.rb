@@ -14,7 +14,7 @@ module Frank
     include Frank::TemplateHelpers
     include Frank::Render
     
-    attr_accessor :server, :static_folder, :dynamic_folder, :templates
+    attr_accessor  :env, :server, :static_folder, :dynamic_folder, :templates
     
     def initialize(&block)
       instance_eval &block
@@ -36,7 +36,7 @@ module Frank
     private
     
     # setter for options
-    def set(option, value)      
+    def set(option, value)  
       if respond_to?("#{option}=")
         send "#{option}=", value
       end
@@ -108,10 +108,10 @@ module Frank
       nil
     end
 
-    def find_template_ext(filename)
+    def find_template_ext(filename)      
       name, kind = name_ext(filename)
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
-      
+
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
         tmpl = "#{(name||'')}.#{ext}"
         return [tmpl, kind] if File.exists? File.join(@dynamic_folder, tmpl)
@@ -161,27 +161,29 @@ module Frank
   
   def self.new(&block)
     base = Base.new(&block) if block_given?
-    server_settings = base.instance_variable_get(:@server)
     
     builder = Rack::Builder.new do
-      use Rack::Statik, :root => base.instance_variable_get(:@static_folder)
+      use Rack::Statik, :root => base.static_folder
       run base
     end
+
+    unless base.env == 'test'
+      m = "got it under control \n got your back \n holdin' it down
+             takin' care of business \n workin' some magic".split("\n").sort_by{rand}.first.strip
+      puts "\n-----------------------\n" +
+           " Frank's #{ m }...\n" +
+           " #{base.server['hostname']}:#{base.server['port']} \n\n"
     
-    m = "got it under control \n got your back \n holdin' it down
-         takin' care of business \n workin' some magic".split("\n").sort_by{rand}.first.strip
-    puts "\n-----------------------\n" +
-         " Frank's #{ m }...\n" +
-         " #{server_settings['hostname']}:#{server_settings['port']} \n\n"
-    
-    server = Rack::Handler.get(server_settings['handler'])
-    server.run(builder, :Port => server_settings['port'], :Host => server_settings['hostname']) do
-      trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }
+      server = Rack::Handler.get(base.server['handler'])
+      server.run(builder, :Port => base.server['port'], :Host => base.server['hostname']) do
+        trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }
+      end
     end
-        
-  rescue Errno::EADDRINUSE
-    puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{server_settings['port']}\033[0m\n\n"
-      
+    
+    base
+    
+    rescue Errno::EADDRINUSE
+      puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{base.server['port']}\033[0m\n\n"
   end
   
 end

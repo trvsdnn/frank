@@ -66,4 +66,5 @@ templates:
     default: index
     layouts:
         - name: layout
+          only: []
 

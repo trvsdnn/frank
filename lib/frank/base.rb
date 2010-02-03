@@ -75,7 +75,7 @@ module Frank
       path.sub!(/^\//,'')
       template, ext = find_template_ext(path)
       raise Errno::ENOENT if template.nil?
-
+      
       if template.match(/^_/) or (ext||'').match(/^(js|css)$/)
         render_template template
       else
@@ -83,11 +83,11 @@ module Frank
       end
     end
 
-    def render_template(tmpl, *args)
+    def render_template(tmpl, *args)      
       tilt_with_request(File.join(@dynamic_folder, tmpl), *args) {"CONTENT"}
     end
 
-    def render_with_layout(tmpl, *args)
+    def render_with_layout(tmpl, *args)      
       if layout = get_layout_for(tmpl)
         tilt_with_request(File.join(@dynamic_folder, layout), *args) do
           render_template tmpl
@@ -97,7 +97,7 @@ module Frank
       end
     end
     
-    TMPL_EXTS = { :html => %w[haml erb rhtml builder liquid mustache],
+    TMPL_EXTS = { :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
                   :css => %w[sass less],
                   :js => %w[coffee] }
                   
@@ -108,12 +108,12 @@ module Frank
       nil
     end
 
-    def find_template_ext(filename)      
+    def find_template_ext(filename)
       name, kind = name_ext(filename)
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
 
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
-        tmpl = "#{(name||'')}.#{ext}"
+        tmpl = "#{(name||'')}.#{ext}"        
         return [tmpl, kind] if File.exists? File.join(@dynamic_folder, tmpl)
       end
       
@@ -145,7 +145,7 @@ module Frank
       Tilt[lang].new(file, 1).render(*tilt_args, &block)
     end
     
-    def tilt_with_request(file, *args, &block)
+    def tilt_with_request(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
       obj = Object.new.extend(TemplateHelpers).extend(Render)
       obj.instance_variable_set(:@dynamic_folder, @dynamic_folder)

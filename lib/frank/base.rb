@@ -59,7 +59,7 @@ module Frank
     
     # prints requests and errors to STDOUT
     def log_request(status, excp=nil)
-      out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@server['handler'].capitalize}) http://#{@request.host}:#{@request.port}#{@request.fullpath} [#{@request.request_method}] - #{status}"
+      out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
       out += "\n\n**QUACK** #{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
       STDOUT.puts out
     end

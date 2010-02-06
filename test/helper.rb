@@ -1,16 +1,14 @@
 require 'rubygems'
-require 'ostruct'
 require 'test/unit'
 require 'rack/test'
-require 'redgreen'
 require 'shoulda'
-require 'rr'
+require 'template/helpers'
 
 require File.join(File.dirname(__FILE__), '../lib/frank')
 
 class Test::Unit::TestCase
   include Rack::Test::Methods
-  
+
   LIBDIR = File.join(File.dirname(File.dirname(__FILE__)), 'lib')
   
   def mock_app(&block)

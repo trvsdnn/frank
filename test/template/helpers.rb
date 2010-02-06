@@ -1,3 +1,5 @@
 module FrankHelpers
-  # helpers go here
+  def hello_helper
+    'hello from helper'
+  end
 end

@@ -4,6 +4,7 @@ require 'frank/template_helpers'
 require 'frank/rescue'
 require 'frank/statik'
 
+
 module Frank
   
   module Render; end
@@ -19,7 +20,7 @@ module Frank
     def initialize(&block)
       instance_eval &block
     end
-  
+
     def call(env)
       dup.call!(env)
     end

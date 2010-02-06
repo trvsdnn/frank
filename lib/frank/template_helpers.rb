@@ -1,6 +1,6 @@
 module Frank
   module TemplateHelpers
-    # include FrankHelpers #TODO ADD THIS
+    include FrankHelpers #TODO ADD THIS
   
     def render_partial(path)
       pieces = path.split("/")

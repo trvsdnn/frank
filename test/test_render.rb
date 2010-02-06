@@ -18,6 +18,11 @@ class TestBase < Test::Unit::TestCase
       assert_equal "<h1>hello worlds</h1>\n", template
     end
     
+    should 'render haml template with a haml partial' do
+      template = @frank.render_path('partial_test.haml')
+      assert_equal "<h1>hello worlds</h1>\n<p>hello from partial</p>\n", template
+    end
+    
     should 'render sass template' do
       template = @frank.render_path('sass.sass')
       assert_equal "#hello-worlds {\n  background: red; }\n", template

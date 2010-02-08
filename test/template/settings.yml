@@ -32,7 +32,7 @@ server:
 #  All files in this folder will be served up
 #  directly, without interpretation
 #
-static_folder: template/static
+static_folder: static
 
 # ----------------------
 #  Dynamic folder:
@@ -40,7 +40,7 @@ static_folder: template/static
 #  Frank will try to interpret any of the files
 #  in this folder based on their extension
 #
-dynamic_folder: template/dynamic
+dynamic_folder: dynamic
 
 # ----------------------
 #  Templates:

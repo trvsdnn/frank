@@ -10,6 +10,7 @@ class TestBase < Test::Unit::TestCase
         settings.each do |name, value|
           set name.to_s, value
         end
+        set :proj_dir, File.join(Dir.pwd, 'template')
       end
     end
     

@@ -4,7 +4,7 @@ module Frank
   class Output < Frank::Base
     include Frank::Render
     
-    attr_accessor :static_folder, :dynamic_folder, :templates, :output_folder, :proj_dir
+    attr_accessor :proj_dir, :static_folder, :dynamic_folder, :templates, :output_folder
     
     def initialize(&block)
       instance_eval &block
@@ -12,16 +12,16 @@ module Frank
     end
         
     def compile_templates
-      dir = File.join( @proj_dir, @dynamic_folder )
+      dir = File.join(@proj_dir, @dynamic_folder)
+      require 'ruby-debug'
       
       Find.find(dir) do |path|
         if FileTest.file?(path) and !File.basename(path).match(/^\./)
           path = path[ dir.size + 1 ..-1 ]
           name, ext = name_ext(path)
           new_ext = reverse_ext_lookup(ext)
-          new_file = File.join( @output_folder,  "#{name}.#{new_ext}")          
+          new_file = File.join(@output_folder,  "#{name}.#{new_ext}")          
           FileUtils.makedirs(new_file.split('/').reverse[1..-1].reverse.join('/'))
-          
           File.open(new_file, 'w') {|f| f.write render_path(path) }
           puts "Create #{name}.#{new_ext}"
         end

@@ -1,9 +1,9 @@
 module Frank
   module TemplateHelpers
-    include FrankHelpers #TODO ADD THIS
+    include FrankHelpers
   
     def render_partial(path)
-      pieces = path.split("/")
+      pieces = path.split('/')
       partial = '_' + pieces.pop
       render_path File.join(pieces.join('/'), partial)
     end

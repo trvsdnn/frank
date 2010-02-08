@@ -15,7 +15,7 @@ module Frank
     include Frank::TemplateHelpers
     include Frank::Render
     
-    attr_accessor  :env, :server, :static_folder, :dynamic_folder, :templates
+    attr_accessor  :proj_dir, :env, :server, :static_folder, :dynamic_folder, :templates
     
     def initialize(&block)
       instance_eval &block
@@ -72,11 +72,14 @@ module Frank
       return path.split(/\.(?=[^.]+$)/)
     end
     
+    # breaks down path and renders partials, js, css without layouts
     def render_path(path)
       path.sub!(/^\//,'')
       template, ext = find_template_ext(path)
-      raise Errno::ENOENT if template.nil?
+      # debugger
       
+      # TODO: add error classes
+      raise Errno::ENOENT, "Template not found #{path}" if template.nil?
       if template.match(/^_/) or (ext||'').match(/^(js|css)$/)
         render_template template
       else
@@ -84,13 +87,13 @@ module Frank
       end
     end
 
-    def render_template(tmpl, *args)      
-      tilt_with_request(File.join(@dynamic_folder, tmpl), *args) {"CONTENT"}
+    def render_template(tmpl, *args)
+      tilt_with_request(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
     end
 
     def render_with_layout(tmpl, *args)      
       if layout = get_layout_for(tmpl)
-        tilt_with_request(File.join(@dynamic_folder, layout), *args) do
+        tilt_with_request(File.join(@proj_dir, @dynamic_folder, layout), *args) do
           render_template tmpl
         end
       else
@@ -114,13 +117,15 @@ module Frank
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
 
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
-        tmpl = "#{(name||'')}.#{ext}"        
-        return [tmpl, kind] if File.exists? File.join(@dynamic_folder, tmpl)
+        tmpl = "#{(name||'')}.#{ext}"
+        if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
+          return [tmpl, ext] 
+        end
       end
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
         default = File.join((name||''), "#{@templates['default']}.#{ext}")
-        return [default, kind] if File.exists? File.join(@dynamic_folder, default)
+        return [default, ext] if File.exists? File.join(@proj_dir, @dynamic_folder, default)
       end
       nil
     rescue

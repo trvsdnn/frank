@@ -76,7 +76,6 @@ module Frank
     def render_path(path)
       path.sub!(/^\//,'')
       template, ext = find_template_ext(path)
-      # debugger
       
       # TODO: add error classes
       raise Errno::ENOENT, "Template not found #{path}" if template.nil?
@@ -113,14 +112,12 @@ module Frank
     end
 
     def find_template_ext(filename)
-      name, kind = name_ext(filename)
+      name, kind = name_ext(filename)      
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
-
+      
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
         tmpl = "#{(name||'')}.#{ext}"
-        if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
-          return [tmpl, ext] 
-        end
+        return [tmpl, ext] if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
       end
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
@@ -154,6 +151,7 @@ module Frank
     def tilt_with_request(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
       obj = Object.new.extend(TemplateHelpers).extend(Render)
+      obj.instance_variable_set(:@proj_dir, @proj_dir)
       obj.instance_variable_set(:@dynamic_folder, @dynamic_folder)
       obj.instance_variable_set(:@templates, @templates)
       Tilt.new(file, 1).render(obj, locals, &block)

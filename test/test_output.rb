@@ -16,7 +16,7 @@ class TestBase < Test::Unit::TestCase
     end
     
     should 'create the output folder' do
-      assert File.exist? 'template/' + @frank.output_folder
+      assert File.exist? 'template/output'
     end
     
     teardown do

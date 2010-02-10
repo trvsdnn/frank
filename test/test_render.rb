@@ -10,13 +10,14 @@ class TestBase < Test::Unit::TestCase
         settings.each do |name, value|
           set name.to_s, value
         end
+        set :environment, :test
         set :proj_dir, File.join(Dir.pwd, 'template')
       end
     end
     
     should 'render haml template' do
          template = @frank.render_path('index.haml')
-         assert_equal "<h1>hello worlds</h1>\n", template
+         assert_equal "<h1>hello worlds</h1>\n\n", template
        end
     
     should 'render haml template with a haml partial' do
@@ -57,6 +58,10 @@ class TestBase < Test::Unit::TestCase
       should 'render builder template' do
         template = @frank.render_path('builder.builder')
         assert_equal "<h1>hello worlds</h1>\n", template
+      end
+      
+      should 'raise template error' do
+        assert_raise(Frank::TemplateError) { @frank.render_path('not_a.template') }
       end
       
   end

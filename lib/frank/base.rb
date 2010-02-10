@@ -8,14 +8,16 @@ require 'frank/statik'
 module Frank
   
   module Render; end
-    
+  class TemplateError < StandardError; end
+  class ConfigError < StandardError; end
+  
   class Base
     include Rack::Utils
     include Frank::Rescue
     include Frank::TemplateHelpers
     include Frank::Render
     
-    attr_accessor  :proj_dir, :env, :server, :static_folder, :dynamic_folder, :templates
+    attr_accessor  :environment, :proj_dir, :server, :static_folder, :dynamic_folder, :templates
     
     def initialize(&block)
       instance_eval &block
@@ -50,7 +52,7 @@ module Frank
         ext = File.extname(@request.path.split('/').last || '')
         @response['Content-Type'] = Rack::Mime.mime_type(ext, 'text/html')
         @response.write render_path(@request.path)
-      rescue Errno::ENOENT
+      rescue Frank::TemplateError
         render_404
       rescue Exception => e
         render_500 e
@@ -61,7 +63,7 @@ module Frank
     def log_request(status, excp=nil)
       out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
       out += "\n\n**QUACK** #{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
-      STDOUT.puts out
+      STDOUT.puts out unless @environment == :test
     end
     
   end
@@ -78,7 +80,7 @@ module Frank
       template, ext = find_template_ext(path)
       
       # TODO: add error classes
-      raise Errno::ENOENT, "Template not found #{path}" if template.nil?
+      raise Frank::TemplateError, "Template not found #{path}" if template.nil?
       if template.match(/^_/) or (ext||'').match(/^(js|css)$/)
         render_template template
       else
@@ -144,7 +146,7 @@ module Frank
       layout.nil? ? nil : layout['name'] + '.' + ext
     end
     
-    def tilt_lang(file, lang, *tilt_args, &block)
+    def tilt_with_lang(file, lang, *tilt_args, &block)
       Tilt[lang].new(file, 1).render(*tilt_args, &block)
     end
     
@@ -171,7 +173,7 @@ module Frank
       run base
     end
 
-    unless base.env == 'test'
+    unless base.environment == :test
       m = "got it under control \n got your back \n holdin' it down
              takin' care of business \n workin' some magic".split("\n").sort_by{rand}.first.strip
       puts "\n-----------------------\n" +

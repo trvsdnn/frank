@@ -56,6 +56,10 @@ class TestBase < Test::Unit::TestCase
       assert_equal "hello from static", IO.read('template/output/static.html')
     end
     
+    should 'not create partials' do
+      assert !File.exist?('template/output/_partial.html')
+    end
+    
     teardown do
       FileUtils.rm_r File.join(Dir.pwd, 'template/output')
     end

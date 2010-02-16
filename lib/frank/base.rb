@@ -3,7 +3,7 @@ require 'frank/tilt'
 require 'frank/template_helpers'
 require 'frank/rescue'
 require 'frank/statik'
-
+require 'frank/imager'
 
 module Frank
   
@@ -170,6 +170,7 @@ module Frank
     
     builder = Rack::Builder.new do
       use Rack::Statik, :root => base.static_folder
+      use Rack::Imager
       run base
     end
 

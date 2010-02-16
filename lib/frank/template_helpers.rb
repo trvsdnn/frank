@@ -1,3 +1,5 @@
+require 'frank/lorem'
+
 module Frank
   module TemplateHelpers
     include FrankHelpers
@@ -6,6 +8,10 @@ module Frank
       pieces = path.split('/')
       partial = '_' + pieces.pop
       render_path File.join(pieces.join('/'), partial)
+    end
+    
+    def lorem
+      Lorem
     end
     
   end

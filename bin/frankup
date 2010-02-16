@@ -7,6 +7,7 @@ begin
     settings.each do |name, value|
       set name.to_s, value
     end
+    set :proj_dir, Dir.pwd
   end
 rescue Errno::ENOENT
   puts "Frank could not find settings.yml."

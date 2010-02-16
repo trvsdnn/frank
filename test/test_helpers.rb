@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/helper'
 
 class TestBase < Test::Unit::TestCase
 
-  context 'Frank::Base' do
+  context 'Frank::TemplateHelpers' do
     
     setup do
       settings = YAML.load_file('template/settings.yml')
@@ -18,6 +18,26 @@ class TestBase < Test::Unit::TestCase
     should 'render haml and use hello_helper' do
       template = @frank.render_path('helper_test.haml')
       assert_equal "<h1>hello from helper</h1>\n", template
+    end
+    
+    context 'Lorem' do
+      should 'render haml with 3 random lorem words' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='words'>(\w+\s?){3}<\/p>/
+        assert_match reg, template
+      end
+    
+      should 'render haml with 2 random lorem sentences' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='sentences'><\/p>/
+        assert_match reg, template
+      end
+      
+      should 'render haml with 1 random lorem paragraph' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='paragraphs'><\/p>/
+        assert_match reg, template
+      end
     end
     
   end

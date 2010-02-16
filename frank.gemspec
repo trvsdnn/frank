@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-01-30}
+  s.date = %q{2010-02-15}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
      "frank.gemspec",
      "lib/frank.rb",
      "lib/frank/base.rb",
+     "lib/frank/imager.rb",
+     "lib/frank/lorem.rb",
      "lib/frank/output.rb",
      "lib/frank/rescue.rb",
      "lib/frank/statik.rb",
@@ -37,6 +39,14 @@ Gem::Specification.new do |s|
      "lib/frank/templates/500.haml",
      "lib/frank/templates/frank-404.png",
      "lib/frank/templates/frank-500.png",
+     "lib/frank/templates/imager/frank1.jpg",
+     "lib/frank/templates/imager/frank2.jpg",
+     "lib/frank/templates/imager/frank3.jpg",
+     "lib/frank/templates/imager/frank4.jpg",
+     "lib/frank/templates/imager/frank5.jpg",
+     "lib/frank/templates/imager/frank6.jpg",
+     "lib/frank/templates/imager/frank7.jpg",
+     "lib/frank/templates/imager/frank8.jpg",
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
@@ -47,14 +57,25 @@ Gem::Specification.new do |s|
      "lib/template/static/js/frank.js",
      "test/helper.rb",
      "test/suite.rb",
-     "test/template/dynamic/css/frank.sass",
+     "test/template/dynamic/_partial.haml",
+     "test/template/dynamic/builder.builder",
+     "test/template/dynamic/erb.erb",
+     "test/template/dynamic/helper_test.haml",
      "test/template/dynamic/index.haml",
      "test/template/dynamic/layout.haml",
+     "test/template/dynamic/liquid.liquid",
+     "test/template/dynamic/markdown.md",
+     "test/template/dynamic/mustache.mustache",
+     "test/template/dynamic/partial_test.haml",
+     "test/template/dynamic/redcloth.textile",
+     "test/template/dynamic/sass.sass",
      "test/template/helpers.rb",
      "test/template/settings.yml",
-     "test/template/static/images/frank-med.png",
-     "test/template/static/js/frank.js",
-     "test/test_config.rb"
+     "test/template/static/static.html",
+     "test/test_base.rb",
+     "test/test_helpers.rb",
+     "test/test_output.rb",
+     "test/test_render.rb"
   ]
   s.homepage = %q{http://github.com/blahed/frank}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -66,7 +87,8 @@ Gem::Specification.new do |s|
      "test/suite.rb",
      "test/template/helpers.rb",
      "test/test_base.rb",
-     "test/test_config.rb",
+     "test/test_helpers.rb",
+     "test/test_output.rb",
      "test/test_render.rb"
   ]
 

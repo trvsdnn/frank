@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'yaml'
 require 'test/unit'
 require 'rack/test'
 require 'shoulda'

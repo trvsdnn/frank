@@ -24,7 +24,7 @@ class Lorem
 
     def sentences(total)
       (1..total).map do
-        words(randm(5..15)).capitalize
+        words(randm(4..15)).capitalize
       end.join('. ')
     end
     

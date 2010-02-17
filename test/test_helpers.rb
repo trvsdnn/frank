@@ -23,18 +23,22 @@ class TestBase < Test::Unit::TestCase
     context 'Lorem' do
       should 'render haml with 3 random lorem words' do
         template = @frank.render_path('lorem_test.haml')
-        reg = /<p class='words'>(\w+\s?){3}<\/p>/
+        reg = /<p class='words'>(?:\w+\s?){3}<\/p>/
         assert_match reg, template
       end
     
       should 'render haml with 2 random lorem sentences' do
         template = @frank.render_path('lorem_test.haml')
+        # Hangs when running tests, but not in irb O.o
+        # reg = /<p class='sentences'>(?:(?:\w+\s?){2,}. ?){4,}<\/p>/
         reg = /<p class='sentences'><\/p>/
         assert_match reg, template
       end
       
       should 'render haml with 1 random lorem paragraph' do
         template = @frank.render_path('lorem_test.haml')
+        # Hangs when running tests, but not in irb O.o
+        # reg = /<p class='paragraphs'>(?:(?:(?:\w+\s?){2,}. ?){2,}\n\n){1,}<\/p>/m
         reg = /<p class='paragraphs'><\/p>/
         assert_match reg, template
       end

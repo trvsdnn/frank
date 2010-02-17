@@ -193,4 +193,17 @@ module Frank
       puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{base.server['port']}\033[0m\n\n"
   end
   
+  def self.stub(project)
+    puts "\n-----------------------\n Frank:\n - Creating '#{project}'"
+    begin
+      Dir.mkdir project
+    rescue Errno::EEXIST
+      puts " uh oh, #{project} already exists..."
+      exit
+    end
+    puts " - Copying Frank template"
+    FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    puts "\n Congratulations, '#{project}' is ready to go.\n\n"
+  end
+  
 end

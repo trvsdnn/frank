@@ -1,33 +1,10 @@
 #!/usr/bin/env ruby
+require 'frank'
 
 if ARGV.empty?
   puts "Usage: frank [PROJECT_NAME]"
-  puts "Stubs out a template project; if a .frank folder was found, copies it over as your project base"
+  puts "Stubs out a template project"
   exit
 end
 
-puts "\n-----------------------\n Frank:\n"
-
-project   = ARGV.first
-libdir    = File.join(File.dirname(File.expand_path(__FILE__)), '../lib')
-dot_frank = File.join(ENV['HOME'], '.frank')
-
-puts " - Creating '#{project}'"
-begin
-  Dir.mkdir project
-rescue Errno::EEXIST
-  puts " uh oh, #{project} already exists..."
-  exit
-end
-
-# If they have a .frank, copy contents to new project folder
-if File.directory? dot_frank
-  puts " - Copying .frank template"
-  FileUtils.cp_r( File.join(dot_frank, '.'), project )
-else # Otherwise just copy over the template project
-  puts " - Copying Frank template"
-  FileUtils.cp_r( Dir.glob(File.join(libdir, 'template/*')), project )
-end
-
-puts "\n Congratulations, '#{project}' is ready to go.\n\n"
-
+Frank.stub(ARGV.first)

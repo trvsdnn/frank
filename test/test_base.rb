@@ -46,4 +46,19 @@ class TestBase < Test::Unit::TestCase
     
   end
   
+  context 'Frank.stub' do
+    
+    should 'stub out a project' do
+      out = capture_stdout { Frank.stub('stubbed') }
+      assert_equal Dir.entries('stubbed'), Dir.entries(File.join(LIBDIR, 'template'))
+      putss = "\n-----------------------\n Frank:\n - Creating 'stubbed'\n - Copying Frank template\n\n Congratulations, 'stubbed' is ready to go.\n\n"
+      assert_equal putss, out.string
+    end
+  
+    teardown do
+      FileUtils.rm_r File.join(Dir.pwd, 'stubbed')
+    end
+  
+  end
+  
 end

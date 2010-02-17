@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/helper'
 
 class TestBase < Test::Unit::TestCase
 
-  context 'Frank::Base' do
+  context 'Frank::Output' do
     
     setup do
       settings = YAML.load_file('template/settings.yml')

@@ -27,7 +27,7 @@ class TestBase < Test::Unit::TestCase
       get '/'
       
       assert last_response.ok?
-      assert_equal "<h1>hello worlds</h1>\n\n", last_response.body
+      assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", last_response.body
     end
     
     should 'render 404 page if template not found' do

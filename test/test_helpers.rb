@@ -17,7 +17,7 @@ class TestBase < Test::Unit::TestCase
     
     should 'render haml and use hello_helper' do
       template = @frank.render_path('helper_test.haml')
-      assert_equal "<h1>hello from helper</h1>\n", template
+      assert_equal "<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n", template
     end
     
     context 'Lorem' do

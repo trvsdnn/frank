@@ -21,11 +21,11 @@ class TestBase < Test::Unit::TestCase
     end
     
     should 'create index.html' do
-      assert_equal "<h1>hello worlds</h1>\n\n", IO.read('template/output/index.html')
+      assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", IO.read('template/output/index.html')
     end
     
     should  'create partial_test.html' do
-      assert_equal "<h1>hello worlds</h1>\n<p>hello from partial</p>\n", IO.read('template/output/partial_test.html')   
+      assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n", IO.read('template/output/partial_test.html')   
     end
     
     should 'create erb.html' do

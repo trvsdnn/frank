@@ -79,7 +79,6 @@ module Frank
       path.sub!(/^\//,'')
       template, ext = find_template_ext(path)
       
-      # TODO: add error classes
       raise Frank::TemplateError, "Template not found #{path}" if template.nil?
       if template.match(/^_/) or (ext||'').match(/^(js|css)$/)
         render_template template
@@ -92,7 +91,7 @@ module Frank
       tilt_with_request(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
     end
 
-    def render_with_layout(tmpl, *args)      
+    def render_with_layout(tmpl, *args)
       if layout = get_layout_for(tmpl)
         tilt_with_request(File.join(@proj_dir, @dynamic_folder, layout), *args) do
           render_template tmpl
@@ -142,7 +141,9 @@ module Frank
       layout = onlies.select {|l| l['only'].index(view) }.first
       layout = nots.reject {|l| l['not'].index(view) }.first unless layout
       layout = blanks.first unless layout
-    
+        
+      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
+      
       layout.nil? ? nil : layout['name'] + '.' + ext
     end
     

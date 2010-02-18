@@ -44,11 +44,6 @@ dynamic_folder: dynamic
 
 # ----------------------
 #  Templates:
-# 
-# 'extension' is appended to requests to find
-#  a template. For example, if you request
-# '/blog/archive', Frank will look in the
-# 'blog' folder for 'archive.haml'.
 #
 # 'default' is the optional default template to
 #  serve from a folder (include the root folder)
@@ -66,5 +61,7 @@ templates:
     default: index
     layouts:
         - name: layout
-          only: []
+          not: [builder, erb, liquid, markdown, mustache, redcloth]
+        - name: layout2
+          only: [layout2_test]
 

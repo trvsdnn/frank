@@ -15,14 +15,28 @@ class TestBase < Test::Unit::TestCase
       end
     end
     
+    context 'layouts' do
+      
+      should 'render template using layout' do
+        template = @frank.render_path('layout_test.haml')
+        assert_equal "<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n", template
+      end
+      
+      should 'render template using layout2' do
+        template = @frank.render_path('layout2_test.haml')
+        assert_equal "<div id='layout2'>\n  <h1>hi inside layout2</h1>\n</div>\n", template
+      end
+      
+    end
+    
     should 'render haml template' do
-         template = @frank.render_path('index.haml')
-         assert_equal "<h1>hello worlds</h1>\n\n", template
-       end
+     template = @frank.render_path('index.haml')
+     assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", template
+    end
     
     should 'render haml template with a haml partial' do
       template = @frank.render_path('partial_test.haml')
-      assert_equal "<h1>hello worlds</h1>\n<p>hello from partial</p>\n", template
+      assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n", template
     end
     
     should 'render sass template' do

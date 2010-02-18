@@ -31,7 +31,7 @@ class TestBase < Test::Unit::TestCase
         template = @frank.render_path('lorem_test.haml')
         # Hangs when running tests, but not in irb O.o
         # reg = /<p class='sentences'>(?:(?:\w+\s?){2,}. ?){4,}<\/p>/
-        reg = /<p class='sentences'><\/p>/
+        reg = /<p class='sentences'>(?:[^.]+.){2}<\/p>/
         assert_match reg, template
       end
       
@@ -39,7 +39,7 @@ class TestBase < Test::Unit::TestCase
         template = @frank.render_path('lorem_test.haml')
         # Hangs when running tests, but not in irb O.o
         # reg = /<p class='paragraphs'>(?:(?:(?:\w+\s?){2,}. ?){2,}\n\n){1,}<\/p>/m
-        reg = /<p class='paragraphs'><\/p>/
+        reg = /<p class='paragraphs'>(?:[^\n]+(?:\n\n)?){1}<\/p>/m
         assert_match reg, template
       end
     end

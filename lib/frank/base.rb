@@ -86,11 +86,13 @@ module Frank
         render_with_layout template
       end
     end
-
+    
+    # renders a template
     def render_template(tmpl, *args)
       tilt_with_request(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
     end
-
+    
+    # renders layout and template inside layout block
     def render_with_layout(tmpl, *args)
       if layout = get_layout_for(tmpl)
         tilt_with_request(File.join(@proj_dir, @dynamic_folder, layout), *args) do
@@ -111,7 +113,9 @@ module Frank
       end
       nil
     end
-
+    
+    # finds template extension based on filename
+    # TODO: cleanup
     def find_template_ext(filename)
       name, kind = name_ext(filename)      
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
@@ -130,10 +134,13 @@ module Frank
       nil
     end
     
+    # determines layout using layouts setting
+    # in settings.yml
+    # TODO: cleanup
     def get_layout_for(view)
       view, ext = name_ext(view)
+      
       layouts = @templates['layouts'] || []
-    
       onlies = layouts.select {|l| l['only'] }
       nots = layouts.select {|l| l['not'] }
       blanks = layouts - onlies - nots
@@ -166,6 +173,7 @@ module Frank
     
   end
   
+  # starts the server
   def self.new(&block)
     base = Base.new(&block) if block_given?
     
@@ -194,6 +202,7 @@ module Frank
       puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{base.server['port']}\033[0m\n\n"
   end
   
+  # copies over the generic project template
   def self.stub(project)
     puts "\n-----------------------\n Frank:\n - Creating '#{project}'"
     begin

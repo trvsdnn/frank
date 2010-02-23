@@ -48,15 +48,13 @@ module Frank
     # attempt to render with the request path,
     # if it cannot be found, render error page
     def process
-      begin
-        ext = File.extname(@request.path.split('/').last || '')
-        @response['Content-Type'] = Rack::Mime.mime_type(ext, 'text/html')
-        @response.write render_path(@request.path)
-      rescue Frank::TemplateError
-        render_404
-      rescue Exception => e
-        render_500 e
-      end
+      ext = File.extname(@request.path.split('/').last || '')
+      @response['Content-Type'] = Rack::Mime.mime_type(ext, 'text/html')
+      @response.write render_path(@request.path)
+    rescue Frank::TemplateError
+      render_404
+    rescue Exception => e
+      render_500 e
     end
     
     # prints requests and errors to STDOUT
@@ -119,19 +117,20 @@ module Frank
     def find_template_ext(filename)
       name, kind = name_ext(filename)      
       kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
+      tmpl_ext = nil
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
         tmpl = "#{(name||'')}.#{ext}"
-        return [tmpl, ext] if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
+        default = File.join((name||''), "#{@templates['default']}.#{ext}")
+        
+        if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
+          tmpl_ext = [tmpl, ext] 
+        elsif File.exists? File.join(@proj_dir, @dynamic_folder, default)
+          tmpl_ext = [default, ext]
+        end
       end
       
-      TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
-        default = File.join((name||''), "#{@templates['default']}.#{ext}")
-        return [default, ext] if File.exists? File.join(@proj_dir, @dynamic_folder, default)
-      end
-      nil
-    rescue
-      nil
+      tmpl_ext
     end
     
     # determines layout using layouts setting
@@ -152,10 +151,6 @@ module Frank
       layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
       
       layout.nil? ? nil : layout['name'] + '.' + ext
-    end
-    
-    def tilt_with_lang(file, lang, *tilt_args, &block)
-      Tilt[lang].new(file, 1).render(*tilt_args, &block)
     end
     
     def tilt_with_request(file, *args, &block)      

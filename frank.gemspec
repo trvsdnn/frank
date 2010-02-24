@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-02-23}
+  s.date = %q{2010-02-24}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -63,6 +63,7 @@ Gem::Specification.new do |s|
      "test/template/dynamic/builder.builder",
      "test/template/dynamic/erb.erb",
      "test/template/dynamic/helper_test.haml",
+     "test/template/dynamic/imager_test.haml",
      "test/template/dynamic/index.haml",
      "test/template/dynamic/layout.haml",
      "test/template/dynamic/layout2.haml",

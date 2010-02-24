@@ -6,8 +6,12 @@ module Imager
       @app = app
     end
   
-    def image_filename(dims)
-      "frank#{dims.hash.to_s[-1..-1]}.jpg"
+    def image_filename(dims, query)      
+      if query == 'random'
+        "frank#{rand(10)}.jpg"
+      else
+        "frank#{dims.hash.to_s[-1..-1]}.jpg"
+      end  
     end
  
     def call(env)
@@ -15,8 +19,10 @@ module Imager
       image_path = File.expand_path(File.dirname(__FILE__)) + '/templates/imager/'
  
       if path.include? '_img'
-        dims = '!' + env['PATH_INFO'].split('/').last.match(/\d+x\d+/i).to_s
-        filename = image_filename(dims)
+        
+        dims = '!' + path.split('/').last.match(/\d+x\d+/i).to_s
+        filename = image_filename(dims, env['QUERY_STRING'])
+        
         image = MiniMagick::Image.from_file(image_path + filename)
         image.resize dims
         return [ 200, { 'Content-Type' => 'image/jpg' }, image.to_blob ] 
@@ -28,7 +34,7 @@ module Imager
   
   module Helpers
     def imager(width, height, random=false)
-      "_img/#{width.to_s}x#{height.to_s}.jpg"
+      "_img/#{width.to_s}x#{height.to_s}.jpg#{'?random' if random}"
     end
   end
 

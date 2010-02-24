@@ -115,8 +115,8 @@ module Frank
     # finds template extension based on filename
     # TODO: cleanup
     def find_template_ext(filename)
-      name, kind = name_ext(filename)      
-      kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?
+      name, ext = name_ext(filename)      
+      kind = reverse_ext_lookup(ext) if ext && TMPL_EXTS[ext.intern].nil?
       tmpl_ext = nil
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
@@ -153,6 +153,7 @@ module Frank
       layout.nil? ? nil : layout['name'] + '.' + ext
     end
     
+    # TODO: cleanup
     def tilt_with_request(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
       obj = Object.new.extend(TemplateHelpers).extend(Render)
@@ -200,15 +201,13 @@ module Frank
   # copies over the generic project template
   def self.stub(project)
     puts "\n-----------------------\n Frank:\n - Creating '#{project}'"
-    begin
-      Dir.mkdir project
-    rescue Errno::EEXIST
-      puts " uh oh, #{project} already exists..."
-      exit
-    end
+    Dir.mkdir project
     puts " - Copying Frank template"
     FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
     puts "\n Congratulations, '#{project}' is ready to go.\n\n"
+  rescue Errno::EEXIST
+    puts " uh oh, #{project} already exists..."
+    exit
   end
   
 end

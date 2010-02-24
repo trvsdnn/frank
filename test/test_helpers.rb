@@ -20,6 +20,11 @@ class TestBase < Test::Unit::TestCase
       assert_equal "<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n", template
     end
     
+    should 'render image url using imager' do
+      template = @frank.render_path('imager_test.haml')
+      assert_equal "<div id='layout'>\n  <img src='_img/400x300.jpg' />\n</div>\n", template
+    end
+    
     context 'Lorem' do
       should 'render haml with 3 random lorem words' do
         template = @frank.render_path('lorem_test.haml')
@@ -29,16 +34,12 @@ class TestBase < Test::Unit::TestCase
     
       should 'render haml with 2 random lorem sentences' do
         template = @frank.render_path('lorem_test.haml')
-        # Hangs when running tests, but not in irb O.o
-        # reg = /<p class='sentences'>(?:(?:\w+\s?){2,}. ?){4,}<\/p>/
         reg = /<p class='sentences'>(?:[^.]+.){2}<\/p>/
         assert_match reg, template
       end
       
       should 'render haml with 1 random lorem paragraph' do
         template = @frank.render_path('lorem_test.haml')
-        # Hangs when running tests, but not in irb O.o
-        # reg = /<p class='paragraphs'>(?:(?:(?:\w+\s?){2,}. ?){2,}\n\n){1,}<\/p>/m
         reg = /<p class='paragraphs'>(?:[^\n]+(?:\n\n)?){1}<\/p>/m
         assert_match reg, template
       end

@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-02-15}
+  s.date = %q{2010-02-23}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
      "lib/frank/templates/500.haml",
      "lib/frank/templates/frank-404.png",
      "lib/frank/templates/frank-500.png",
+     "lib/frank/templates/imager/frank0.jpg",
      "lib/frank/templates/imager/frank1.jpg",
      "lib/frank/templates/imager/frank2.jpg",
      "lib/frank/templates/imager/frank3.jpg",
@@ -47,6 +48,7 @@ Gem::Specification.new do |s|
      "lib/frank/templates/imager/frank6.jpg",
      "lib/frank/templates/imager/frank7.jpg",
      "lib/frank/templates/imager/frank8.jpg",
+     "lib/frank/templates/imager/frank9.jpg",
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
@@ -63,7 +65,11 @@ Gem::Specification.new do |s|
      "test/template/dynamic/helper_test.haml",
      "test/template/dynamic/index.haml",
      "test/template/dynamic/layout.haml",
+     "test/template/dynamic/layout2.haml",
+     "test/template/dynamic/layout2_test.haml",
+     "test/template/dynamic/layout_test.haml",
      "test/template/dynamic/liquid.liquid",
+     "test/template/dynamic/lorem_test.haml",
      "test/template/dynamic/markdown.md",
      "test/template/dynamic/mustache.mustache",
      "test/template/dynamic/partial_test.haml",

@@ -3,13 +3,14 @@ require File.dirname(__FILE__) + '/helper'
 class TestBase < Test::Unit::TestCase
   
   def app
-    settings = YAML.load_file('template/settings.yml')
+    proj_dir = File.join(File.dirname(__FILE__), 'template')
+    settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
     Frank.new do
       settings.each do |name, value|
         set name.to_s, value
       end
       set :environment, :test
-      set :proj_dir, File.join(Dir.pwd, 'template')
+      set :proj_dir, proj_dir
     end
   end
   

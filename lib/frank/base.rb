@@ -8,8 +8,6 @@ require 'frank/imager'
 module Frank
   
   module Render; end
-  class TemplateError < StandardError; end
-  class ConfigError < StandardError; end
   
   class Base
     include Rack::Utils
@@ -174,8 +172,8 @@ module Frank
     base = Base.new(&block) if block_given?
     
     builder = Rack::Builder.new do
-      use Rack::Statik, :root => base.static_folder
-      use Rack::Imager
+      use Frank::Statik, :root => base.static_folder
+      use Frank::Imager
       run base
     end
 

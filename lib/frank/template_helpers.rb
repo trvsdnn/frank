@@ -1,10 +1,8 @@
 require 'frank/lorem'
-require 'frank/imager'
 
 module Frank
   module TemplateHelpers
     include FrankHelpers
-    include Imager::Helpers
   
     def render_partial(path)
       pieces = path.split('/')
@@ -13,7 +11,7 @@ module Frank
     end
     
     def lorem
-      Lorem
+      Frank::Lorem
     end
     
   end

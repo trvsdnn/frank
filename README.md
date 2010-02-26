@@ -104,15 +104,17 @@ This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all
 
 ### Placeholder Images
 
-Likewise, Frank can also generate placeholder images for you, from a selection of 10 pre-made images:
+Likewise, Frank can generate placeholder images for you, from a selection of 10 pre-made images. For example, to generate `<img />` tag with a random dummy image:
      
      %img{:src=> lorem.image( 500, 400 ) }
 
-This will return an image scaled & cropped to `500px` wide by `400px` tall pixels. By default, Frank caches the images returned for a given size. So every subsequent request for a `500x400` image will return the same thing. If you'd rather have a random image every time, just pass in `true` for the 3rd image:
+The `lorem.image` helper returns a special Frank image URL. In this case, the returned image will be 500 pixels wide and 400 pixels tall. By default, Frank caches the images returned for each specific size. So every subsequent request for a `500x400` image will return the same thing. If you'd rather have a random image every time, just pass in `true` for the 3rd image:
      
      lorem.image( 100, 100, true )    # returns a random 100x100 image every time it's called
 
 ( NOTE: Unfortunately, in order to use the placeholder images, you must have a working [ImageMagick][12], and have the `mini_magick` gem installed as well. )
+
+If you would like to use the placeholder images in a context where the helper methods are unavailable (e.g. in static CSS or JavaScript), you can access the URL directly with `/_img/500x400.jpg`, or for random images `/_img/500x400.jpg?random`.
 
 
 

@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.1.3"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-02-25}
+  s.date = %q{2010-02-26}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -104,18 +104,24 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rack>, [">= 0"])
-      s.add_runtime_dependency(%q<mongrel>, [">= 0"])
-      s.add_runtime_dependency(%q<haml>, [">= 0"])
+      s.add_runtime_dependency(%q<rack>, [">= 1.0"])
+      s.add_runtime_dependency(%q<mongrel>, [">= 1.0"])
+      s.add_runtime_dependency(%q<haml>, [">= 2.0"])
+      s.add_development_dependency(%q<shoulda>, [">= 2.0"])
+      s.add_development_dependency(%q<rack-test>, [">= 0.5"])
     else
-      s.add_dependency(%q<rack>, [">= 0"])
-      s.add_dependency(%q<mongrel>, [">= 0"])
-      s.add_dependency(%q<haml>, [">= 0"])
+      s.add_dependency(%q<rack>, [">= 1.0"])
+      s.add_dependency(%q<mongrel>, [">= 1.0"])
+      s.add_dependency(%q<haml>, [">= 2.0"])
+      s.add_dependency(%q<shoulda>, [">= 2.0"])
+      s.add_dependency(%q<rack-test>, [">= 0.5"])
     end
   else
-    s.add_dependency(%q<rack>, [">= 0"])
-    s.add_dependency(%q<mongrel>, [">= 0"])
-    s.add_dependency(%q<haml>, [">= 0"])
+    s.add_dependency(%q<rack>, [">= 1.0"])
+    s.add_dependency(%q<mongrel>, [">= 1.0"])
+    s.add_dependency(%q<haml>, [">= 2.0"])
+    s.add_dependency(%q<shoulda>, [">= 2.0"])
+    s.add_dependency(%q<rack-test>, [">= 0.5"])
   end
 end
 

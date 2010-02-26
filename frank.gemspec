@@ -61,6 +61,7 @@ Gem::Specification.new do |s|
      "test/suite.rb",
      "test/template/dynamic/_partial.haml",
      "test/template/dynamic/builder.builder",
+     "test/template/dynamic/coffee.coffee",
      "test/template/dynamic/erb.erb",
      "test/template/dynamic/helper_test.haml",
      "test/template/dynamic/index.haml",

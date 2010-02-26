@@ -2,7 +2,7 @@ require 'frank/lorem'
 
 module Frank
   module TemplateHelpers
-    include FrankHelpers
+    include FrankHelpers if defined? FrankHelpers
   
     def render_partial(path)
       pieces = path.split('/')

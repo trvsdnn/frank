@@ -113,8 +113,9 @@ module Frank
     # finds template extension based on filename
     # TODO: cleanup
     def find_template_ext(filename)
-      name, ext = name_ext(filename)      
-      kind = reverse_ext_lookup(ext) if ext && TMPL_EXTS[ext.intern].nil?
+      name, kind = name_ext(filename)      
+      kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?      
+      
       tmpl_ext = nil
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|

@@ -36,7 +36,7 @@ module Frank
     
       def image(width, height, random=false)
         if defined? MiniMagick
-          "/_img/#{width.to_s}x#{height.to_s}.jpg#{'?random' if random}"
+          "/_img/#{width.to_s}x#{height.to_s}.jpg#{'?random' + (10000 + rand(10000)).to_s if random}"
         else
           raise Frank::ConfigError, 'mini_magick is required for lorem.image, please install it with `gem install mini_magick`'
         end

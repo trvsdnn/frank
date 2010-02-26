@@ -31,35 +31,51 @@ class TestBase < Test::Unit::TestCase
       assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", last_response.body
     end
     
-    should 'render 404 page if template not found' do
-      get '/not_here'
-                              
-      assert !last_response.ok?                          
-      assert_match 'Not Found', last_response.body
-    end
-    
-    should 'render 500 page for error' do
-      get '/?brok=en'
+    should 'render a dynamic css without a layout' do
+      get '/sass.css'
       
-      assert !last_response.ok?
-      assert_match "undefined local variable or method `non_method'", last_response.body
+      assert last_response.ok?
+      assert_equal "#hello-worlds {\n  background: red; }\n", last_response.body
     end
     
-  end
-  
-  context 'Frank.stub' do
+    should 'render a dynamic javascript without a layout' do
+      get '/coffee.js'
+      
+      assert last_response.ok?
+      assert_equal "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();", last_response.body
+    end
     
-    should 'stub out a project' do
-      out = capture_stdout { Frank.stub('stubbed') }
-      assert_equal Dir.entries('stubbed'), Dir.entries(File.join(LIBDIR, 'template'))
-      putss = "\n-----------------------\n Frank:\n - Creating 'stubbed'\n - Copying Frank template\n\n Congratulations, 'stubbed' is ready to go.\n\n"
-      assert_equal putss, out.string
+    should 'render 404 page if template not found' do
+        get '/not_here.css'
+                                
+        assert !last_response.ok?
+        assert_equal 'text/html', last_response.content_type                          
+        assert_match 'Not Found', last_response.body
+      end
+      
+      should 'render 500 page for error' do
+        get '/?brok=en'
+        
+        assert !last_response.ok?
+        assert_equal 'text/html', last_response.content_type
+        assert_match "undefined local variable or method `non_method'", last_response.body
+      end
+      
     end
-  
-    teardown do
-      FileUtils.rm_r File.join(Dir.pwd, 'stubbed')
+    
+    context 'Frank.stub' do
+      
+      should 'stub out a project' do
+        out = capture_stdout { Frank.stub('stubbed') }
+        assert_equal Dir.entries('stubbed'), Dir.entries(File.join(LIBDIR, 'template'))
+        putss = "\n-----------------------\n Frank:\n - Creating 'stubbed'\n - Copying Frank template\n\n Congratulations, 'stubbed' is ready to go.\n\n"
+        assert_equal putss, out.string
+      end
+    
+      teardown do
+        FileUtils.rm_r File.join(Dir.pwd, 'stubbed')
+      end
+    
     end
-  
-  end
   
 end

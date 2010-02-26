@@ -12,7 +12,7 @@ module Frank
   
     # choose a random image if random is in the query
     def image_filename(dims, query)      
-      if query == 'random'
+      if query.include?('random')
         "frank#{rand(10)}.jpg"
       else
         "frank#{dims.hash.to_s[-1..-1]}.jpg"

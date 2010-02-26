@@ -44,6 +44,11 @@ class TestBase < Test::Unit::TestCase
       template = @frank.render_path('sass.sass')
       assert_equal "#hello-worlds {\n  background: red; }\n", template
     end
+    
+    should 'render coffee template' do
+      template = @frank.render_path('coffee.coffee')
+      assert_equal "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();", template
+    end
       
     should 'render erb template' do
       template = @frank.render_path('erb.erb')

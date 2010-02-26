@@ -81,6 +81,43 @@ Helper methods are also easy. Just open up `helpers.rb` and add your methods
 to the `FrankHelpers` module; that's it. Use them just like `render_partial`.
 
 
+
+Built-in Helpers
+----------------
+
+Frank also comes with some handy helper methods for generating placeholder content.
+
+### Placeholder Text
+
+You can easily generate dummy text like so:
+
+     %p= lorem.sentences 3
+
+This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all of the following methods for generating dummy text:
+
+     lorem.sentence     # returns a single sentence
+     lorem.words 5      # returns 5 individual words
+     lorem.word
+     lorem.paragraphs 10
+     lorem.paragraph
+
+
+### Placeholder Images
+
+Likewise, Frank can generate placeholder images for you, from a selection of 10 pre-made images. For example, to generate `<img />` tag with a random dummy image:
+     
+     %img{:src=> lorem.image( 500, 400 ) }
+
+The `lorem.image` helper returns a special Frank image URL. In this case, the returned image will be 500 pixels wide and 400 pixels tall. By default, Frank caches the images returned for each specific size. So every subsequent request for a `500x400` image will return the same thing. If you'd rather have a random image every time, just pass in `true` for the 3rd image:
+     
+     lorem.image( 100, 100, true )    # returns a random 100x100 image every time it's called
+
+( NOTE: Unfortunately, in order to use the placeholder images, you must have a working [ImageMagick][12], and have the `mini_magick` gem installed as well. )
+
+If you would like to use the placeholder images in a context where the helper methods are unavailable (e.g. in static CSS or JavaScript), you can access the URL directly with `/_img/500x400.jpg`, or for random images `/_img/500x400.jpg?random`.
+
+
+
 GET/POST params
 ---------------
 
@@ -91,6 +128,8 @@ and `params` are available in your templates.
 For example, to use a person's name submitted through a form you might do:
 
     %h1= "Hello, #{params.name}"
+
+
 
 Configuration
 -------------
@@ -125,3 +164,5 @@ Installation
 [8]: http://lesscss.org/
 [9]: http://rack.rubyforge.org/
 [10]: http://lesscss.org/
+[11]: http://en.wikipedia.org/wiki/Lorem_ipsum
+[12]: http://www.imagemagick.org/script/binary-releases.php?ImageMagick=4pg9cdfr8e6gn7aru9mtelepr3

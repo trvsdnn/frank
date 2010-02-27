@@ -137,13 +137,7 @@ Configuration
 In `settings.yml`, you can change your folder names, and server port & host name.
 Check the comments there if you need help.
 
-Once you've gotten comfortable with Frank, you will probably no longer want
-the example files included whenever you start a new project. You may also have
-preferred folder names, and languages that you always want to start
-projects with.
-
-To do this, create a new base project. Then just copy your base project to `~/.frank`.
-This folder will then be copied for you whenever you run the `frank` command.
+(NOTE: In order to reduce confusion, Frank no longer checks for a `~/.frank` folder to copy when you run the `frank` command. Instead, the preferred method is just to create a base Frank project wherever you please, and just `cp -r` to the location of your new project, since this is all the `frank` command did anyway)
   
 Installation
 ------------

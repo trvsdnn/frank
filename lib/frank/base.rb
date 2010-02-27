@@ -120,7 +120,7 @@ module Frank
       
       TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
         tmpl = "#{(name||'')}.#{ext}"
-        default = File.join((name||''), "#{@templates['default']}.#{ext}")
+        default = File.join((name||''), "index.#{ext}")
         
         if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
           tmpl_ext = [tmpl, ext] 

@@ -45,9 +45,6 @@ dynamic_folder: dynamic
 # ----------------------
 #  Templates:
 #
-# 'default' is the optional default template to
-#  serve from a folder (include the root folder)
-#
 # 'layouts' is a list of layouts to use, where
 # 'name' is the filename (without extension).
 #  You can also use multiple layouts, and limit
@@ -57,8 +54,6 @@ dynamic_folder: dynamic
 #      - name: normal
 #        not: [blog, ajax]
 templates:
-    extension: haml
-    default: index
     layouts:
         - name: layout
           not: [builder, erb, liquid, markdown, mustache, redcloth]

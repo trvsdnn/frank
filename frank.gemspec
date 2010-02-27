@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
      "lib/frank/templates/imager/frank6.jpg",
      "lib/frank/templates/imager/frank7.jpg",
      "lib/frank/templates/imager/frank8.jpg",
-     "lib/frank/templates/imager/frank9.png",
+     "lib/frank/templates/imager/frank9.jpg",
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",

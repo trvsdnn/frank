@@ -43,7 +43,7 @@ class TestBase < Test::Unit::TestCase
       
       should 'render image url using imager' do
         template = @frank.render_path('lorem_test.haml')
-        reg = /<img src='\/_img\/400x300.jpg\?random' \/>/
+        reg = /<img src='\/_img\/400x300.jpg\?random\d{5}' \/>/
         assert_match reg, template
       end
     end

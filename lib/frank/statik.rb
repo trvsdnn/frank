@@ -19,6 +19,8 @@ module Frank
         env['PATH_INFO'].gsub!('/__frank__', '')
         result = @frank_server.call(env)
       elsif path.index('/') == 0
+        env['PATH_INFO'] << '/' unless path.match(/(\.\w+|\/)$/)
+        env['PATH_INFO'] << 'index.html' if path[-1..-1] == '/'
         result = @static_server.call(env)
       end
       return result if result[0] == 200

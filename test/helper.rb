@@ -6,7 +6,6 @@ $LOAD_PATH.unshift libdir unless $LOAD_PATH.include?(libdir)
 
 require 'stringio'
 require 'rubygems'
-require 'yaml'
 require 'test/unit'
 require 'rack/test'
 require 'shoulda'

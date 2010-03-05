@@ -10,5 +10,7 @@ module Frank
 end
 
 require 'rubygems'
+require 'yaml'
+require 'rack'
 require 'frank/base'
 require 'frank/output'

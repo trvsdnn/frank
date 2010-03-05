@@ -1,4 +1,3 @@
-require 'rack'
 require 'frank/tilt'
 require 'frank/template_helpers'
 require 'frank/rescue'

@@ -11,6 +11,7 @@ require 'rack/test'
 require 'shoulda'
 require 'template/helpers'
 require 'frank'
+require 'ruby-debug'
 
 module Kernel
  def capture_stdout

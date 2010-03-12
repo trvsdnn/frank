@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-03-05}
+  s.date = %q{2010-03-11}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.md",
      "Rakefile",
-     "VERSION",
      "bin/frank",
      "bin/frankout",
      "bin/frankup",

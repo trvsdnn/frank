@@ -41,6 +41,24 @@ class TestBase < Test::Unit::TestCase
         assert_match reg, template
       end
       
+      should 'render haml with lorem name' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='name'>\w+\s\w+<\/p>/m
+        assert_match reg, template
+      end
+      
+      should 'render haml with lorem email' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='email'>[\w-]+@\w+\.\w+<\/p>/m
+        assert_match reg, template
+      end
+      
+      should 'render haml with lorem date' do
+        template = @frank.render_path('lorem_test.haml')
+        reg = /<p class='date'>\d{4}-\d{2}-\d{2}<\/p>/m
+        assert_match reg, template
+      end
+      
       should 'render image url using imager' do
         template = @frank.render_path('lorem_test.haml')
         reg = /<img src='\/_img\/400x300.jpg\?random\d{5}' \/>/

@@ -5,6 +5,9 @@ if ARGV.empty?
   puts "Usage: frank [PROJECT_NAME]"
   puts "Stubs out a template project"
   exit
+elsif ['-v', '--version'].include?(ARGV.first)
+  puts "Frank v#{Frank::VERSION}"
+  exit
 end
 
 Frank.stub(ARGV.first)

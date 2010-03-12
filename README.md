@@ -100,6 +100,7 @@ This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all
      lorem.word
      lorem.paragraphs 10
      lorem.paragraph
+     lorem.date         # accepts a strftime format argument
      lorem.name
      lorem.first_name
      lorem.last_name

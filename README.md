@@ -17,8 +17,8 @@ Create a new project with:
 
     $ frank <project_name>
 
-Then start up the server with:
-    
+Then `cd <project_name>` and start up the server with:
+  
     $ frankup
 
     -----------------------

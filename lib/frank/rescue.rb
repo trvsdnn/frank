@@ -1,10 +1,13 @@
 module Frank
-  module Rescue
+  module Rescue    
     
     def render_404
       template = File.expand_path(File.dirname(__FILE__)) + '/templates/404.haml'
-      locals = { :request => @env, :dynamic_folder => @dynamic_folder, :static_folder => @static_folder }
-
+      locals = { :request => @env, 
+                 :dynamic_folder => @dynamic_folder, 
+                 :static_folder => @static_folder,
+                 :environment => @environment }
+                 
       @response['Content-Type'] = 'text/html'
       @response.status = 404
       @response.body = Tilt.new(template, 1).render(Object.new, locals = locals)

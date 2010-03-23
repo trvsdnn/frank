@@ -1,14 +1,21 @@
 #!/usr/bin/env ruby
 require 'frank'
 
-begin
+if File.exist? 'settings.yml'
   settings = YAML.load_file('settings.yml')
-  Frank.new do
-    settings.each do |name, value|
-      set name.to_s, value
-    end
-    set :proj_dir, Dir.pwd
+else
+  settings = { 
+    :server => { 'handler' => 'mongrel', 'hostname' => 'localhost', 'port' => 3601 },
+    :static_folder => '.', 
+    :dynamic_folder => '.',
+    :environment => :serving  
+  }
+  puts 'Could not find "settings.yml", serving up files from the this directory at http://localhost:3601'
+end
+
+Frank.new do
+  settings.each do |name, value|
+    set name.to_s, value
   end
-rescue Errno::ENOENT
-  puts "Frank could not find settings.yml."
+  set :proj_dir, Dir.pwd
 end

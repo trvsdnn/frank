@@ -5,7 +5,7 @@ require 'frank/statik'
 require 'frank/imager'
 
 module Frank
-  VERSION = '0.2.3'
+  VERSION = '0.2.4'
   
   module Render; end
   
@@ -184,8 +184,8 @@ module Frank
       puts "\n-----------------------\n" +
            " Frank's #{ m }...\n" +
            " #{base.server['hostname']}:#{base.server['port']} \n\n"
-    
       server = Rack::Handler.get(base.server['handler'])
+      
       server.run(builder, :Port => base.server['port'], :Host => base.server['hostname']) do
         trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }
       end

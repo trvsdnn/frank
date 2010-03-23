@@ -2,11 +2,13 @@ Frank
 =========
 
 Inspired by [Sinatra][0]'s simplicity and ease of use, Frank lets you build
-static sites using your favorite libs, painlessly. It uses [Tilt][1], so it
-comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
-[Liquid][5], & [Mustache][6].
+static sites using your favorite libs. Frank has a built in development server
+for previewing work as you develop. Frank also has a "dump" command for compiling and saving
+your work out to static html, css, and js.
 
-Frank also supports [CoffeeScript][7] for writing JavaScript in style.
+Frank uses [Tilt][1], so it
+comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
+[Liquid][5], [Mustache][6], and [CoffeeScript][7].
 
 Overview
 --------
@@ -23,10 +25,14 @@ Then start up the server with:
      Frank's holdin' it down...
      0.0.0.0:3601
 
-And you're ready to get to work. Feel free to use as much or a little of
-the available libs as you please. Frank works just as well with Mustache /
-CSS / JavasScript as Haml / Sass / CoffeeScript.
+And you're ready to get to work. By default, dynamic templates are served from the dynamic folder
+and static files are served from the static folder.
 
+When you are finished:
+
+    $ frankout <dump_dir>
+
+This will compile and copy everything to the folder given.
 
 Views & Layouts
 -------------------------

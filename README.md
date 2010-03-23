@@ -25,8 +25,8 @@ Then start up the server with:
      Frank's holdin' it down...
      0.0.0.0:3601
 
-And you're ready to get to work. By default, dynamic templates are served from the dynamic folder
-and static files are served from the static folder.
+And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder
+and static files are served from the `static` folder.
 
 When you are finished:
 

@@ -1,16 +1,55 @@
 #!/usr/bin/env ruby
+require 'optparse'
 require 'frank'
+
+options = {:server => {}}
+
+opts = OptionParser.new do |opts|
+  
+  opts.on('--server [HANDLER]', 'Set the server handler') do |handler|
+    options[:server]['handler'] = handler unless handler.nil?
+  end
+  
+  opts.on('--hostname [HOSTNAME]', 'Set the server hostname') do |hostname|
+    options[:server]['hostname'] = hostname unless hostname.nil?
+  end
+  
+  opts.on('--port [PORT]', 'Set the server port') do |port|
+    options[:server]['port'] = port unless port.nil?
+  end
+  
+  opts.on('--dynamic_folder [FOLDER]', 'Set the dynamic folder') do |folder|
+    options[:dynamic_folder] = folder unless folder.nil?
+  end
+  
+  opts.on('--static_folder [FOLDER]', 'Set the static folder') do |folder|
+    options[:static_folder] = folder unless folder.nil?
+  end
+  
+end.parse!
 
 if File.exist? 'settings.yml'
   settings = YAML.load_file('settings.yml')
 else
   settings = { 
-    :server => { 'handler' => 'mongrel', 'hostname' => 'localhost', 'port' => 3601 },
+    :server => { 'handler' => 'mongrel', 'hostname' => '127.0.0.1', 'port' => 3601 },
     :static_folder => '.', 
     :dynamic_folder => '.',
     :environment => :serving  
   }
-  puts 'Could not find "settings.yml", serving up files from the this directory at http://localhost:3601'
+end
+
+options.each do |opt, val|
+  if opt == :server
+    server = settings['server'] ? settings['server'] : settings[:server]
+    val.each { |sopt, sval| server[sopt] = sval }
+  else
+    settings[opt] = val
+  end 
+end
+
+if settings[:environment] == :serving
+  puts "Could not find \"settings.yml\", serving up files from the this directory at http://#{settings[:server]['hostname']}:#{settings[:server]['port']}"
 end
 
 Frank.new do

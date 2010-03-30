@@ -85,13 +85,14 @@ module Frank
     
     # renders a template
     def render_template(tmpl, *args)
-      tilt_with_request(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
+      tilt(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
     end
     
-    # renders layout and template inside layout block
+    # if template has a layout defined, render template within layout
+    # otherwise render template
     def render_with_layout(tmpl, *args)
       if layout = get_layout_for(tmpl)
-        tilt_with_request(File.join(@proj_dir, @dynamic_folder, layout), *args) do
+        tilt(File.join(@proj_dir, @dynamic_folder, layout), *args) do
           render_template tmpl
         end
       else
@@ -132,8 +133,7 @@ module Frank
       tmpl_ext
     end
     
-    # determines layout using layouts setting
-    # in settings.yml
+    # determines layout using layouts settings
     # TODO: cleanup
     def get_layout_for(view)
       view, ext = name_ext(view)
@@ -142,19 +142,20 @@ module Frank
       onlies = layouts.select {|l| l['only'] }
       nots = layouts.select {|l| l['not'] }
       blanks = layouts - onlies - nots
-      
-      layout = nil if blanks.first['name'] == view
-      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
             
-      layout = onlies.select {|l| l['only'].index(view) }.first unless layout.nil?
-      layout = nots.reject {|l| l['not'].index(view) }.first unless layout.nil?
-      layout = blanks.first unless layout.nil?
+      layout = onlies.select {|l| l['only'].index(view) }.first 
+      layout = nots.reject {|l| l['not'].index(view) }.first unless layout
+      layout = blanks.first unless layout
+      
+      # TODO: we are checking for exts in two places, consolidate soon
+      layout = nil if !blanks.empty? && blanks.first['name'] == view
+      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
             
       layout.nil? ? nil : layout['name'] + '.' + ext
     end
     
     # TODO: cleanup
-    def tilt_with_request(file, *args, &block)      
+    def tilt(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
       obj = Object.new.extend(TemplateHelpers).extend(Render)
       obj.instance_variable_set(:@proj_dir, @proj_dir)

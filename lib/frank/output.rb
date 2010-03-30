@@ -10,7 +10,8 @@ module Frank
       instance_eval &block
       @output_path = File.join(@proj_dir, @output_folder)
     end
-        
+    
+    # get all of the templates and compile them
     def compile_templates
       dir = File.join(@proj_dir, @dynamic_folder)
       
@@ -33,7 +34,8 @@ module Frank
       static_folder = File.join(@proj_dir, @static_folder)
       FileUtils.cp_r(File.join(static_folder, '/.'), @output_path) 
     end
-  
+    
+    # create the dump dir, compile templates, copy over static assets
     def dump
       FileUtils.mkdir(@output_path)
       puts "Create #{@output_folder}" unless @environment == :test

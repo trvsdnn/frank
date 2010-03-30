@@ -142,13 +142,14 @@ module Frank
       onlies = layouts.select {|l| l['only'] }
       nots = layouts.select {|l| l['not'] }
       blanks = layouts - onlies - nots
-    
-      layout = onlies.select {|l| l['only'].index(view) }.first
-      layout = nots.reject {|l| l['not'].index(view) }.first unless layout
-      layout = blanks.first unless layout
-        
-      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
       
+      layout = nil if blanks.first['name'] == view
+      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
+            
+      layout = onlies.select {|l| l['only'].index(view) }.first unless layout.nil?
+      layout = nots.reject {|l| l['not'].index(view) }.first unless layout.nil?
+      layout = blanks.first unless layout.nil?
+            
       layout.nil? ? nil : layout['name'] + '.' + ext
     end
     

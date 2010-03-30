@@ -26,7 +26,8 @@ module Frank
         end
       end
     end
-  
+    
+    # copies over static content
     def copy_static
       puts "Copying over your static content" unless @environment == :test
       static_folder = File.join(@proj_dir, @static_folder)

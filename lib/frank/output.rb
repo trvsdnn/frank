@@ -36,16 +36,22 @@ module Frank
               new_file = File.join(@proj_dir, @output_folder, name, "index.#{new_ext}")
               name = "#{name}/index"
             end
-            FileUtils.makedirs(new_file.split('/').reverse[1..-1].reverse.join('/'))
+            create_dir(new_file)
             File.open(new_file, 'w') {|f| f.write render_path(path) }
           elsif options[:production] == false
             new_file = File.join(@proj_dir, @output_folder, "#{name}.#{new_ext}")  
-            FileUtils.makedirs(new_file.split('/').reverse[1..-1].reverse.join('/'))
+            create_dir(new_file)
             File.open(new_file, 'w') {|f| f.write render_path(path) }
           end
           puts " - \033[32mCreating\033[0m '#{@output_folder}/#{name}.#{new_ext}'"
         end
       end
+    end
+    
+    # use path to determine folder name and
+    # create the required folder if it doesn't exist
+    def create_dir(path)
+      FileUtils.makedirs path.split('/').reverse[1..-1].reverse.join('/')
     end
     
     # copies over static content

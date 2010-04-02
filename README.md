@@ -30,9 +30,11 @@ and static files are served from the `static` folder.
 
 When you are finished:
 
-    $ frankout <dump_dir>
-
-This will compile and copy everything to the folder given.
+    $ frankout <dump_dir> # compile templates
+    
+    or
+    
+    $ frankout --production <dump_dir> # compile and create folder structure suitable for serving from a production website
 
 Views & Layouts
 -------------------------

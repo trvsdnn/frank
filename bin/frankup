@@ -4,7 +4,12 @@ require 'frank'
 
 options = {:server => {}}
 
-opts = OptionParser.new do |opts|
+OptionParser.new do |opts|
+  opts.banner = "Usage: frankup [OPTIONS]\n",
+                "Starts the frank development server using settings.yml\n",
+                "If settings.yml isn\'t found, a webserver will be started and serve up files from the current directory\n\n"
+  
+  opts.separator 'Options:'
   
   opts.on('--server [HANDLER]', 'Set the server handler') do |handler|
     options[:server]['handler'] = handler unless handler.nil?
@@ -26,6 +31,10 @@ opts = OptionParser.new do |opts|
     options[:static_folder] = folder unless folder.nil?
   end
   
+  opts.on( '-h', '--help', 'Display this help' ) do
+    puts opts
+    exit
+  end
 end.parse!
 
 if File.exist? 'settings.yml'

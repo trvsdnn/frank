@@ -1,16 +1,37 @@
 #!/usr/bin/env ruby
+require 'optparse'
 require 'frank'
 
+options = { :production => false }
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: frankout [OPTIONS] directory\n",
+                "Compiles and dumps a project and it\'s static files to given directory\n",
+                "Example: frankout --production html_dump\n\n"
+  
+  opts.separator 'Options:'
+  
+  opts.on('--production', 'Production ready dump i.e. ([FOLDER]/index.html)') do |handler|
+    options[:production] = true
+  end
+  
+  opts.on( '-h', '--help', 'Display this help' ) do
+    puts opts
+    exit
+  end
+end
+
+opts.parse!
+
 if ARGV.empty?
-  puts "Usage: frankout [DUMP_DIR]"
-  puts "Compiles and dumps a project and it\'s static files to given folder"
+  puts opts
   exit
 end
 
 output_folder = ARGV.first
 
 if File.exists? output_folder
-  print "Folder: #{output_folder} already exists... do you want to overwrite it? (y|n) "
+  print "'#{output_folder}' \033[31malready exists...\033[0m do you want to overwrite it? (y|n) "
   resp = STDIN.gets.chomp.strip
   exit if resp.downcase.strip != 'y'
   FileUtils.rm_rf(output_folder)
@@ -26,7 +47,7 @@ begin
     end
     set :output_folder, output_folder
     set :proj_dir, proj_dir
-  end.dump
+  end.dump(options)
   
 rescue Errno::ENOENT
   puts "Frank could not find settings.yml."

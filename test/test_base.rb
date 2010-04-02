@@ -68,7 +68,7 @@ class TestBase < Test::Unit::TestCase
       should 'stub out a project' do
         out = capture_stdout { Frank.stub('stubbed') }
         assert_equal Dir.entries('stubbed'), Dir.entries(File.join(LIBDIR, 'template'))
-        putss = "\n-----------------------\n Frank:\n - Creating 'stubbed'\n - Copying Frank template\n\n Congratulations, 'stubbed' is ready to go.\n\n"
+        putss = "\nFrank is...\n - \e[32mCreating\e[0m your project 'stubbed'\n - \e[32mCopying\e[0m Frank template\n\n \e[32mCongratulations, 'stubbed' is ready to go!\e[0m\n"
         assert_equal putss, out.string
       end
     

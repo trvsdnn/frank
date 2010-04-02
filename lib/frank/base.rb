@@ -201,13 +201,14 @@ module Frank
   
   # copies over the generic project template
   def self.stub(project)
-    puts "\n-----------------------\n Frank:\n - Creating '#{project}'"
+    puts "\nFrank is..."
+    puts " - \033[32mCreating\033[0m your project '#{project}'"
     Dir.mkdir project
-    puts " - Copying Frank template"
+    puts " - \033[32mCopying\033[0m Frank template"
     FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
-    puts "\n Congratulations, '#{project}' is ready to go.\n\n"
+    puts "\n \033[32mCongratulations, '#{project}' is ready to go!\033[0m"
   rescue Errno::EEXIST
-    puts " uh oh, #{project} already exists..."
+    puts "\n \033[31muh oh, directory '#{project}' already exists...\033[0m"
     exit
   end
   

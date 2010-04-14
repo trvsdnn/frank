@@ -5,7 +5,7 @@ require 'frank/statik'
 require 'frank/imager'
 
 module Frank
-  VERSION = '0.2.5'
+  VERSION = '0.2.6'
   
   module Render; end
   

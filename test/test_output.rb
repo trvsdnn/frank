@@ -15,7 +15,7 @@ class TestBase < Test::Unit::TestCase
           end
           set :environment, :test
           set :proj_dir, proj_dir
-          set :output_folder, 'output'
+          set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
         end.dump
       end
     end
@@ -92,7 +92,7 @@ class TestBase < Test::Unit::TestCase
           end
           set :environment, :test
           set :proj_dir, proj_dir
-          set :output_folder, 'output'
+          set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
         end.dump({:production => true})
       end
     end

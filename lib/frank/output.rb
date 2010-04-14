@@ -8,7 +8,6 @@ module Frank
     
     def initialize(&block)
       instance_eval &block
-      @output_path = File.join(@proj_dir, @output_folder)
     end
     
     # get all of the templates and compile them
@@ -31,15 +30,15 @@ module Frank
             # then compile it as is, otherwise name a folder based on the template
             # and compile to index.html
             if "#{name}.#{new_ext}" == 'index.html' || new_ext != 'html'
-              new_file = File.join(@proj_dir, @output_folder, "#{name}.#{new_ext}")
+              new_file = File.join(@output_folder, "#{name}.#{new_ext}")
             else
-              new_file = File.join(@proj_dir, @output_folder, name, "index.#{new_ext}")
+              new_file = File.join(@output_folder, name, "index.#{new_ext}")
               name = "#{name}/index"
             end
             create_dir(new_file)
             File.open(new_file, 'w') {|f| f.write render_path(path) }
           elsif options[:production] == false
-            new_file = File.join(@proj_dir, @output_folder, "#{name}.#{new_ext}")  
+            new_file = File.join(@output_folder, "#{name}.#{new_ext}")  
             create_dir(new_file)
             File.open(new_file, 'w') {|f| f.write render_path(path) }
           end
@@ -58,12 +57,12 @@ module Frank
     def copy_static
       puts " - \033[32mCopying\033[0m static content"
       static_folder = File.join(@proj_dir, @static_folder)
-      FileUtils.cp_r(File.join(static_folder, '/.'), @output_path) 
+      FileUtils.cp_r(File.join(static_folder, '/.'), @output_folder) 
     end
     
     # create the dump dir, compile templates, copy over static assets
     def dump(options={:production => false})
-      FileUtils.mkdir(@output_path)
+      FileUtils.mkdir(@output_folder)
       puts "\nFrank is..."
       puts " - \033[32mCreating\033[0m '#{@output_folder}'"
       

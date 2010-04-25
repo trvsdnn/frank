@@ -31,14 +31,14 @@ class TestBase < Test::Unit::TestCase
       assert_equal "<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", last_response.body
     end
     
-    should 'render a dynamic css without a layout' do
+    should 'render dynamic css without a layout' do
       get '/sass.css'
       
       assert last_response.ok?
       assert_equal "#hello-worlds {\n  background: red; }\n", last_response.body
     end
     
-    should 'render a dynamic javascript without a layout' do
+    should 'render dynamic javascript without a layout' do
       get '/coffee.js'
       
       assert last_response.ok?

@@ -28,6 +28,11 @@ class TestBase < Test::Unit::TestCase
         assert_equal "<div id='layout2'>\n  <h1>hi inside layout2</h1>\n</div>\n", template
       end
       
+      should 'render rdiscount template inside haml layout' do
+        template = @frank.render_path('markdown_in_haml.md')
+        assert_equal "<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n", template
+      end
+      
     end
     
     should 'render haml template' do

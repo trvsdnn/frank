@@ -5,7 +5,7 @@ require 'frank/statik'
 require 'frank/imager'
 
 module Frank
-  VERSION = '0.2.6'
+  VERSION = '0.3.0'
   
   module Render; end
   
@@ -135,25 +135,31 @@ module Frank
     
     # determines layout using layouts settings
     # TODO: cleanup
-    def get_layout_for(view)
-      view, ext = name_ext(view)
+    def get_layout_for(tmpl)
+      name, ext = name_ext(tmpl)
       
       layouts = @templates['layouts'] || []
       onlies = layouts.select {|l| l['only'] }
       nots = layouts.select {|l| l['not'] }
       blanks = layouts - onlies - nots
             
-      layout = onlies.select {|l| l['only'].index(view) }.first 
-      layout = nots.reject {|l| l['not'].index(view) }.first unless layout
+      layout = onlies.select {|l| l['only'].index(name) }.first 
+      layout = nots.reject {|l| l['not'].index(name) }.first unless layout
       layout = blanks.first unless layout
       
       # TODO: we are checking for exts in two places, consolidate soon
-      layout = nil if !blanks.empty? && blanks.first['name'] == view
+      layout = nil if !blanks.empty? && blanks.first['name'] == name
       layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
-            
-      layout.nil? ? nil : layout['name'] + '.' + ext
+      
+      layout.nil? ? nil : get_layout_template(layout['name'], ext)
     end
-    
+        
+    # get the layout type if given explicitly
+    # otherwise fallback to whatever the current template is
+    def get_layout_template(name, ext)
+      name.match(/\.\w+$/) ? name : "#{name}.#{ext}"
+    end
+          
     # TODO: cleanup
     def tilt(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }

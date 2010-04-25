@@ -55,7 +55,7 @@ dynamic_folder: dynamic
 #        not: [blog, ajax]
 templates:
     layouts:
-        - name: layout
+        - name: layout.haml
           not: [builder, erb, liquid, markdown, mustache, redcloth]
         - name: layout2
           only: [layout2_test]

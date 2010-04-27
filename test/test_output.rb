@@ -13,7 +13,7 @@ class TestBase < Test::Unit::TestCase
           settings.each do |name, value|
             set name.to_s, value
           end
-          set :environment, :test
+          set :environment, :output
           set :proj_dir, proj_dir
           set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
         end.dump
@@ -64,6 +64,17 @@ class TestBase < Test::Unit::TestCase
       assert_equal "<h1>hello worlds</h1>\n", IO.read(output)
     end
     
+    should 'copy lorem_test.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/lorem_test.html')
+      assert_match "<p class='words'>replace-this</p>", IO.read(output)
+      assert_match "<p class='sentences'>replace-this</p>", IO.read(output)
+      assert_match "<p class='paragraphs'>replace-this</p>", IO.read(output)
+      assert_match "<p class='date'>replace-this</p>", IO.read(output)
+      assert_match "<p class='name'>replace-this</p>", IO.read(output)
+      assert_match "<p class='email'>replace-this</p>", IO.read(output)
+      assert_match "<img src='replace-this' />", IO.read(output)
+    end
+    
     should 'copy static.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/static.html')
       assert_equal "hello from static", IO.read(output)
@@ -90,7 +101,7 @@ class TestBase < Test::Unit::TestCase
           settings.each do |name, value|
             set name.to_s, value
           end
-          set :environment, :test
+          set :environment, :output
           set :proj_dir, proj_dir
           set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
         end.dump({:production => true})

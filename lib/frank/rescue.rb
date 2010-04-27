@@ -23,5 +23,6 @@ module Frank
       @response.body = Tilt.new(template, 1).render(Object.new, locals = locals)   
       log_request('500', excp)
     end
+    
   end
 end

@@ -11,7 +11,7 @@ module Frank
     end
     
     def lorem
-      Frank::Lorem
+      Frank::Lorem.new(@environment)
     end
     
   end

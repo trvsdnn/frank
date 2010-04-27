@@ -164,6 +164,7 @@ module Frank
     def tilt(file, *args, &block)      
       locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
       obj = Object.new.extend(TemplateHelpers).extend(Render)
+      obj.instance_variable_set(:@environment, @environment)
       obj.instance_variable_set(:@proj_dir, @proj_dir)
       obj.instance_variable_set(:@dynamic_folder, @dynamic_folder)
       obj.instance_variable_set(:@templates, @templates)

@@ -13,19 +13,20 @@ module Frank
     # get all of the templates and compile them
     def compile_templates(options)
       dir = File.join(@proj_dir, @dynamic_folder)
-      layouts = templates['layouts'].map { |l| l['name'] }
+      # layouts = templates['layouts'].map { |l| l['name'] }
       
       Find.find(dir) do |path|
         if FileTest.file?(path) && !File.basename(path).match(/^(\.|_)/)
           # get the path name
           path = path[ dir.size + 1 ..-1 ]
           # get name and ext
-          name, ext = name_ext(path)
+          ext = File.extname(path)
+          name = File.basename(path, ext)
+          puts name
           # get output extension
-          new_ext = reverse_ext_lookup(ext)
+          new_ext = ext_from_handler(ext)
 
-          # if production is true and this template isn't a layout
-          if options[:production] == true && !layouts.include?(name)
+          if options[:production] == true
             # if template isn't index or template doesn't compile to html
             # then compile it as is, otherwise name a folder based on the template
             # and compile to index.html
@@ -36,11 +37,11 @@ module Frank
               name = "#{name}/index"
             end
             create_dir(new_file)
-            File.open(new_file, 'w') {|f| f.write render_path(path) }
-          elsif options[:production] == false
+            File.open(new_file, 'w') {|f| f.write render(path) }
+          else
             new_file = File.join(@output_folder, "#{name}.#{new_ext}")  
             create_dir(new_file)
-            File.open(new_file, 'w') {|f| f.write render_path(path) }
+            File.open(new_file, 'w') {|f| f.write render(path) }
           end
           puts " - \033[32mCreating\033[0m '#{@output_folder}/#{name}.#{new_ext}'"
         end

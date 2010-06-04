@@ -42,21 +42,4 @@ static_folder: static
 #
 dynamic_folder: dynamic
 
-# ----------------------
-#  Templates:
-#
-# 'layouts' is a list of layouts to use, where
-# 'name' is the filename (without extension).
-#  You can also use multiple layouts, and limit
-#  their scopes like so:
-#      - name: blog_layout
-#        only: [blog]
-#      - name: normal
-#        not: [blog, ajax]
-templates:
-    layouts:
-        - name: layout.haml
-          not: [builder, erb, liquid, markdown, mustache, redcloth]
-        - name: layout2
-          only: [layout2_test]
-
+layouts_folder: layouts

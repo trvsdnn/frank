@@ -15,7 +15,13 @@ module Frank
     include Frank::TemplateHelpers
     include Frank::Render
     
-    attr_accessor  :environment, :proj_dir, :server, :static_folder, :dynamic_folder, :templates
+    attr_accessor :environment
+    attr_accessor :proj_dir
+    attr_accessor :server
+    attr_accessor :static_folder
+    attr_accessor :dynamic_folder
+    attr_accessor :layouts_folder
+    attr_accessor :templates
     
     def initialize(&block)
       instance_eval &block
@@ -45,10 +51,9 @@ module Frank
     
     # attempt to render with the request path,
     # if it cannot be found, render error page
-    def process
-      ext = File.extname(@request.path.split('/').last || '')
-      @response['Content-Type'] = Rack::Mime.mime_type(ext, 'text/html')
-      @response.write render_path(@request.path)
+    def process      
+      @response['Content-Type'] = Rack::Mime.mime_type(File.extname(@request.path), 'text/html')
+      @response.write render(@request.path)
     rescue Frank::TemplateError
       render_404
     rescue Exception => e
@@ -58,121 +63,147 @@ module Frank
     # prints requests and errors to STDOUT
     def log_request(status, excp=nil)
       out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
-      out += "\n\n**QUACK** #{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
-      STDOUT.puts out unless @environment == :test
+      out << "\n\n#{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
+      puts out
     end
     
   end
   
   module Render
     
-    def name_ext(path)
-      return path.split(/\.(?=[^.]+$)/)
-    end
+    TMPL_EXTS = { 
+      :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
+      :css  => %w[sass less],
+      :js   => %w[coffee]
+    }         
     
-    # breaks down path and renders partials, js, css without layouts
-    def render_path(path)
-      path.sub!(/^\//,'')
-      template, ext = find_template_ext(path)
+    # render request path or template path
+    def render(path)
+      # normalize the path
+      path.sub!(/^\/?(.*)$/, '/\1')
+      path.sub!(/\/$/, '/index.html')
+      path.sub!(/(\/[\w-]+)$/, '\1.html')
+      path = to_file_path(path) if defined? @request
+      # puts path
+      # regex for kinds that don't support meta
+      # and define the meta delimiter
+      nometa, delimiter  = /\/_|\.(js|coffee|css|sass|less)$/, /^-{3,}\n$/
       
-      raise Frank::TemplateError, "Template not found #{path}" if template.nil?
-      if template.match(/^_/) or (ext||'').match(/^(js|css)$/)
-        render_template template
+      # set the layout
+      layout = path.match(nometa) ? nil : layout_for(path)
+      
+      # read in the template
+      # check for meta and parse it if it exists
+      template_path = File.join(@proj_dir, @dynamic_folder, path)
+      raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
+      template        = File.read(template_path)
+      ext             = File.extname(path)
+      template, meta  = template.split(delimiter).reverse if template.scan(delimiter)
+      locals          = parse_meta_and_set_locals(meta, path)
+      
+      # use given layout if defined as a meta field
+      layout = locals[:layout] if locals.has_key? :layout
+      
+      # let tilt determine the template handler
+      # and return some template markup
+      if layout.nil?
+        tilt(ext, template, locals)
       else
-        render_with_layout template
-      end
-    end
-    
-    # renders a template
-    def render_template(tmpl, *args)
-      tilt(File.join(@proj_dir, @dynamic_folder, tmpl), *args) {"CONTENT"}
-    end
-    
-    # if template has a layout defined, render template within layout
-    # otherwise render template
-    def render_with_layout(tmpl, *args)
-      if layout = get_layout_for(tmpl)
-        tilt(File.join(@proj_dir, @dynamic_folder, layout), *args) do
-          render_template tmpl
-        end
-      else
-        render_template tmpl
-      end
-    end
-    
-    TMPL_EXTS = { :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
-                  :css => %w[sass less],
-                  :js => %w[coffee] }
-                  
-    def reverse_ext_lookup(ext)
-      TMPL_EXTS.each do |kind, exts|
-        return kind.to_s if exts.index(ext)
-      end
-      nil
-    end
-    
-    # finds template extension based on filename
-    # TODO: cleanup
-    def find_template_ext(filename)
-      name, kind = name_ext(filename)      
-      kind = reverse_ext_lookup(kind) if kind && TMPL_EXTS[kind.intern].nil?      
-      
-      tmpl_ext = nil
-      
-      TMPL_EXTS[ kind.nil? ? :html : kind.intern ].each do |ext|
-        tmpl = "#{(name||'')}.#{ext}"
-        default = File.join((name||''), "index.#{ext}")
+        layout_path = File.join(@proj_dir, @layouts_folder, layout)
+        raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
         
-        if File.exists? File.join(@proj_dir, @dynamic_folder, tmpl)
-          tmpl_ext = [tmpl, ext] 
-        elsif File.exists? File.join(@proj_dir, @dynamic_folder, default)
-          tmpl_ext = [default, ext]
+        tilt(File.extname(layout), layout_path, locals) do
+          tilt(ext, template, locals)
+        end          
+      end
+    end
+    
+    # converts a request path to a template path
+    def to_file_path(path)
+      file_name = File.basename(path, File.extname(path))
+      file_ext  = File.extname(path).sub(/^\./, '')
+      folder    = File.join(@proj_dir, @dynamic_folder)
+      engine    = nil
+      
+      TMPL_EXTS.each do |ext, engines|
+        if ext.to_s == file_ext
+          engine = engines.reject do |eng|
+            !File.exist? File.join(folder, path.sub(/\.[\w-]+$/, ".#{eng}"))
+          end.first          
         end
       end
       
-      tmpl_ext
+      raise Frank::TemplateError, "Template not found #{path}" if engine.nil?
+      
+      path.sub(/\.[\w-]+$/, ".#{engine}")
     end
     
-    # determines layout using layouts settings
-    # TODO: cleanup
-    def get_layout_for(tmpl)
-      name, ext = name_ext(tmpl)
-      
-      layouts = @templates['layouts'] || []
-      onlies = layouts.select {|l| l['only'] }
-      nots = layouts.select {|l| l['not'] }
-      blanks = layouts - onlies - nots
-            
-      layout = onlies.select {|l| l['only'].index(name) }.first 
-      layout = nots.reject {|l| l['not'].index(name) }.first unless layout
-      layout = blanks.first unless layout
-      
-      # TODO: we are checking for exts in two places, consolidate soon
-      layout = nil if !blanks.empty? && blanks.first['name'] == name
-      layout = nil if (TMPL_EXTS[:css] + TMPL_EXTS[:js]).include?(ext)
-      
-      layout.nil? ? nil : get_layout_template(layout['name'], ext)
+    # lookup the original ext for given template path
+    # TODO: make non-ugly
+    def ext_from_handler(extension)
+      orig_ext = nil
+      TMPL_EXTS.each do |ext, engines|
+        orig_ext = ext.to_s if engines.include? extension[1..-1]
+      end
+      orig_ext
     end
-        
-    # get the layout type if given explicitly
-    # otherwise fallback to whatever the current template is
-    def get_layout_template(name, ext)
-      name.match(/\.\w+$/) ? name : "#{name}.#{ext}"
+    
+    # reverse walks the layouts folder until we find a layout
+    # returns nil if layout is not found
+    # TODO: rewrite this... it was late
+    def layout_for(path)
+      layout  = nil
+      default = "default#{File.extname(path)}"
+      folders = path.split('/').reject { |f| f.match /^$|\./ }
+      
+      (1..folders.length).to_a.reverse.each do |i|
+        this_path = folders[0..i].join('/')
+        if File.exist? File.join(@proj_dir, @layouts_folder, this_path, default)
+          layout = File.join this_path, default 
+        end
+      end
+      
+      layout = default if layout.nil? and File.exist? File.join(@proj_dir, @layouts_folder, default)
+
+      layout
     end
           
-    # TODO: cleanup
-    def tilt(file, *args, &block)      
-      locals = @request.nil? ? {} : { :request => @env, :params => @request.params }
+    # setup an object and extend it with TemplateHelpers and Render
+    # then send everything to tilt and get some template markup back
+    def tilt(ext, source, locals={}, &block)
       obj = Object.new.extend(TemplateHelpers).extend(Render)
-      obj.instance_variable_set(:@environment, @environment)
-      obj.instance_variable_set(:@proj_dir, @proj_dir)
-      obj.instance_variable_set(:@dynamic_folder, @dynamic_folder)
-      obj.instance_variable_set(:@templates, @templates)
-      Tilt.new(file, 1).render(obj, locals, &block)
+      instance_variables.each do |var|
+        unless ['@response', '@env'].include? var
+          obj.instance_variable_set(var.intern, instance_variable_get(var))
+        end
+      end
+      Tilt[ext].new(source).render(obj, locals=locals, &block)
     end
-  
-    def remove_ext(path)
-      path.gsub(File.extname(path), '')
+    
+    private
+    
+    # parse the given meta string with yaml
+    # add current path
+    # and add instance variables
+    def parse_meta_and_set_locals(meta, path)
+      locals = {}
+      
+      # parse yaml and symbolize keys
+      if meta.nil?
+        meta = {}
+      else
+        meta = YAML.load(meta).inject({}) do |options, (key, value)|
+          options[(key.to_sym rescue key) || key] = value
+          options
+        end
+      end
+      
+      # normalize current_path
+      # and add it to locals
+      current_path = path.sub(/\.[\w-]+$/, '').sub(/\/index/, '/')
+      locals[:current_path] = current_path
+      
+      meta.merge(locals)
     end
     
   end
@@ -208,8 +239,7 @@ module Frank
   
   # copies over the generic project template
   def self.stub(project)
-    puts "\nFrank is..."
-    puts " - \033[32mCreating\033[0m your project '#{project}'"
+    puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
     Dir.mkdir project
     puts " - \033[32mCopying\033[0m Frank template"
     FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )

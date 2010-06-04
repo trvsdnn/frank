@@ -116,7 +116,12 @@ module Tilt
       @compiled_method_names = {}
 
       # load template data and prepare
-      @reader = block || lambda { |t| File.read(@file) }
+      if @file.match(/^[^\n]+$/) && File.exist?(@file)
+        @reader = block || lambda { |t| File.read(@file) }
+      else
+        @reader = block || lambda { |t| @file }
+      end
+      
       @data = @reader.call(self)
       prepare
     end

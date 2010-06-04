@@ -1,0 +1,78 @@
+require File.dirname(__FILE__) + '/helper'
+
+describe Frank::TemplateHelpers do
+  include Rack::Test::Methods 
+  
+  def app
+    proj_dir = File.join(File.dirname(__FILE__), 'template')
+    settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
+    require File.join(proj_dir, 'helpers')
+    Frank.new do
+      settings.each do |name, value|
+        set name.to_s, value
+      end
+      set :environment, :test
+      set :proj_dir, proj_dir
+    end
+  end
+  
+  before(:all) do
+    @app = app
+  end
+  
+  it 'render haml and use hello_helper' do
+    template = @app.render('helper_test.haml')
+    template.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
+  end
+  
+  it 'get act correct with is_current_path helper' do
+    template = @app.render('nested/child.haml')
+    template.should == "/nested/child\n<div id='layout'>\n  <h1>selected</h1>\n</div>\n"
+  end
+  
+  context 'Lorem' do
+    it 'render haml with 3 random lorem words' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='words'>(?:\w+\s?){3}<\/p>/
+      template.should =~ reg
+    end
+  
+    it 'render haml with 2 random lorem sentences' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='sentences'>(?:[^.]+.){2}<\/p>/
+      template.should =~ reg
+    end
+    
+    it 'render haml with 1 random lorem paragraph' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='paragraphs'>(?:[^\n]+(?:\n\n)?){1}<\/p>/m
+      template.should =~ reg
+    end
+    
+    it 'render haml with lorem name' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='name'>[\w']+\s[\w']+<\/p>/m
+      template.should =~ reg
+    end
+    
+    it 'render haml with lorem email' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='email'>[\w-]+@\w+\.\w+<\/p>/m
+      template.should =~ reg
+    end
+    
+    it 'render haml with lorem date' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='date'>\d{4}-\d{2}-\d{2}<\/p>/m
+      template.should =~ reg
+    end
+    
+    it 'render image url using imager' do
+      template = @app.render('lorem_test.haml')
+      reg = /<img src='\/_img\/400x300.jpg\?random\d{5}' \/>/
+      template.should =~ reg
+    end
+  end
+  
+end
+  

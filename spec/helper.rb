@@ -6,9 +6,9 @@ $LOAD_PATH.unshift libdir unless $LOAD_PATH.include?(libdir)
 
 require 'stringio'
 require 'rubygems'
-require 'test/unit'
+# require 'test/unit'
 require 'rack/test'
-require 'shoulda'
+# require 'shoulda'
 require 'template/helpers'
 require 'frank'
 require 'ruby-debug'
@@ -22,8 +22,4 @@ module Kernel
  ensure
    $stdout = STDOUT
  end
-end
-
-class Test::Unit::TestCase
-  include Rack::Test::Methods 
 end

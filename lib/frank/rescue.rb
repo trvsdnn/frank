@@ -10,7 +10,7 @@ module Frank
                  
       @response['Content-Type'] = 'text/html'
       @response.status = 404
-      @response.body = Tilt.new(template, 1).render(Object.new, locals = locals)
+      @response.body = Tilt::HamlTemplate.new(template).render(Object.new, locals = locals)
       log_request('404')
     end
   
@@ -20,7 +20,7 @@ module Frank
 
       @response['Content-Type'] = 'text/html'
       @response.status = 500
-      @response.body = Tilt.new(template, 1).render(Object.new, locals = locals)   
+      @response.body = Tilt::HamlTemplate.new(template).render(Object.new, locals = locals)   
       log_request('500', excp)
     end
     

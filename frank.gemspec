@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-05-21}
+  s.date = %q{2010-06-05}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -29,11 +29,12 @@ Gem::Specification.new do |s|
      "frank.gemspec",
      "lib/frank.rb",
      "lib/frank/base.rb",
-     "lib/frank/imager.rb",
      "lib/frank/lorem.rb",
+     "lib/frank/middleware/imager.rb",
+     "lib/frank/middleware/refresh.rb",
+     "lib/frank/middleware/statik.rb",
      "lib/frank/output.rb",
      "lib/frank/rescue.rb",
-     "lib/frank/statik.rb",
      "lib/frank/template_helpers.rb",
      "lib/frank/templates/404.haml",
      "lib/frank/templates/500.haml",
@@ -57,32 +58,36 @@ Gem::Specification.new do |s|
      "lib/template/settings.yml",
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
-     "test/helper.rb",
-     "test/suite.rb",
-     "test/template/dynamic/_partial.haml",
-     "test/template/dynamic/builder.builder",
-     "test/template/dynamic/coffee.coffee",
-     "test/template/dynamic/erb.erb",
-     "test/template/dynamic/helper_test.haml",
-     "test/template/dynamic/index.haml",
-     "test/template/dynamic/layout2.haml",
-     "test/template/dynamic/layout2_test.haml",
-     "test/template/dynamic/layout_test.haml",
-     "test/template/dynamic/liquid.liquid",
-     "test/template/dynamic/lorem_test.haml",
-     "test/template/dynamic/markdown.md",
-     "test/template/dynamic/markdown_in_haml.md",
-     "test/template/dynamic/mustache.mustache",
-     "test/template/dynamic/partial_test.haml",
-     "test/template/dynamic/redcloth.textile",
-     "test/template/dynamic/sass.sass",
-     "test/template/helpers.rb",
-     "test/template/settings.yml",
-     "test/template/static/static.html",
-     "test/test_base.rb",
-     "test/test_helpers.rb",
-     "test/test_output.rb",
-     "test/test_render.rb"
+     "spec/base_spec.rb",
+     "spec/helper.rb",
+     "spec/output_spec.rb",
+     "spec/render_spec.rb",
+     "spec/template/dynamic/500.haml",
+     "spec/template/dynamic/_partial.haml",
+     "spec/template/dynamic/builder.builder",
+     "spec/template/dynamic/coffee.coffee",
+     "spec/template/dynamic/erb.erb",
+     "spec/template/dynamic/helper_test.haml",
+     "spec/template/dynamic/index.haml",
+     "spec/template/dynamic/layout2_test.haml",
+     "spec/template/dynamic/layout_test.haml",
+     "spec/template/dynamic/liquid.liquid",
+     "spec/template/dynamic/lorem_test.haml",
+     "spec/template/dynamic/markdown.md",
+     "spec/template/dynamic/markdown_in_haml.md",
+     "spec/template/dynamic/mustache.mustache",
+     "spec/template/dynamic/nested/child.haml",
+     "spec/template/dynamic/partial_test.haml",
+     "spec/template/dynamic/redcloth.textile",
+     "spec/template/dynamic/refresh.haml",
+     "spec/template/dynamic/sass.sass",
+     "spec/template/helpers.rb",
+     "spec/template/layouts/default.haml",
+     "spec/template/layouts/explicit/layout2.haml",
+     "spec/template/layouts/nested/default.haml",
+     "spec/template/settings.yml",
+     "spec/template/static/static.html",
+     "spec/template_helpers_spec.rb"
   ]
   s.homepage = %q{http://github.com/blahed/frank}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -90,13 +95,12 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Stupidly Simple Static Slinger}
   s.test_files = [
-    "test/helper.rb",
-     "test/suite.rb",
-     "test/template/helpers.rb",
-     "test/test_base.rb",
-     "test/test_helpers.rb",
-     "test/test_output.rb",
-     "test/test_render.rb"
+    "spec/base_spec.rb",
+     "spec/helper.rb",
+     "spec/output_spec.rb",
+     "spec/render_spec.rb",
+     "spec/template/helpers.rb",
+     "spec/template_helpers_spec.rb"
   ]
 
   if s.respond_to? :specification_version then

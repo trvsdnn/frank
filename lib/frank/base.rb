@@ -1,8 +1,9 @@
 require 'frank/tilt'
 require 'frank/template_helpers'
 require 'frank/rescue'
-require 'frank/statik'
-require 'frank/imager'
+require 'frank/middleware/statik'
+require 'frank/middleware/imager'
+require 'frank/middleware/refresh'
 
 module Frank
   VERSION = '0.3.0'
@@ -92,11 +93,12 @@ module Frank
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
       
+      @template_path = File.join(@proj_dir, @dynamic_folder, path)
+      raise Frank::TemplateError, "Template not found #{@template_path}" unless File.exist? @template_path
+      
       # read in the template
       # check for meta and parse it if it exists
-      template_path = File.join(@proj_dir, @dynamic_folder, path)
-      raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
-      template        = File.read(template_path)
+      template        = File.read(@template_path)
       ext             = File.extname(path)
       template, meta  = template.split(delimiter).reverse if template.scan(delimiter)
       locals          = parse_meta_and_set_locals(meta, path)
@@ -104,15 +106,20 @@ module Frank
       # use given layout if defined as a meta field
       layout = locals[:layout] if locals.has_key? :layout
       
+      # add template_path to locals
+      # locals[:template_path] = template_path
+      
       # let tilt determine the template handler
       # and return some template markup
       if layout.nil?
         tilt(ext, template, locals)
       else
-        layout_path = File.join(@proj_dir, @layouts_folder, layout)
-        raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
+        @layout_path = File.join(@proj_dir, @layouts_folder, layout)
+        # add layout_path to locals
+        # locals[:layout_path] = layout_path
+        raise Frank::TemplateError, "Layout not found #{@layout_path}" unless File.exist? @layout_path
         
-        tilt(File.extname(layout), layout_path, locals) do
+        tilt(File.extname(layout), @layout_path, locals) do
           tilt(ext, template, locals)
         end          
       end
@@ -213,8 +220,9 @@ module Frank
     base = Base.new(&block) if block_given?
     
     builder = Rack::Builder.new do
-      use Frank::Statik, :root => base.static_folder
-      use Frank::Imager
+      use Frank::Middleware::Statik, :root => base.static_folder
+      use Frank::Middleware::Imager
+      use Frank::Middleware::Refresh
       run base
     end
 

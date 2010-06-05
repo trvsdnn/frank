@@ -83,6 +83,11 @@ describe Frank::Output do
       File.read(output).should include("<p class='email'>replace-this</p>")
       File.read(output).should include("<img src='replace-this' />")
     end
+    
+    it 'should not render the refresh js' do
+      output = File.join(File.dirname(__FILE__), 'template/output/refresh.html')
+      File.read(output).should == "<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
+    end
   
     after(:all) do
       FileUtils.rm_r File.join(File.dirname(__FILE__), 'template/output')
@@ -169,6 +174,11 @@ describe Frank::Output do
       File.read(output).should include("<p class='email'>replace-this</p>")
       File.read(output).should include("<img src='replace-this' />")
     end
+    
+    it 'should not render the refresh js' do
+      output = File.join(File.dirname(__FILE__), 'template/output/refresh/index.html')
+      File.read(output).should == "<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
+    end
   
     after(:all) do
       FileUtils.rm_r File.join(File.dirname(__FILE__), 'template/output')
@@ -176,85 +186,3 @@ describe Frank::Output do
   end
 
 end
-
-#   
-#   context 'Frank::Output Production' do
-#     
-#     setup do
-#       proj_dir = File.join(File.dirname(__FILE__), 'template')
-#       settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-#       require File.join(proj_dir, 'helpers')
-#       
-#       capture_stdout do
-#         @frank = Frank::Output.new do
-#           settings.each do |name, value|
-#             set name.to_s, value
-#           end
-#           set :environment, :output
-#           set :proj_dir, proj_dir
-#           set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
-#         end.dump({:production => true})
-#       end
-#     end
-#     
-#     should 'create the output folder' do
-#       assert File.exist? File.join(File.dirname(__FILE__), 'template/output')
-#     end
-#     
-#     should 'create index.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/index.html')
-#       assert_equal "/index\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n", IO.read(output)
-#     end
-#     
-#     should  'create partial_test.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
-#       assert_equal "/partial_test\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n", IO.read(output)   
-#     end
-#     
-#     should 'create erb.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/erb/index.html')
-#       assert_equal "<h1>hello worlds</h1>\n", IO.read(output)
-#     end
-#     
-#     should 'create redcloth.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/redcloth/index.html')
-#       assert_equal "<h1>hello worlds</h1>", IO.read(output)
-#     end
-#     
-#     should 'create markdown.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/markdown/index.html')
-#       assert_equal "<h1>hello worlds</h1>\n", IO.read(output)
-#     end
-#     
-#     should 'create mustache.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/mustache/index.html')
-#       assert_equal "<h1>hello worlds</h1>\n", IO.read(output)
-#     end
-#     
-#     should 'create liquid.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/liquid/index.html')
-#       assert_equal "<h1>hello worlds</h1>", IO.read(output)
-#     end
-#     
-#     should 'create builder.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/builder/index.html')
-#       assert_equal "<h1>hello worlds</h1>\n", IO.read(output)
-#     end
-#     
-#     should 'copy static.html' do
-#       output = File.join(File.dirname(__FILE__), 'template/output/static.html')
-#       assert_equal "hello from static", IO.read(output)
-#     end
-#     
-#     should 'not create partials' do
-#       assert !File.exist?(File.join(File.dirname(__FILE__), 'template/output/_partial/index.html'))
-#     end
-#     
-#     teardown do
-#       FileUtils.rm_r File.join(File.dirname(__FILE__), 'template/output')
-#     end
-#   
-#     
-#   end
-#   
-# end

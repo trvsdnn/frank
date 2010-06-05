@@ -25,9 +25,9 @@ describe Frank::TemplateHelpers do
     template.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
   end
   
-  it 'get act correct with is_current_path helper' do
-    template = @app.render('nested/child.haml')
-    template.should == "/nested/child\n<div id='layout'>\n  <h1>selected</h1>\n</div>\n"
+  it 'should render the refresh javascript' do
+    template = @app.render('refresh.haml')
+    template.should include("<script type=\"text/javascript\">\n            (function(){")
   end
   
   context 'Lorem' do

@@ -22,8 +22,8 @@ module Frank
           <script type="text/javascript">
           (function(){
             var template_path = '#{@template_path}',
-                layout_path = '#{@layout_path}',
-                when = #{Time.now.to_i};
+                layout_path   = '#{@layout_path}',
+                when          = #{Time.now.to_i};
 
             function process( raw ){
               var stamps = eval(raw);
@@ -37,9 +37,8 @@ module Frank
               req.onreadystatechange = function (aEvt) {  
                 if ( req.readyState == 4 && req.status == 200 )
                   process(req.responseText);
-              };  
+              };
               req.send(null);
-
               setTimeout( poll, 1000 );
             })();
 

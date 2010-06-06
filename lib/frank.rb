@@ -11,6 +11,7 @@ end
 
 require 'rubygems'
 require 'yaml'
+require 'fileutils'
 require 'rack'
 require 'frank/base'
 require 'frank/output'

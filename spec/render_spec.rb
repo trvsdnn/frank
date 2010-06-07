@@ -34,7 +34,11 @@ describe Frank::Render do
     template.should == "<div id='p'>/markdown_in_haml</div>\n<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n"
   end
   
-  
+  it 'renders a haml template with no layout' do
+    template = @app.render('no_layout.haml')
+    template.should == "<h1>i have no layout</h1>\n"
+  end
+    
   it 'renders haml template' do
    template = @app.render('index.haml')
    template.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
@@ -59,7 +63,7 @@ describe Frank::Render do
     template = @app.render('erb.erb')
     template.should == "<h1>hello worlds</h1>\n"
   end
-
+  
   it 'renders redcloth template' do
     template = @app.render('redcloth.textile')
     template.should == "<h1>hello worlds</h1>"
@@ -88,5 +92,5 @@ describe Frank::Render do
   it 'raise template error' do
     lambda { @app.render('not_a.template') }.should raise_error(Frank::TemplateError)
   end
-  
+   
 end

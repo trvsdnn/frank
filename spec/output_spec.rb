@@ -33,6 +33,11 @@ describe Frank::Output do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test.html')
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
     end
+    
+    it 'creates no_layout.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/no_layout.html')
+      File.read(output).should == "<h1>i have no layout</h1>\n"
+    end
   
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
@@ -123,6 +128,11 @@ describe Frank::Output do
     it  'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+    end
+    
+    it 'creates no_layout.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/no_layout/index.html')
+      File.read(output).should == "<h1>i have no layout</h1>\n"
     end
   
     it 'creates erb.html' do

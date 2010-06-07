@@ -88,7 +88,7 @@ module Frank
       # puts path
       # regex for kinds that don't support meta
       # and define the meta delimiter
-      nometa, delimiter  = /\/_|\.(js|coffee|css|sass|less)$/, /^-{3,}\n$/
+      nometa, delimiter  = /\/_|\.(js|coffee|css|sass|less)$/, /^META-{3,}\n$/
       
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
@@ -104,10 +104,7 @@ module Frank
       locals          = parse_meta_and_set_locals(meta, path)
       
       # use given layout if defined as a meta field
-      layout = locals[:layout] if locals.has_key? :layout
-      
-      # add template_path to locals
-      # locals[:template_path] = template_path
+      layout = locals[:layout] == 'nil' ? nil : locals[:layout] if locals.has_key?(:layout)
       
       # let tilt determine the template handler
       # and return some template markup

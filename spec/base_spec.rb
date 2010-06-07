@@ -37,13 +37,6 @@ describe Frank::Base do
     last_response.body.should == "<div id='nested_layout'>\n  <h1>hello from child</h1>\n</div>\n"
   end
   
-  it 'renders a dynamic template with an explicit layout' do
-    get '/layout_test'
-    
-    last_response.should be_ok
-    last_response.body.should == "<div id='layout2'>\n  <h1>hi inside layout2</h1>\n</div>\n"
-  end
-  
   it 'renders dynamic css without a layout' do
     get '/sass.css'
     

@@ -29,7 +29,6 @@ And you're ready to get to work. By default, dynamic templates are served from t
 static files are served from the `static` folder, and layouts are server from the `layouts` folder.
 
 When you are finished:
-
     `$ frankout <dump_dir> # compile templates`
     
     or
@@ -108,6 +107,14 @@ to the `FrankHelpers` module; that's it. Use them just like `render_partial`.
 Built-in Helpers
 ----------------
 
+### Auto Refresh
+
+Constantly refreshing your browser can become tedious while doing work. Frank has a handy refresh helper.
+It will include a bit of javascript that refreshes the browser when you save the current template or it's layout.
+You can include this in a haml template like this: `= refresh`. When you `frankout`,
+ the template will render an empty string instead of the script tag
+
+
 Frank also comes with some handy helper methods for generating placeholder content.
 
 ### Placeholder Text
@@ -128,7 +135,7 @@ This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all
      lorem.first_name
      lorem.last_name
      lorem.email
-
+     
 
 ### Placeholder Images
 
@@ -143,6 +150,12 @@ The `lorem.image` helper returns a special Frank image URL. In this case, the re
 ( NOTE: Unfortunately, in order to use the placeholder images, you must have a working [ImageMagick][12], and have the `mini_magick` gem installed as well. )
 
 If you would like to use the placeholder images in a context where the helper methods are unavailable (e.g. in static CSS or JavaScript), you can access the URL directly with `/_img/500x400.jpg`, or for random images `/_img/500x400.jpg?random`.
+
+### Replacement Text
+
+All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frankout`.
+For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frankup` server.
+However, when you `frankout` the template will render "<%= page.content %>".
 
 
 Configuration

@@ -101,7 +101,7 @@ module Tilt
         else raise TypeError
         end
       end
-
+      
       raise ArgumentError, "file or block required" if (@file || block).nil?
 
       # call the initialize_engine method if this is the very first time

@@ -9,18 +9,24 @@ module Frank
                  :environment => @environment }
                  
       @response['Content-Type'] = 'text/html'
-      @response.status = 404
-      @response.body = Tilt::HamlTemplate.new(template).render(Object.new, locals = locals)
+      @response.status          = 404
+      obj                       = Object.new.extend(TemplateHelpers)
+      @response.body            = Tilt::HamlTemplate.new(template).render(obj, locals = locals)
+      
       log_request('404')
     end
   
     def render_500(excp)
       template = File.expand_path(File.dirname(__FILE__)) + '/templates/500.haml'
-      locals = { :request => @env, :params => @request.params, :exception => excp }
+      locals   = { :request => @env, 
+                   :params => @request.params, 
+                   :exception => excp }
 
       @response['Content-Type'] = 'text/html'
-      @response.status = 500
-      @response.body = Tilt::HamlTemplate.new(template).render(Object.new, locals = locals)   
+      @response.status          = 500
+      obj                       = Object.new.extend(TemplateHelpers)
+      @response.body            = Tilt::HamlTemplate.new(template).render(obj, locals = locals)  
+      
       log_request('500', excp)
     end
     

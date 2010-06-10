@@ -4,7 +4,7 @@ module Frank
  
       def initialize(app, options={})
         @app = app
-        frank_root = File.expand_path(File.dirname(__FILE__)) + '/templates'
+        frank_root = File.expand_path(File.dirname(File.dirname(__FILE__))) + '/templates'
         root = options[:root] || Dir.pwd
         @frank_server = Rack::File.new(frank_root)
         @static_server = Rack::File.new(root)

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-06-08}
+  s.date = %q{2010-06-10}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -76,6 +76,7 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/markdown_in_haml.md",
      "spec/template/dynamic/mustache.mustache",
      "spec/template/dynamic/nested/child.haml",
+     "spec/template/dynamic/nested/deeper/deep.haml",
      "spec/template/dynamic/no_layout.haml",
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
@@ -86,7 +87,7 @@ Gem::Specification.new do |s|
      "spec/template/layouts/explicit/layout2.haml",
      "spec/template/layouts/nested/default.haml",
      "spec/template/settings.yml",
-     "spec/template/static/static.html",
+     "spec/template/static/files/static.html",
      "spec/template_helpers_spec.rb"
   ]
   s.homepage = %q{http://github.com/blahed/frank}

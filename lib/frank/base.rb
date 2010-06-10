@@ -52,7 +52,8 @@ module Frank
     
     # attempt to render with the request path,
     # if it cannot be found, render error page
-    def process      
+    def process
+      load_helpers      
       @response['Content-Type'] = Rack::Mime.mime_type(File.extname(@request.path), 'text/html')
       @response.write render(@request.path)
     rescue Frank::TemplateError
@@ -63,9 +64,17 @@ module Frank
     
     # prints requests and errors to STDOUT
     def log_request(status, excp=nil)
-      out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
+      out = "\033[1m[#{Time.now.strftime('%Y-%m-%d %H:%M')}]\033[22m (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
       out << "\n\n#{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
       puts out
+    end
+    
+    def load_helpers
+      helpers = File.join(@proj_dir, 'helpers.rb')
+      if File.exist? helpers
+        load helpers 
+        Frank::TemplateHelpers.class_eval("include FrankHelpers")
+      end
     end
     
   end
@@ -93,14 +102,14 @@ module Frank
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
       
-      @template_path = File.join(@proj_dir, @dynamic_folder, path)
-      raise Frank::TemplateError, "Template not found #{@template_path}" unless File.exist? @template_path
+      template_path = File.join(@proj_dir, @dynamic_folder, path)
+      raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
       
       # read in the template
       # check for meta and parse it if it exists
-      template        = File.read(@template_path)
+      template        = File.read(template_path) << "\n"
       ext             = File.extname(path)
-      template, meta  = template.split(delimiter).reverse if template.scan(delimiter)
+      template, meta  = template.split(delimiter).reverse
       locals          = parse_meta_and_set_locals(meta, path)
       
       # use given layout if defined as a meta field
@@ -111,12 +120,11 @@ module Frank
       if layout.nil?
         tilt(ext, template, locals)
       else
-        @layout_path = File.join(@proj_dir, @layouts_folder, layout)
+        layout_path = File.join(@proj_dir, @layouts_folder, layout)
         # add layout_path to locals
-        # locals[:layout_path] = layout_path
-        raise Frank::TemplateError, "Layout not found #{@layout_path}" unless File.exist? @layout_path
+        raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
         
-        tilt(File.extname(layout), @layout_path, locals) do
+        tilt(File.extname(layout), layout_path, locals) do
           tilt(ext, template, locals)
         end          
       end
@@ -151,27 +159,7 @@ module Frank
       end
       orig_ext
     end
-    
-    # reverse walks the layouts folder until we find a layout
-    # returns nil if layout is not found
-    # TODO: rewrite this... it was late
-    # def layout_for(path)
-    #   layout  = nil
-    #   default = "default#{File.extname(path)}"
-    #   folders = path.split('/').reject { |f| f.match /^$|\.[\w-]+/ }
-    #   
-    #   (1..folders.length).to_a.reverse.each do |i|
-    #     this_path = folders[0..i].join('/')
-    #     puts this_path
-    #     if File.exist? File.join(@proj_dir, @layouts_folder, this_path, default)
-    #       layout ||= File.join this_path, default 
-    #     end
-    #   end
-    #   
-    #   layout = default if layout.nil? and File.exist? File.join(@proj_dir, @layouts_folder, default)
-    # 
-    #   layout
-    # end
+  
     
     # reverse walks the layouts folder until we find a layout
     # returns nil if layout is not found

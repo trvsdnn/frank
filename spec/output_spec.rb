@@ -51,7 +51,7 @@ describe Frank::Output do
       
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<h1>hello worlds</h1>\n\n"
     end
       
     it 'creates redcloth.html' do
@@ -66,12 +66,12 @@ describe Frank::Output do
       
     it 'creates mustache.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/mustache.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<h1>hello worlds</h1>\n\n"
     end
       
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid.html')
-      File.read(output).should == "<h1>hello worlds</h1>"
+      File.read(output).should == "<h1>hello worlds</h1>\n"
     end
       
     it 'creates builder.html' do
@@ -158,7 +158,7 @@ describe Frank::Output do
   
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<h1>hello worlds</h1>\n\n"
     end
   
     it 'creates redcloth.html' do
@@ -173,12 +173,12 @@ describe Frank::Output do
   
     it 'creates mustache.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/mustache/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<h1>hello worlds</h1>\n\n"
     end
   
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>"
+      File.read(output).should == "<h1>hello worlds</h1>\n"
     end
   
     it 'creates builder.html' do

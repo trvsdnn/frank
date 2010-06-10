@@ -71,7 +71,7 @@ describe Frank::Render do
    
   it 'renders erb template' do
     template = @app.render('erb.erb')
-    template.should == "<h1>hello worlds</h1>\n"
+    template.should == "<h1>hello worlds</h1>\n\n"
   end
   
   it 'renders redcloth template' do
@@ -86,12 +86,12 @@ describe Frank::Render do
   
   it 'renders mustache template' do
     template = @app.render('mustache.mustache')
-    template.should == "<h1>hello worlds</h1>\n"
+    template.should == "<h1>hello worlds</h1>\n\n"
   end
   
   it 'renders liquid template' do
     template = @app.render('liquid.liquid')
-    template.should == "<h1>hello worlds</h1>"
+    template.should == "<h1>hello worlds</h1>\n"
   end
   
   it 'renders builder template' do

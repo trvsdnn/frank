@@ -30,6 +30,13 @@ describe Frank::Base do
     last_response.body.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
   end
   
+  it 'renders a page and uses a helper' do
+    get '/helper_test'
+    
+    last_response.should be_ok
+    last_response.body.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
+  end
+  
   it 'renders a nested template given a request' do
     get '/nested/child'
     

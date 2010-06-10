@@ -3,16 +3,16 @@ module Frank
     class Refresh
  
       def initialize(app, options={})
-        @app = app
+        @app     = app
+        @folders = options[:watch]
       end
     
       # catch __refrank__ path and
-      # return timestamps for given file paths
+      # return the most recent timestamp
       def call(env)
         request = Rack::Request.new(env)
-       
-        if request.path_info.include? '__refresh__'
-          [ 200, { 'Content-Type' => 'application/json' }, get_mtimes(request.params) ]
+        if request.path_info.match /^\/__refresh__$/
+          [ 200, { 'Content-Type' => 'application/json' }, "[#{get_mtime}]" ]
         else
           @app.call(env)
         end
@@ -21,11 +21,16 @@ module Frank
     
       private
     
-      def get_mtimes(params)
-        template_mtime  = File.new(params['template_path']).mtime.to_i
-        layout_mtime    = File.new(params['layout_path']).mtime.to_i
-        "[ #{template_mtime}, #{layout_mtime} ]"
+      def get_mtime
+        timestamps = []
+        @folders.each do |folder|
+          Dir[File.join(Dir.pwd, folder, '**/*.*')].each do |found|
+            timestamps << File.mtime(found).to_i unless File.directory?(found)
+          end
+        end
+        timestamps.sort.last
       end
+      
     end
   end
 end

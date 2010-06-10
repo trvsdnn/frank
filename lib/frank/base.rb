@@ -155,21 +155,41 @@ module Frank
     # reverse walks the layouts folder until we find a layout
     # returns nil if layout is not found
     # TODO: rewrite this... it was late
+    # def layout_for(path)
+    #   layout  = nil
+    #   default = "default#{File.extname(path)}"
+    #   folders = path.split('/').reject { |f| f.match /^$|\.[\w-]+/ }
+    #   
+    #   (1..folders.length).to_a.reverse.each do |i|
+    #     this_path = folders[0..i].join('/')
+    #     puts this_path
+    #     if File.exist? File.join(@proj_dir, @layouts_folder, this_path, default)
+    #       layout ||= File.join this_path, default 
+    #     end
+    #   end
+    #   
+    #   layout = default if layout.nil? and File.exist? File.join(@proj_dir, @layouts_folder, default)
+    # 
+    #   layout
+    # end
+    
+    # reverse walks the layouts folder until we find a layout
+    # returns nil if layout is not found
     def layout_for(path)
-      layout  = nil
       default = "default#{File.extname(path)}"
-      folders = path.split('/').reject { |f| f.match /^$|\./ }
+      path = path.sub /\/[\w-]+\.[\w-]+$/, ''
+      folders = path.split('/')
       
-      (1..folders.length).to_a.reverse.each do |i|
-        this_path = folders[0..i].join('/')
-        if File.exist? File.join(@proj_dir, @layouts_folder, this_path, default)
-          layout = File.join this_path, default 
-        end
+      until File.exist? File.join(@proj_dir, @layouts_folder, folders, default)
+        break if folders.empty?
+        folders.pop
       end
-      
-      layout = default if layout.nil? and File.exist? File.join(@proj_dir, @layouts_folder, default)
 
-      layout
+      if File.exist? File.join(@proj_dir, @layouts_folder, folders, default)
+        File.join(folders, default)
+      else
+        nil
+      end
     end
           
     # setup an object and extend it with TemplateHelpers and Render
@@ -219,7 +239,7 @@ module Frank
     builder = Rack::Builder.new do
       use Frank::Middleware::Statik, :root => base.static_folder
       use Frank::Middleware::Imager
-      use Frank::Middleware::Refresh
+      use Frank::Middleware::Refresh, :watch => [ base.dynamic_folder, base.static_folder, base.layouts_folder ]
       run base
     end
 

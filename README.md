@@ -112,10 +112,8 @@ Built-in Helpers
 Constantly refreshing your browser can become tedious while doing work. Frank has a handy refresh helper.
 It will include a bit of javascript that refreshes the browser when you save the current template or it's layout.
 You can include this in a haml template like this: `= refresh`. When you `frankout`,
- the template will render an empty string instead of the script tag
+the template will render an empty string instead of the script tag
 
-
-Frank also comes with some handy helper methods for generating placeholder content.
 
 ### Placeholder Text
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-06-05}
+  s.date = %q{2010-06-08}
   s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -53,8 +53,8 @@ Gem::Specification.new do |s|
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
-     "lib/template/dynamic/layout.haml",
      "lib/template/helpers.rb",
+     "lib/template/layouts/default.haml",
      "lib/template/settings.yml",
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
@@ -70,13 +70,13 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/helper_test.haml",
      "spec/template/dynamic/index.haml",
      "spec/template/dynamic/layout2_test.haml",
-     "spec/template/dynamic/layout_test.haml",
      "spec/template/dynamic/liquid.liquid",
      "spec/template/dynamic/lorem_test.haml",
      "spec/template/dynamic/markdown.md",
      "spec/template/dynamic/markdown_in_haml.md",
      "spec/template/dynamic/mustache.mustache",
      "spec/template/dynamic/nested/child.haml",
+     "spec/template/dynamic/no_layout.haml",
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
      "spec/template/dynamic/refresh.haml",

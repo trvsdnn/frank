@@ -23,57 +23,67 @@ describe Frank::Output do
     it 'creates the output folder' do
       File.exist?(File.join(File.dirname(__FILE__), 'template/output')).should be_true
     end
-  
+      
     it 'creates index.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/index.html')
       File.read(output).should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
     end
-  
+      
     it  'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test.html')
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+    end
+    
+    it 'creates child.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/nested/child.html')
+      File.read(output).should == "<div id='nested_layout'>\n  <h1>hello from child</h1>\n</div>\n"
+    end
+    
+    it 'creates deep.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/nested/deeper/deep.html')
+      File.read(output).should == "<div id='nested_layout'>\n  <h1>really deep</h1>\n</div>\n"
     end
     
     it 'creates no_layout.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/no_layout.html')
       File.read(output).should == "<h1>i have no layout</h1>\n"
     end
-  
+      
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
       File.read(output).should == "<h1>hello worlds</h1>\n"
     end
-  
+      
     it 'creates redcloth.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/redcloth.html')
       File.read(output).should == "<h1>hello worlds</h1>"
     end
-  
+      
     it 'creates markdown.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/markdown.html')
       File.read(output).should == "<h1>hello worlds</h1>\n"
     end
-  
+      
     it 'creates mustache.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/mustache.html')
       File.read(output).should == "<h1>hello worlds</h1>\n"
     end
-  
+      
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid.html')
       File.read(output).should == "<h1>hello worlds</h1>"
     end
-  
+      
     it 'creates builder.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/builder.html')
       File.read(output).should == "<h1>hello worlds</h1>\n"
     end
-  
+      
     it 'copies static.html' do
-      output = File.join(File.dirname(__FILE__), 'template/output/static.html')
+      output = File.join(File.dirname(__FILE__), 'template/output/files/static.html')
       File.read(output).should == "hello from static"
     end
-  
+      
     it "doesn't create partials" do
       File.exist?(File.join(File.dirname(__FILE__), 'template/output/_partial.html')).should be_false
     end
@@ -93,10 +103,11 @@ describe Frank::Output do
       output = File.join(File.dirname(__FILE__), 'template/output/refresh.html')
       File.read(output).should == "<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
     end
-  
+    
     after(:all) do
       FileUtils.rm_r File.join(File.dirname(__FILE__), 'template/output')
     end
+  
   end
   
   context 'productions output' do
@@ -112,7 +123,7 @@ describe Frank::Output do
           set :environment, :output
           set :proj_dir, proj_dir
           set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
-        end.dump({:production => true})
+        end.dump(production=true)
       end
     end
   
@@ -128,6 +139,16 @@ describe Frank::Output do
     it  'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+    end
+    
+    it 'creates child.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/nested/child/index.html')
+      File.read(output).should == "<div id='nested_layout'>\n  <h1>hello from child</h1>\n</div>\n"
+    end
+    
+    it 'creates deep.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/nested/deeper/deep/index.html')
+      File.read(output).should == "<div id='nested_layout'>\n  <h1>really deep</h1>\n</div>\n"
     end
     
     it 'creates no_layout.html' do
@@ -166,7 +187,7 @@ describe Frank::Output do
     end
   
     it 'copies static.html' do
-      output = File.join(File.dirname(__FILE__), 'template/output/static.html')
+      output = File.join(File.dirname(__FILE__), 'template/output/files/static.html')
       File.read(output).should == "hello from static"
     end
   
@@ -193,6 +214,7 @@ describe Frank::Output do
     after(:all) do
       FileUtils.rm_r File.join(File.dirname(__FILE__), 'template/output')
     end
+    
   end
-
+  
 end

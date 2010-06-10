@@ -34,14 +34,24 @@ describe Frank::Render do
     template.should == "<div id='p'>/markdown_in_haml</div>\n<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n"
   end
   
+  it 'renders a nested template with a nested layout' do
+    template = @app.render('/nested/child.haml')
+    template.should == "<div id='nested_layout'>\n  <h1>hello from child</h1>\n</div>\n"
+  end
+  
+  it 'renders a deeply nested template with a nested layout' do
+    template = @app.render('/nested/deeper/deep.haml')
+    template.should == "<div id='nested_layout'>\n  <h1>really deep</h1>\n</div>\n"
+  end
+   
   it 'renders a haml template with no layout' do
     template = @app.render('no_layout.haml')
     template.should == "<h1>i have no layout</h1>\n"
   end
-    
+   
   it 'renders haml template' do
-   template = @app.render('index.haml')
-   template.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+    template = @app.render('index.haml')
+    template.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
   end
   
   it 'renders haml template with a haml partial' do
@@ -58,7 +68,7 @@ describe Frank::Render do
     template = @app.render('coffee.coffee')
     template.should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
   end
-    
+   
   it 'renders erb template' do
     template = @app.render('erb.erb')
     template.should == "<h1>hello worlds</h1>\n"

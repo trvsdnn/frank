@@ -21,10 +21,16 @@ module Frank
     
       private
     
+      # build list of mtimes for watched files
+      # return the most recent
       def get_mtime
+        pwd        = Dir.pwd
         timestamps = []
+        helpers    = File.join(pwd, 'helpers.rb')
+        
+        timestamps << File.mtime(helpers).to_i if File.exist? helpers
         @folders.each do |folder|
-          Dir[File.join(Dir.pwd, folder, '**/*.*')].each do |found|
+          Dir[File.join(pwd, folder, '**/*.*')].each do |found|
             timestamps << File.mtime(found).to_i unless File.directory?(found)
           end
         end

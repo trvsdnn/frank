@@ -6,7 +6,7 @@ require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.3.0'
+  VERSION = '0.3.0.beta'
   
   module Render; end
   
@@ -94,7 +94,7 @@ module Frank
       path.sub!(/\/$/, '/index.html')
       path.sub!(/(\/[\w-]+)$/, '\1.html')
       path = to_file_path(path) if defined? @request
-      # puts path
+
       # regex for kinds that don't support meta
       # and define the meta delimiter
       nometa, delimiter  = /\/_|\.(js|coffee|css|sass|less)$/, /^META-{3,}\n$/

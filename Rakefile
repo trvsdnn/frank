@@ -4,8 +4,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "frank"
-    gemspec.summary = "Stupidly Simple Static Slinger"
-    gemspec.description = "Create/Dump static builds using whatever templating/helper languages you wish"
+    gemspec.summary = "Static Site Non-Framework"
+    gemspec.description = "Rapidly develop static sites using any supported templating language"
     gemspec.version = Frank::VERSION
     gemspec.email = "travis.dunn@thisismedium.com"
     gemspec.homepage = "http://github.com/blahed/frank"
@@ -13,7 +13,7 @@ begin
     gemspec.add_dependency 'rack', '>=1.0'
     gemspec.add_dependency 'mongrel', '>=1.0'
     gemspec.add_dependency 'haml', '>=2.0'
-    gemspec.add_development_dependency 'shoulda', '>=2.0'
+    gemspec.add_development_dependency 'rspec'
     gemspec.add_development_dependency 'rack-test', '>=0.5'
     
   end

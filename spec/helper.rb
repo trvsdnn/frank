@@ -6,12 +6,9 @@ $LOAD_PATH.unshift libdir unless $LOAD_PATH.include?(libdir)
 
 require 'stringio'
 require 'rubygems'
-# require 'test/unit'
 require 'rack/test'
-# require 'shoulda'
 require 'template/helpers'
 require 'frank'
-require 'ruby-debug'
 
 module Kernel
  def capture_stdout

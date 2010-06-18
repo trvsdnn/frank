@@ -51,13 +51,6 @@ describe Frank::Base do
     last_response.body.should == "#hello-worlds {\n  background: red; }\n"
   end
   
-  it 'renders dynamic javascript without a layout' do
-    get '/coffee.js'
-    
-    last_response.should be_ok
-    last_response.body.should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
-  end
-  
   it 'renders a 404 page if template not found' do
     get '/not_here.css'
                             

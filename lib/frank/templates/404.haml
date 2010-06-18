@@ -22,8 +22,6 @@
           
             - if path.match(/\.css$/)
               = "<tt>#{path.match(/([\w\/]+)\./)[1]}.sass</tt>"
-            - elsif path.match(/\.js$/)
-              = "<tt>#{path.match(/([\w\/]+)\./)[1]}.coffee</tt>"
             - else
               = "<tt>#{path.gsub(/\/$/, '')}.haml</tt>"
             = "in the <tt>#{dynamic_folder}</tt> folder, or"

@@ -51,32 +51,32 @@ describe Frank::Output do
       
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n\n"
+      File.read(output).should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'creates redcloth.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/redcloth.html')
-      File.read(output).should == "<h1>hello worlds</h1>"
+      File.read(output).should == "<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'creates markdown.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/markdown.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'creates mustache.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/mustache.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n\n"
+      File.read(output).should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'creates builder.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/builder.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
       
     it 'copies static.html' do
@@ -158,32 +158,32 @@ describe Frank::Output do
   
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n\n"
+      File.read(output).should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'creates redcloth.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/redcloth/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>"
+      File.read(output).should == "<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'creates markdown.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/markdown/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'creates mustache.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/mustache/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n\n"
+      File.read(output).should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'creates builder.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/builder/index.html')
-      File.read(output).should == "<h1>hello worlds</h1>\n"
+      File.read(output).should == "<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
   
     it 'copies static.html' do

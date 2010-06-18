@@ -526,6 +526,7 @@ module Tilt
     end
   end
   register 'sass', SassTemplate
+  register 'scss', SassTemplate
 
 
   # Lessscss template implementation. See:

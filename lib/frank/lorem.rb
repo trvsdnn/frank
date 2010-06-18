@@ -10,9 +10,7 @@ module Frank
     def word(replacement = nil)
       words 1, replacement
     end
-    
-    require 'ruby-debug'
-    
+        
     def words(total, replacement = nil)
       if @environment == :output && replacement
         replacement

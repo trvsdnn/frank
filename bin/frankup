@@ -41,7 +41,7 @@ if File.exist? 'settings.yml'
   settings = YAML.load_file('settings.yml')
 else
   settings = { 
-    :server => { 'handler' => 'mongrel', 'hostname' => '127.0.0.1', 'port' => 3601 },
+    :server => { 'handler' => 'mongrel', 'hostname' => '0.0.0.0', 'port' => 3601 },
     :static_folder => '.', 
     :dynamic_folder => '.',
     :environment => :serving  

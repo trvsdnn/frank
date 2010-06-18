@@ -65,7 +65,6 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",
      "spec/template/dynamic/builder.builder",
-     "spec/template/dynamic/coffee.coffee",
      "spec/template/dynamic/erb.erb",
      "spec/template/dynamic/helper_test.haml",
      "spec/template/dynamic/index.haml",

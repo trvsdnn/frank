@@ -28,56 +28,77 @@ Then `cd <project_name>` and start up the server with:
 And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder, 
 static files are served from the `static` folder, and layouts are server from the `layouts` folder.
 
-When you are done working:
+When you're done working:
 
     $ frankout <dump_dir>
 
-to compile templates and copy them, along with static your assets, into `<dump_dir>`. Or,
+to compile templates and copy them--along with static your assets--into `<dump_dir>`. Or,
     
     $ frankout --production <dump_dir>
 
-to compile & copy, but organized so as to be served up as a static website in production. (e.g. creating `index.html`s)
+to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
 
 Views & Meta Data
 -------------------------
 
-All of your templates, less, sass &c. go into `<project>/dynamic`, by default.
+All of your templates, less, sass &c. go into `<project>/dynamic` by default.
 You can organize them into subfolders if you've got lots.
 
 ### Views
 
-Writing views is simple. Say you've got a `blog.haml`, in `<project>/dynamic` just browse to
+Writing views is simple. Say you've got a `blog.haml` in `<project>/dynamic`; just browse to
 `http://0.0.0.0:3601/blog` and your view will be parsed and returned as html.
+
 
 ### Meta Data
 
-Frank doesn't have controllers and there are times you need to pass variables around between templates and layouts.
-This can be done with template Meta data. Meta data is set using YAML. 
+Frank was designed to make controllers unnecessary. But sometimes it is nice to be able to use
+variables in your templates / layouts. A particularly good case is if you want to set the page
+title (in your layout) based on the view. This is now simple using view meta data.
 
-You define your fields at the top a template
-a separate it from the rest of your template using the Meta delimiter: `META--------`. The delimiter can contain as
-many dashes, or hyphens as you wish.
+Meta fields can go at the top of any of your views, and are written in YAML. To mark the end
+of the meta section, just place the meta delimeter, `META---`, on a blank line. You can also
+use as many hyphens as you'd like (as long as there are at least 3):
 
-You can access your fields as local variables in the template (if the template language supports it).
-For example, you might have a template and define a field `title: My Rad Template`, then inside a haml layout,
- you could create a title tag with the field: `%title= title`
+Also, your fields are made available as local variables to all templating languages that
+support them, both in the view and its layout:
 
-Layouts (updated in 0.3)
+    view:
+      title: My Rad Page
+      author: My Rad Self
+      ---------------------------------------------META
+      
+      %h1= title
+      %h3= 'By ' + author
+      
+    layout:
+      %title= title + '--My Rad Site'
+    
+
+
+Layouts (updated in 0.3!)
 -----------------------------
 
-Layouts are also simple with Frank. By default, just create a `default.haml`
-(or another language), inside the `layouts` folder and include a `yield` statement. Any
-views will be inserted into it at that point.
+Layouts are also simple with Frank. By default, just create a `default.haml` (or `.rhtml` etc.),
+inside the `layouts` folder and include a `yield` statement. Views using the layout will be
+inserted at that point.
 
-Layouts can be name spaced with folders:
+You can name-space your layouts using folders:
 
-a template: `dynamic_folder/blog/a-blog-post.haml`
-would look for a layout: `layouts/blog/default.haml`
-and if not found use the default: `layouts/default.haml`
+When rendering a view--`dynamic_folder/blog/a-blog-post.haml`,
+Frank would first look for the layout `layouts/blog/default.haml`,
+and if not found use fall back on `layouts/default.haml`
 
-Frank also supports defining layouts on an individual template basis using meta data
-you can do this by defining a meta field `layout: my_layout.haml` You can disable layouts on a 
-template by using `layout: nil`
+Frank also supports choosing layouts on an view-by-view basis via meta data. Just add a
+meta field called `layout` to the top of the view:
+
+    layout: my_layout.haml
+    ---------------------------------------------META
+
+or if you don't want a layout at all:
+
+    layout: nil
+    ---------------------------------------------META
 
 
 
@@ -87,7 +108,7 @@ Partials & Helpers
 Frank comes with a helper method, `render_partial`, for including partials
 in your views.
 
-In addition, you can also easily add your own helper methods to use.
+You can also add your own helper methods easily.
 
 ### Partials
 
@@ -109,12 +130,14 @@ to the `FrankHelpers` module; that's it. Use them just like `render_partial`.
 Built-in Helpers
 ----------------
 
-### Auto Refresh
+### Auto-Refresh
 
-Constantly refreshing your browser can become tedious while doing work. Frank has a handy refresh helper.
-It will include a bit of javascript that refreshes the browser when you save the current template or it's layout.
-You can include this in a haml template like this: `= refresh`. When you `frankout`,
-the template will render an empty string instead of the script tag
+Frank now has a handy automatic page refreshing helper. Just include the line `= refresh`
+(or equivalent) in your view, and Frank will automatically refresh the page for you whenever you
+save a project file. This eliminates the tedium of hundreds of manual refreshes, over the course
+of building a project.
+
+When it comes time to `frankout`, Frank will just leave out the JavasScript snippet for the refresh.
 
 
 ### Placeholder Text

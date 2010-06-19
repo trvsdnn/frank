@@ -46,22 +46,22 @@ You can organize them into subfolders if you've got lots.
 
 ### Views
 
-Writing views is simple. Say you've got a `blog.haml` in `<project>/dynamic`; just browse to
-`http://0.0.0.0:3601/blog` and your view will be parsed and returned as html.
+Writing views is simple. Say you've got a `blog.haml` in `<project>/dynamic`; just browse over to
+`http://0.0.0.0:3601/blog` and your view will be parsed and served up as html.
 
 
 ### Meta Data
 
-Frank was designed to make controllers unnecessary. But sometimes it is nice to be able to use
-variables in your templates / layouts. A particularly good case is if you want to set the page
-title (in your layout) based on the view. This is now simple using view meta data.
+Frank was designed to make controllers unnecessary. But, sometimes it's nice to have
+variables in your templates / layouts. This is particularly handy if you want to set the page
+title (in the layout) according to the view. This is simple, now, with meta data.
 
-Meta fields can go at the top of any of your views, and are written in YAML. To mark the end
-of the meta section, just place the meta delimeter, `META---`, on a blank line. You can also
-use as many hyphens as you'd like (as long as there are at least 3):
+Meta fields go at the top of any view, and are written in [YAML][13]. To mark the end
+of the meta section, place the meta delimeter, `META---`, on a blank line. You can
+use as many hyphens as you'd like (as long as there are 3).
 
-Also, your fields are made available as local variables to all templating languages that
-support them, both in the view and its layout:
+Meta fields are then available as local variables to all templating languages that
+support them--in the view & layout:
 
     view:
       title: My Rad Page
@@ -76,29 +76,34 @@ support them, both in the view and its layout:
     
 
 
-Layouts (updated in 0.3!)
+Layouts (updated in 0.3)
 -----------------------------
 
-Layouts are also simple with Frank. By default, just create a `default.haml` (or `.rhtml` etc.),
-inside the `layouts` folder and include a `yield` statement. Views using the layout will be
-inserted at that point.
+Layouts are also simple with Frank. Create a `default.haml` (or `.rhtml`, etc.),
+in the `layouts` folder, and include a `yield` somewhere therein; views using the
+layout will be inserted there.
 
-You can name-space your layouts using folders:
+### Namespacing Layouts
+You can namespace your layouts using folders:
 
-When rendering a view--`dynamic_folder/blog/a-blog-post.haml`,
-Frank would first look for the layout `layouts/blog/default.haml`,
-and if not found use fall back on `layouts/default.haml`
+  * When rendering a view--`dynamic_folder/blog/a-blog-post.haml`,
+  * Frank would first look for the layout `layouts/blog/default.haml`,
+  * and if not found use fall back on `layouts/default.haml`
 
-Frank also supports choosing layouts on an view-by-view basis via meta data. Just add a
-meta field called `layout` to the top of the view:
+### Multiple/No Layouts
+
+Frank also supports choosing layouts on a view-by-view basis via meta data. Just add a
+`layout` meta field:
 
     layout: my_layout.haml
     ---------------------------------------------META
+    %h1 I'm using my_layout.haml instead of default.haml!
 
 or if you don't want a layout at all:
 
     layout: nil
     ---------------------------------------------META
+    %h1 No layout here!
 
 
 
@@ -132,12 +137,12 @@ Built-in Helpers
 
 ### Auto-Refresh
 
-Frank now has a handy automatic page refreshing helper. Just include the line `= refresh`
+Frank now has a handy automatic page refreshing helper. Just include `= refresh`
 (or equivalent) in your view, and Frank will automatically refresh the page for you whenever you
-save a project file. This eliminates the tedium of hundreds of manual refreshes, over the course
+save a project file. This eliminates the tedium of hundreds of manual refreshes over the course
 of building a project.
 
-When it comes time to `frankout`, Frank will just leave out the JavasScript snippet for the refresh.
+When it's time to `frankout`, Frank will leave out the JavasScript bits of the refresher.
 
 
 ### Placeholder Text
@@ -210,3 +215,4 @@ Installation
 [10]: http://lesscss.org/
 [11]: http://en.wikipedia.org/wiki/Lorem_ipsum
 [12]: http://www.imagemagick.org/script/binary-releases.php?ImageMagick=4pg9cdfr8e6gn7aru9mtelepr3
+[13]: http://www.yaml.org/start.html

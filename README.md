@@ -28,20 +28,22 @@ Then `cd <project_name>` and start up the server with:
 And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder
 and static files are served from the `static` folder.
 
-When you are finished:
+When you are done working:
 
-    $ frankout <dump_dir> # compile templates
+    $ frankout <dump_dir>
+
+to compile templates and copy them, along with static your assets, into `<dump_dir>`. Or,
     
-    or
-    
-    $ frankout --production <dump_dir> # compile and create folder structure suitable for serving from a production website
+    $ frankout --production <dump_dir>
+
+to compile & copy, but organized so as to be served up by a production website. (e.g. creating `index.html`s)
+
 
 Views & Layouts
 -------------------------
 
-All of your templates, and less/sass/coffeescript go into `<project>/dynamic`,
-by default. You are more than welcome to organize them into subfolders if you've
-got lots.
+All of your templates, less, sass &c. go into `<project>/dynamic`, by default.
+You are more than welcome to organize them into subfolders if you've got lots.
 
 ### Views
 

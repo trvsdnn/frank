@@ -98,7 +98,7 @@ module Frank
 
       # regex for kinds that don't support meta
       # and define the meta delimiter
-      nometa, delimiter  = /\/_|\.(sass|less)$/, /^META-{3,}\n$/
+      nometa, delimiter  = /\/_|\.(sass|less)$/, /^META-{3,}\s*$|^-{3,}META\s*$/
       
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)

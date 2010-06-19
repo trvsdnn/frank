@@ -21,25 +21,21 @@ module Frank
         <<-JS
           <script type="text/javascript">
           (function(){
-            var template_path = '#{@template_path}',
-                layout_path = '#{@layout_path}',
-                when = #{Time.now.to_i};
+            var when = #{Time.now.to_i};
 
             function process( raw ){
-              var stamps = eval(raw);
-              if( stamps[0] > when || stamps[1] > when )
+              if( eval(raw)[0] > when )
                 window.location.reload();
             }
 
             (function poll(){
               var req = new XMLHttpRequest();  
-              req.open('GET', '/__refresh__?template_path=' + template_path + '&layout_path=' + layout_path, true);  
+              req.open('GET', '/__refresh__', true);  
               req.onreadystatechange = function (aEvt) {  
                 if ( req.readyState == 4 && req.status == 200 )
                   process(req.responseText);
-              };  
+              };
               req.send(null);
-
               setTimeout( poll, 1000 );
             })();
 

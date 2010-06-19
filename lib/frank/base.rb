@@ -6,7 +6,7 @@ require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.3.0'
+  VERSION = '0.3.0.beta2'
   
   module Render; end
   
@@ -52,7 +52,8 @@ module Frank
     
     # attempt to render with the request path,
     # if it cannot be found, render error page
-    def process      
+    def process
+      load_helpers      
       @response['Content-Type'] = Rack::Mime.mime_type(File.extname(@request.path), 'text/html')
       @response.write render(@request.path)
     rescue Frank::TemplateError
@@ -63,9 +64,17 @@ module Frank
     
     # prints requests and errors to STDOUT
     def log_request(status, excp=nil)
-      out = "[#{Time.now.strftime('%Y-%m-%d %H:%M')}] (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
+      out = "\033[1m[#{Time.now.strftime('%Y-%m-%d %H:%M')}]\033[22m (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
       out << "\n\n#{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
       puts out
+    end
+    
+    def load_helpers
+      helpers = File.join(@proj_dir, 'helpers.rb')
+      if File.exist? helpers
+        load helpers 
+        Frank::TemplateHelpers.class_eval("include FrankHelpers")
+      end
     end
     
   end
@@ -74,9 +83,10 @@ module Frank
     
     TMPL_EXTS = { 
       :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
-      :css  => %w[sass less],
-      :js   => %w[coffee]
-    }         
+      :css  => %w[sass less scss]
+    }
+    
+    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
     
     # render request path or template path
     def render(path)
@@ -85,41 +95,37 @@ module Frank
       path.sub!(/\/$/, '/index.html')
       path.sub!(/(\/[\w-]+)$/, '\1.html')
       path = to_file_path(path) if defined? @request
-      # puts path
+
       # regex for kinds that don't support meta
       # and define the meta delimiter
-      nometa, delimiter  = /\/_|\.(js|coffee|css|sass|less)$/, /^-{3,}\n$/
+      nometa, delimiter  = /\/_|\.(sass|less)$/, /^META-{3,}\n$/
       
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
       
-      @template_path = File.join(@proj_dir, @dynamic_folder, path)
-      raise Frank::TemplateError, "Template not found #{@template_path}" unless File.exist? @template_path
+      template_path = File.join(@proj_dir, @dynamic_folder, path)
+      raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
       
       # read in the template
       # check for meta and parse it if it exists
-      template        = File.read(@template_path)
+      template        = File.read(template_path) << "\n"
       ext             = File.extname(path)
-      template, meta  = template.split(delimiter).reverse if template.scan(delimiter)
+      template, meta  = template.split(delimiter).reverse
       locals          = parse_meta_and_set_locals(meta, path)
       
       # use given layout if defined as a meta field
-      layout = locals[:layout] if locals.has_key? :layout
-      
-      # add template_path to locals
-      # locals[:template_path] = template_path
+      layout = locals[:layout] == 'nil' ? nil : locals[:layout] if locals.has_key?(:layout)
       
       # let tilt determine the template handler
       # and return some template markup
       if layout.nil?
         tilt(ext, template, locals)
       else
-        @layout_path = File.join(@proj_dir, @layouts_folder, layout)
+        layout_path = File.join(@proj_dir, @layouts_folder, layout)
         # add layout_path to locals
-        # locals[:layout_path] = layout_path
-        raise Frank::TemplateError, "Layout not found #{@layout_path}" unless File.exist? @layout_path
+        raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
         
-        tilt(File.extname(layout), @layout_path, locals) do
+        tilt(File.extname(layout), layout_path, locals) do
           tilt(ext, template, locals)
         end          
       end
@@ -154,25 +160,40 @@ module Frank
       end
       orig_ext
     end
+  
     
     # reverse walks the layouts folder until we find a layout
     # returns nil if layout is not found
-    # TODO: rewrite this... it was late
     def layout_for(path)
-      layout  = nil
-      default = "default#{File.extname(path)}"
-      folders = path.split('/').reject { |f| f.match /^$|\./ }
-      
-      (1..folders.length).to_a.reverse.each do |i|
-        this_path = folders[0..i].join('/')
-        if File.exist? File.join(@proj_dir, @layouts_folder, this_path, default)
-          layout = File.join this_path, default 
+      layout_exts = LAYOUT_EXTS.dup
+      ext         = File.extname(path)
+      default     = 'default' << layout_ext_or_first(layout_exts, ext)
+      file_path   = path.sub(/\/[\w-]+\.[\w-]+$/, '')
+      folders     = file_path.split('/')
+            
+      until File.exist? File.join(@proj_dir, @layouts_folder, folders, default)
+        break if layout_exts.empty? && folders.empty?
+        
+        if layout_exts.empty?
+          layout_exts = LAYOUT_EXTS.dup
+          default = 'default' << layout_ext_or_first(layout_exts, ext)
+          folders.pop
+        else
+          default = 'default' << layout_exts.shift
         end
       end
       
-      layout = default if layout.nil? and File.exist? File.join(@proj_dir, @layouts_folder, default)
-
-      layout
+      if File.exists? File.join(@proj_dir, @layouts_folder, folders, default)
+        File.join(folders, default)
+      else
+        nil
+      end
+    end
+    
+    # if the given ext is a layout ext, pop it off and return it
+    # otherwise return the first layout ext
+    def layout_ext_or_first(layout_exts, ext)
+      layout_exts.include?(ext) ? layout_exts.delete(ext) : layout_exts.first
     end
           
     # setup an object and extend it with TemplateHelpers and Render
@@ -222,7 +243,7 @@ module Frank
     builder = Rack::Builder.new do
       use Frank::Middleware::Statik, :root => base.static_folder
       use Frank::Middleware::Imager
-      use Frank::Middleware::Refresh
+      use Frank::Middleware::Refresh, :watch => [ base.dynamic_folder, base.static_folder, base.layouts_folder ]
       run base
     end
 
@@ -249,8 +270,10 @@ module Frank
   def self.stub(project)
     puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
     Dir.mkdir project
+    
     puts " - \033[32mCopying\033[0m Frank template"
     FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    
     puts "\n \033[32mCongratulations, '#{project}' is ready to go!\033[0m"
   rescue Errno::EEXIST
     puts "\n \033[31muh oh, directory '#{project}' already exists...\033[0m"

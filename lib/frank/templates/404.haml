@@ -9,6 +9,7 @@
         h1 { margin: 24px -30px 10px -3px; font: bold 48px Georgia; line-height:48px;}
         img { margin: 60px 0px 0px -22px; }
         tt { color: #4D9EEF; color:#999; font-family: Inconsolata, Monaco, monospace }
+    =refresh
   %body
     #wrapper
       %img{:src=>'/__frank__/frank-404.png'}
@@ -21,8 +22,6 @@
           
             - if path.match(/\.css$/)
               = "<tt>#{path.match(/([\w\/]+)\./)[1]}.sass</tt>"
-            - elsif path.match(/\.js$/)
-              = "<tt>#{path.match(/([\w\/]+)\./)[1]}.coffee</tt>"
             - else
               = "<tt>#{path.gsub(/\/$/, '')}.haml</tt>"
             = "in the <tt>#{dynamic_folder}</tt> folder, or"

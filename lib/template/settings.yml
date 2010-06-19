@@ -1,17 +1,3 @@
-# -----------------------------------------------
-#  Frank settings:
-#
-#  These settings will apply to this project only.
-#  If you would like to use this project as a
-#  template for new projects, just copy this
-#  project folder to `~/.frank` and it will be
-#  duplicated for you every time you run the
-# `frank` command.
-#
-#  Feel free to trash all these comments, too.
-#
-
-
 # ----------------------
 #  Server settings:
 #
@@ -41,17 +27,18 @@ static_folder: static
 dynamic_folder: dynamic
 
 # ----------------------
-#  Templates:
+#  Layouts folder:
 #
-# 'layouts' is a list of layouts to use, where
-# 'name' is the filename (without extension).
-#  You can also use multiple layouts, and limit
-#  their scopes like so:
-#      - name: blog_layout
-#        only: [blog]
-#      - name: normal
-#        not: [blog, ajax]
-templates:
-    layouts:
-        - name: layout
-
+#  Frank will look for layouts in this folder
+#  the default layout is `default'
+#  it respects nested layouts that correspond to nested
+#  folders in the `dynamic_folder'
+#  for example: a template: `dynamic_folder/blog/a-blog-post.haml'
+#  would look for a layout: `layouts/blog/default.haml'
+#  and if not found use the default: `layouts/default.haml'
+#  
+#  Frank also supports defining layouts on an
+#  individual template basis using meta data
+#  you can do this by defining a meta field `layout: my_layout.haml'
+#
+layouts_folder: layouts

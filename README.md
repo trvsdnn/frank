@@ -25,8 +25,8 @@ Then `cd <project_name>` and start up the server with:
      Frank's holdin' it down...
      0.0.0.0:3601
 
-And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder
-and static files are served from the `static` folder.
+And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder, 
+static files are served from the `static` folder, and layouts are server from the `layouts` folder.
 
 When you are done working:
 
@@ -36,35 +36,49 @@ to compile templates and copy them, along with static your assets, into `<dump_d
     
     $ frankout --production <dump_dir>
 
-to compile & copy, but organized so as to be served up by a production website. (e.g. creating `index.html`s)
+to compile & copy, but organized so as to be served up as a static website in production. (e.g. creating `index.html`s)
 
-
-Views & Layouts
+Views & Meta Data
 -------------------------
 
 All of your templates, less, sass &c. go into `<project>/dynamic`, by default.
-You are more than welcome to organize them into subfolders if you've got lots.
+You can organize them into subfolders if you've got lots.
 
 ### Views
 
 Writing views is simple. Say you've got a `blog.haml`, in `<project>/dynamic` just browse to
 `http://0.0.0.0:3601/blog` and your view will be parsed and returned as html.
 
-### Layouts
+### Meta Data
 
-Layouts are also simple with Frank. By default, just create a `layout.haml`
-(or whichever language you like best), that contains a `yield`, and any
+Frank doesn't have controllers and there are times you need to pass variables around between templates and layouts.
+This can be done with template Meta data. Meta data is set using YAML. 
+
+You define your fields at the top a template
+a separate it from the rest of your template using the Meta delimiter: `META--------`. The delimiter can contain as
+many dashes, or hyphens as you wish.
+
+You can access your fields as local variables in the template (if the template language supports it).
+For example, you might have a template and define a field `title: My Rad Template`, then inside a haml layout,
+ you could create a title tag with the field: `%title= title`
+
+Layouts (updated in 0.3)
+-----------------------------
+
+Layouts are also simple with Frank. By default, just create a `default.haml`
+(or another language), inside the `layouts` folder and include a `yield` statement. Any
 views will be inserted into it at that point.
 
-Multiple layouts are also easy. In your `settings.yml`, do something like:
+Layouts can be name spaced with folders:
 
-    layouts:
-        - name: blog_layout
-          only: [blog]
-        - name: normal
-          not: [blog, ajax]
-This tells Frank to use `blog_layout.haml` for `/blog`, and `normal.haml`
-for everything but `/blog' and '/ajax`.
+a template: `dynamic_folder/blog/a-blog-post.haml`
+would look for a layout: `layouts/blog/default.haml`
+and if not found use the default: `layouts/default.haml`
+
+Frank also supports defining layouts on an individual template basis using meta data
+you can do this by defining a meta field `layout: my_layout.haml` You can disable layouts on a 
+template by using `layout: nil`
+
 
 
 Partials & Helpers
@@ -95,7 +109,13 @@ to the `FrankHelpers` module; that's it. Use them just like `render_partial`.
 Built-in Helpers
 ----------------
 
-Frank also comes with some handy helper methods for generating placeholder content.
+### Auto Refresh
+
+Constantly refreshing your browser can become tedious while doing work. Frank has a handy refresh helper.
+It will include a bit of javascript that refreshes the browser when you save the current template or it's layout.
+You can include this in a haml template like this: `= refresh`. When you `frankout`,
+the template will render an empty string instead of the script tag
+
 
 ### Placeholder Text
 
@@ -115,7 +135,7 @@ This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all
      lorem.first_name
      lorem.last_name
      lorem.email
-
+     
 
 ### Placeholder Images
 
@@ -131,19 +151,11 @@ The `lorem.image` helper returns a special Frank image URL. In this case, the re
 
 If you would like to use the placeholder images in a context where the helper methods are unavailable (e.g. in static CSS or JavaScript), you can access the URL directly with `/_img/500x400.jpg`, or for random images `/_img/500x400.jpg?random`.
 
+### Replacement Text
 
-
-GET/POST params
----------------
-
-Sometimes it's nice to include user input in your mock-ups. It's especially
-handy when mocking-up Ajax-driven elements. For this reason, the `request`
-and `params` are available in your templates.
-
-For example, to use a person's name submitted through a form you might do:
-
-    %h1= "Hello, #{params.name}"
-
+All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frankout`.
+For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frankup` server.
+However, when you `frankout` the template will render "<%= page.content %>".
 
 
 Configuration

@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.3.0"
+  s.version = "0.3.0.beta2"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-06-05}
-  s.description = %q{Create/Dump static builds using whatever templating/helper languages you wish}
+  s.date = %q{2010-06-18}
+  s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
   s.extra_rdoc_files = [
@@ -53,8 +53,8 @@ Gem::Specification.new do |s|
      "lib/frank/tilt.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
-     "lib/template/dynamic/layout.haml",
      "lib/template/helpers.rb",
+     "lib/template/layouts/default.haml",
      "lib/template/settings.yml",
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
@@ -65,18 +65,18 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",
      "spec/template/dynamic/builder.builder",
-     "spec/template/dynamic/coffee.coffee",
      "spec/template/dynamic/erb.erb",
      "spec/template/dynamic/helper_test.haml",
      "spec/template/dynamic/index.haml",
      "spec/template/dynamic/layout2_test.haml",
-     "spec/template/dynamic/layout_test.haml",
      "spec/template/dynamic/liquid.liquid",
      "spec/template/dynamic/lorem_test.haml",
      "spec/template/dynamic/markdown.md",
      "spec/template/dynamic/markdown_in_haml.md",
      "spec/template/dynamic/mustache.mustache",
      "spec/template/dynamic/nested/child.haml",
+     "spec/template/dynamic/nested/deeper/deep.haml",
+     "spec/template/dynamic/no_layout.haml",
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
      "spec/template/dynamic/refresh.haml",
@@ -86,14 +86,14 @@ Gem::Specification.new do |s|
      "spec/template/layouts/explicit/layout2.haml",
      "spec/template/layouts/nested/default.haml",
      "spec/template/settings.yml",
-     "spec/template/static/static.html",
+     "spec/template/static/files/static.html",
      "spec/template_helpers_spec.rb"
   ]
   s.homepage = %q{http://github.com/blahed/frank}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Stupidly Simple Static Slinger}
+  s.summary = %q{Static Site Non-Framework}
   s.test_files = [
     "spec/base_spec.rb",
      "spec/helper.rb",
@@ -111,20 +111,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rack>, [">= 1.0"])
       s.add_runtime_dependency(%q<mongrel>, [">= 1.0"])
       s.add_runtime_dependency(%q<haml>, [">= 2.0"])
-      s.add_development_dependency(%q<shoulda>, [">= 2.0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5"])
     else
       s.add_dependency(%q<rack>, [">= 1.0"])
       s.add_dependency(%q<mongrel>, [">= 1.0"])
       s.add_dependency(%q<haml>, [">= 2.0"])
-      s.add_dependency(%q<shoulda>, [">= 2.0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0.5"])
     end
   else
     s.add_dependency(%q<rack>, [">= 1.0"])
     s.add_dependency(%q<mongrel>, [">= 1.0"])
     s.add_dependency(%q<haml>, [">= 2.0"])
-    s.add_dependency(%q<shoulda>, [">= 2.0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0.5"])
   end
 end

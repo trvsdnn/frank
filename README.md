@@ -4,11 +4,11 @@ Frank
 Inspired by [Sinatra][0]'s simplicity and ease of use, Frank lets you build
 static sites using your favorite libs. Frank has a built in development server
 for previewing work as you develop. Frank also has a "dump" command for compiling and saving
-your work out to static html, css, and js.
+your work out to static html and css.
 
 Frank uses [Tilt][1], so it
 comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
-[Liquid][5], [Mustache][6], and [CoffeeScript][7].
+[Liquid][5], and [Mustache][6].
 
 Overview
 --------
@@ -26,7 +26,7 @@ Then `cd <project_name>` and start up the server with:
      0.0.0.0:3601
 
 And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder, 
-static files are served from the `static` folder, and layouts are server from the `layouts` folder.
+static files are served from the `static` folder, and layouts are served from the `layouts` folder.
 
 When you're done working:
 
@@ -144,6 +144,10 @@ of building a project.
 
 When it's time to `frankout`, Frank will leave out the JavasScript bits of the refresher.
 
+### Current Page
+
+Frank now has a `current_page` variable that you can use to set selected states on nav items.
+It will return the path info from the template being processed. You also, have access to the variable from layouts and from the `frankout` command.
 
 ### Placeholder Text
 
@@ -183,7 +187,8 @@ If you would like to use the placeholder images in a context where the helper me
 
 All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frankout`.
 For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frankup` server.
-However, when you `frankout` the template will render "<%= page.content %>".
+However, when you `frankout` the template will render "<%= page.content %>". This is useful if you plan on moving a frank project
+into a framework. (e.g. rails, sinatra, django, etc)
 
 
 Configuration
@@ -209,7 +214,6 @@ Installation
 [4]: http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/
 [5]: http://www.liquidmarkup.org/
 [6]: http://github.com/defunkt/mustache
-[7]: http://jashkenas.github.com/coffee-script/
 [8]: http://lesscss.org/
 [9]: http://rack.rubyforge.org/
 [10]: http://lesscss.org/

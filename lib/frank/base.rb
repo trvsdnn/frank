@@ -6,7 +6,7 @@ require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.3.0.beta2'
+  VERSION = '0.3.0'
   
   module Render; end
   

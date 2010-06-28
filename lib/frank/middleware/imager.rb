@@ -24,7 +24,7 @@ module Frank
       # catch a request for _img/0x0, get an image, resize it to given dims
       def call(env)
         path = env['PATH_INFO']
-        image_path = File.expand_path(File.dirname(__FILE__)) + '/templates/imager/'
+        image_path = File.join(LIBDIR, 'frank/templates/imager/')
 
         if defined?(MiniMagick) && path.include?('_img')
           dims = '!' + path.split('/').last.match(/\d+x\d+/i).to_s

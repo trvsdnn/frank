@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-06-21}
+  s.date = %q{2010-06-28}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]

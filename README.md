@@ -144,9 +144,9 @@ of building a project.
 
 When it's time to `frankout`, Frank will leave out the JavasScript bits of the refresher.
 
-### Current Page
+### Current Path
 
-Frank now has a `current_page` variable that you can use to set selected states on nav items.
+Frank now has a `current_path` variable that you can use to set selected states on nav items.
 It will return the path info from the template being processed. You also, have access to the variable from layouts and from the `frankout` command.
 
 ### Placeholder Text

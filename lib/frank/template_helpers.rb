@@ -7,7 +7,7 @@ module Frank
     def render_partial(path)
       pieces = path.split('/')
       partial = '_' + pieces.pop
-      render(File.join(pieces.join('/'), partial))
+      render(File.join(pieces.join('/'), partial), partial=true)
     end
     
     def lorem

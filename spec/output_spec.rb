@@ -29,9 +29,9 @@ describe Frank::Output do
       File.read(output).should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
     end
       
-    it  'creates partial_test.html' do
+    it 'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test.html')
-      File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+      File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
     end
     
     it 'creates child.html' do
@@ -136,9 +136,9 @@ describe Frank::Output do
       File.read(output).should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
     end
   
-    it  'creates partial_test.html' do
+    it 'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
-      File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+      File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
     end
     
     it 'creates child.html' do

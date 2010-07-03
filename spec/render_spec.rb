@@ -56,7 +56,7 @@ describe Frank::Render do
    
    it 'renders haml template with a haml partial' do
      template = @app.render('partial_test.haml')
-     template.should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <p>hello from partial</p>\n</div>\n"
+     template.should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
    end
    
    it 'renders sass template' do

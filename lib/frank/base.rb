@@ -6,7 +6,7 @@ require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.3.1'
+  VERSION = '0.3.2'
   
   module Render; end
   
@@ -89,13 +89,15 @@ module Frank
     LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
     
     # render request path or template path
-    def render(path)
+    def render(path, partial=false)
+      @current_path = path unless partial
+      
       # normalize the path
       path.sub!(/^\/?(.*)$/, '/\1')
       path.sub!(/\/$/, '/index.html')
       path.sub!(/(\/[\w-]+)$/, '\1.html')
       path = to_file_path(path) if defined? @request or path.match(/\/_[^\/]+$/)
-
+      
       # regex for kinds that don't support meta
       # and define the meta delimiter
       nometa, delimiter  = /\/_|\.(sass|less)$/, /^META-{3,}\s*$|^-{3,}META\s*$/
@@ -111,7 +113,7 @@ module Frank
       template        = File.read(template_path) << "\n"
       ext             = File.extname(path)
       template, meta  = template.split(delimiter).reverse
-      locals          = parse_meta_and_set_locals(meta, path)
+      locals          = parse_meta_and_set_locals(meta)
       
       # use given layout if defined as a meta field
       layout = locals[:layout] == 'nil' ? nil : locals[:layout] if locals.has_key?(:layout)
@@ -211,11 +213,8 @@ module Frank
     private
     
     # parse the given meta string with yaml
-    # add current path
-    # and add instance variables
-    def parse_meta_and_set_locals(meta, path)
-      locals = {}
-      
+    # set the current_path local
+    def parse_meta_and_set_locals(meta)      
       # parse yaml and symbolize keys
       if meta.nil?
         meta = {}
@@ -224,14 +223,10 @@ module Frank
           options[(key.to_sym rescue key) || key] = value
           options
         end
-      end
+      end  
+      meta[:current_path] = @current_path.sub(/\.[\w-]+$/, '').sub(/\/index/, '/')
       
-      # normalize current_path
-      # and add it to locals
-      current_path = path.sub(/\.[\w-]+$/, '').sub(/\/index/, '/')
-      locals[:current_path] = current_path
-      
-      meta.merge(locals)
+      meta
     end
     
   end

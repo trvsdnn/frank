@@ -4,10 +4,11 @@ module Frank
   module TemplateHelpers
     include FrankHelpers if defined? FrankHelpers
   
-    def render_partial(path)
+    def render_partial(path, *locals)
       pieces = path.split('/')
       partial = '_' + pieces.pop
-      render(File.join(pieces.join('/'), partial), partial=true)
+      locals = locals.empty? ? nil : locals[0]
+      render(File.join(pieces.join('/'), partial), partial=true, locals)
     end
     
     def lorem

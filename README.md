@@ -125,6 +125,10 @@ in my Haml views like this:
 
     = render_partial 'footer'
 
+You can also send local variables to partials like this:
+
+    = render_partial 'footer', :local_variable_name => 'some_value'
+
 ### Helpers
 
 Helper methods are also easy. Just open up `helpers.rb` and add your methods

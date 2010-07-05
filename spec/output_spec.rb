@@ -34,6 +34,11 @@ describe Frank::Output do
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
     end
     
+    it 'creates partial_locals_test.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/partial_locals_test.html')
+      File.read(output).should == "<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
+    end
+    
     it 'creates child.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/nested/child.html')
       File.read(output).should == "<div id='nested_layout'>\n  <h1>hello from child</h1>\n</div>\n"
@@ -139,6 +144,11 @@ describe Frank::Output do
     it 'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
       File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
+    end
+    
+    it 'creates partial_locals_test.html' do
+      output = File.join(File.dirname(__FILE__), 'template/output/partial_locals_test/index.html')
+      File.read(output).should == "<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
     end
     
     it 'creates child.html' do

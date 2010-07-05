@@ -89,7 +89,7 @@ module Frank
     LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
     
     # render request path or template path
-    def render(path, partial=false, local_vars = nil)
+    def render(path, partial=false, local_vars=nil)
       @current_path = path unless partial
       
       # normalize the path
@@ -214,7 +214,7 @@ module Frank
     
     # parse the given meta string with yaml
     # set the current_path local
-    def parse_meta_and_set_locals(meta, locals= nil)      
+    def parse_meta_and_set_locals(meta, locals=nil)      
       # parse yaml and symbolize keys
       if meta.nil?
         meta = {}
@@ -223,10 +223,8 @@ module Frank
           options[(key.to_sym rescue key) || key] = value
           options
         end
-      end  
-      unless locals.nil?
-        meta.merge!(locals)
-      end
+      end      
+      meta.merge!(locals) unless locals.nil?
       meta[:current_path] = @current_path.sub(/\.[\w-]+$/, '').sub(/\/index/, '/')
       
       meta

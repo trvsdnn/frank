@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+
 require 'optparse'
 require 'frank'
 
@@ -45,6 +47,7 @@ begin
     settings.each do |name, value|
       set name.to_s, value
     end
+    set :environment, :output
     set :output_folder, output_folder
     set :proj_dir, proj_dir
   end.dump(production)

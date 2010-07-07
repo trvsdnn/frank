@@ -8,7 +8,7 @@ module Frank
       pieces = path.split('/')
       partial = '_' + pieces.pop
       locals = locals.empty? ? nil : locals[0]
-      render(File.join(pieces.join('/'), partial), partial=true, locals)
+      render(File.join(pieces.join('/'), partial), partial = true, locals)
     end
     
     def lorem
@@ -16,7 +16,7 @@ module Frank
     end
     
     def refresh
-      if @environment == :output || @environment == :production
+      if @environment == :output
         nil
       else
         <<-JS

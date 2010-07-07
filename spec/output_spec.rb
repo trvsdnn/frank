@@ -4,19 +4,12 @@ describe Frank::Output do
   include Rack::Test::Methods 
   
   context 'default output' do
-    before(:all) do
-      proj_dir = File.join(File.dirname(__FILE__), 'template')
-      settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-      require File.join(proj_dir, 'helpers')
-      capture_stdout do
-        Frank::Output.new do
-          settings.each do |name, value|
-            set name.to_s, value
-          end
-          set :environment, :output
-          set :proj_dir, proj_dir
-          set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
-        end.dump
+    before :all do
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      proj_dir   = File.join(File.dirname(__FILE__), 'template')
+      output_dir = File.join(proj_dir, 'output')
+      Dir.chdir proj_dir do
+        system "#{bin_dir} #{output_dir} > /dev/null"
       end
     end
   
@@ -116,19 +109,12 @@ describe Frank::Output do
   end
   
   context 'productions output' do
-    before(:all) do
-      proj_dir = File.join(File.dirname(__FILE__), 'template')
-      settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-      require File.join(proj_dir, 'helpers')
-      capture_stdout do
-        Frank::Output.new do
-          settings.each do |name, value|
-            set name.to_s, value
-          end
-          set :environment, :output
-          set :proj_dir, proj_dir
-          set :output_folder, File.join(File.dirname(__FILE__), 'template/output')
-        end.dump(production=true)
+    before :all do
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      proj_dir   = File.join(File.dirname(__FILE__), 'template')
+      output_dir = File.join(proj_dir, 'output')
+      Dir.chdir proj_dir do
+        system "#{bin_dir} #{output_dir} --production > /dev/null"
       end
     end
   

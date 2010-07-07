@@ -63,7 +63,7 @@ module Frank
     end
     
     # prints requests and errors to STDOUT
-    def log_request(status, excp=nil)
+    def log_request(status, excp = nil)
       out = "\033[1m[#{Time.now.strftime('%Y-%m-%d %H:%M')}]\033[22m (#{@request.request_method}) http://#{@request.host}:#{@request.port}#{@request.fullpath} - #{status}"
       out << "\n\n#{excp.message}\n\n#{excp.backtrace.join("\n")} " if excp
       puts out
@@ -89,7 +89,7 @@ module Frank
     LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
     
     # render request path or template path
-    def render(path, partial=false, local_vars=nil)
+    def render(path, partial = false, local_vars = nil)
       @current_path = path unless partial
       
       # normalize the path
@@ -214,7 +214,7 @@ module Frank
     
     # parse the given meta string with yaml
     # set the current_path local
-    def parse_meta_and_set_locals(meta, locals=nil)      
+    def parse_meta_and_set_locals(meta, locals = nil)      
       # parse yaml and symbolize keys
       if meta.nil?
         meta = {}

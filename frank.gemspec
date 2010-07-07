@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.3.1"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-06-28}
+  s.date = %q{2010-07-06}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -64,6 +64,7 @@ Gem::Specification.new do |s|
      "spec/render_spec.rb",
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",
+     "spec/template/dynamic/_partial_with_locals.haml",
      "spec/template/dynamic/builder.builder",
      "spec/template/dynamic/erb.erb",
      "spec/template/dynamic/helper_test.haml",
@@ -77,6 +78,7 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/nested/child.haml",
      "spec/template/dynamic/nested/deeper/deep.haml",
      "spec/template/dynamic/no_layout.haml",
+     "spec/template/dynamic/partial_locals_test.haml",
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
      "spec/template/dynamic/refresh.haml",

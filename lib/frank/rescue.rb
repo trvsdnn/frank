@@ -11,14 +11,7 @@ module Frank
       @response['Content-Type'] = 'text/html'
       @response.status          = 404
       obj                       = Object.new.extend(TemplateHelpers)
-      @response.body            = Tilt::HamlTemplate.new do
-        template = template.to_str if template.respond_to?(:to_str)
-        if template.match(/^[^\n]+$/) && File.exist?(template)
-          File.read(template)
-        else
-          template
-        end
-      end.render(obj, locals = locals)
+      @response.body            = Tilt::HamlTemplate.new(template).render(obj, locals = locals)
 
       log_request('404')
     end
@@ -32,14 +25,7 @@ module Frank
       @response['Content-Type'] = 'text/html'
       @response.status          = 500
       obj                       = Object.new.extend(TemplateHelpers)
-      @response.body            = Tilt::HamlTemplate.new do
-        template = template.to_str if template.respond_to?(:to_str)
-        if template.match(/^[^\n]+$/) && File.exist?(template)
-          File.read(template)
-        else
-          template
-        end
-      end.render(obj, locals = locals)
+      @response.body            = Tilt::HamlTemplate.new(template).render(obj, locals = locals)
 
       log_request('500', excp)
     end

@@ -1,4 +1,4 @@
-require 'frank/tilt'
+require 'frank/tilt_setup'
 require 'frank/template_helpers'
 require 'frank/rescue'
 require 'frank/middleware/statik'
@@ -207,7 +207,7 @@ module Frank
           obj.instance_variable_set(var.intern, instance_variable_get(var))
         end
       end
-      Tilt[ext].new(source).render(obj, locals=locals, &block)
+      Tilt[ext].new{source}.render(obj, locals=locals, &block)
     end
 
     private

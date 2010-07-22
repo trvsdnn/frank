@@ -1,3 +1,4 @@
 .DS_Store
 pkg
 lib/frank/output_old.rb
+.rvmrc

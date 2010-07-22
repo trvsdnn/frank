@@ -1,0 +1,71 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    RedCloth (4.2.3)
+    abstract (1.0.0)
+    builder (2.1.2)
+    cgi_multipart_eof_fix (2.5.0)
+    coffee-script (0.3.2)
+    contest (0.1.2)
+    daemons (1.1.0)
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
+    fastthread (1.0.7)
+    gem_plugin (0.2.3)
+    gemcutter (0.6.1)
+    git (1.2.5)
+    haml (3.0.13)
+    jeweler (1.4.0)
+      gemcutter (>= 0.1.0)
+      git (>= 1.2.5)
+      rubyforge (>= 2.0.0)
+    json_pure (1.4.3)
+    less (1.2.21)
+      mutter (>= 0.4.2)
+      treetop (>= 1.4.2)
+    liquid (2.1.2)
+    mini_magick (1.3.1)
+      subexec (~> 0.0.4)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
+    mustache (0.11.2)
+    mutter (0.5.3)
+    polyglot (0.3.1)
+    rack (1.2.1)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rake (0.8.7)
+    rdiscount (1.6.5)
+    rspec (1.3.0)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    subexec (0.0.4)
+    tilt (0.9)
+    treetop (1.4.8)
+      polyglot (>= 0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  RedCloth
+  builder
+  coffee-script
+  contest
+  erubis
+  haml (>= 2.2.11)
+  jeweler
+  less
+  liquid
+  mini_magick
+  mongrel (>= 1.0)
+  mustache
+  rack (>= 1.0)
+  rack-test (>= 0.5)
+  rake
+  rdiscount
+  rspec
+  tilt (= 0.9)

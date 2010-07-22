@@ -207,7 +207,14 @@ module Frank
           obj.instance_variable_set(var.intern, instance_variable_get(var))
         end
       end
-      Tilt[ext].new{source}.render(obj, locals=locals, &block)
+      Tilt[ext].new do
+        source = source.to_str if source.respond_to?(:to_str)
+        if source.match(/^[^\n]+$/) && File.exist?(source)
+          File.read(source)
+        else
+          source
+        end
+      end.render(obj, locals=locals, &block)
     end
 
     private

@@ -101,7 +101,7 @@ module Tilt
         else raise TypeError
         end
       end
-      
+
       raise ArgumentError, "file or block required" if (@file || block).nil?
 
       # call the initialize_engine method if this is the very first time
@@ -121,7 +121,7 @@ module Tilt
       else
         @reader = block || lambda { |t| @file }
       end
-      
+
       @data = @reader.call(self)
       prepare
     end
@@ -526,8 +526,17 @@ module Tilt
     end
   end
   register 'sass', SassTemplate
-  register 'scss', SassTemplate
 
+  # Scss template implementation. See:
+  # http://haml.hamptoncatlin.com/
+  #
+  # Sass templates do not support object scopes, locals, or yield.
+  class ScssTemplate < SassTemplate
+    def prepare
+      @engine = ::Sass::Engine.new(data, sass_options.merge(:syntax => :scss))
+    end
+  end
+  register 'scss', ScssTemplate
 
   # Lessscss template implementation. See:
   # http://lesscss.org/

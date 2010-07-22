@@ -76,7 +76,6 @@ module Frank
         Frank::TemplateHelpers.class_eval("include FrankHelpers")
       end
     end
-
   end
 
   module Render
@@ -237,6 +236,24 @@ module Frank
       meta
     end
 
+  end
+
+  @@root = nil unless defined?(@@root)
+  def self.root
+    @@root
+  end
+
+  def self.root=(new_root)
+    @@root = new_root
+  end
+
+  def self.setup(proj_dir)
+    Frank.root = proj_dir
+
+    initializer = File.join(proj_dir, 'initializers.rb')
+    if File.exists?(initializer)
+      load initializer
+    end
   end
 
   # starts the server

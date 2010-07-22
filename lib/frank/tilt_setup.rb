@@ -1,6 +1,16 @@
 require 'tilt'
 
 module Frank
+
+  # add Frank.sass_options to be configured
+  @@sass_options = nil unless defined?(@@sass_options)
+  def self.sass_options
+    @@sass_options
+  end
+  def self.sass_options=(obj)
+    @@sass_options = obj
+  end
+
   # Scss template implementation. See:
   # http://haml.hamptoncatlin.com/
   #

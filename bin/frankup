@@ -10,29 +10,29 @@ OptionParser.new do |opts|
   opts.banner = "Usage: frankup [OPTIONS]\n",
                 "Starts the frank development server using settings.yml\n",
                 "If settings.yml isn\'t found, a webserver will be started and serve up files from the current directory\n\n"
-  
+
   opts.separator 'Options:'
-  
+
   opts.on('--server [HANDLER]', 'Set the server handler') do |handler|
     options[:server]['handler'] = handler unless handler.nil?
   end
-  
+
   opts.on('--hostname [HOSTNAME]', 'Set the server hostname') do |hostname|
     options[:server]['hostname'] = hostname unless hostname.nil?
   end
-  
+
   opts.on('--port [PORT]', 'Set the server port') do |port|
     options[:server]['port'] = port unless port.nil?
   end
-  
+
   opts.on('--dynamic_folder [FOLDER]', 'Set the dynamic folder') do |folder|
     options[:dynamic_folder] = folder unless folder.nil?
   end
-  
+
   opts.on('--static_folder [FOLDER]', 'Set the static folder') do |folder|
     options[:static_folder] = folder unless folder.nil?
   end
-  
+
   opts.on( '-h', '--help', 'Display this help' ) do
     puts opts
     exit
@@ -42,11 +42,11 @@ end.parse!
 if File.exist? 'settings.yml'
   settings = YAML.load_file('settings.yml')
 else
-  settings = { 
+  settings = {
     :server => { 'handler' => 'mongrel', 'hostname' => '0.0.0.0', 'port' => 3601 },
-    :static_folder => '.', 
+    :static_folder => '.',
     :dynamic_folder => '.',
-    :environment => :serving  
+    :environment => :serving
   }
 end
 
@@ -56,16 +56,19 @@ options.each do |opt, val|
     val.each { |sopt, sval| server[sopt] = sval }
   else
     settings[opt] = val
-  end 
+  end
 end
 
 if settings[:environment] == :serving
   puts "Could not find \"settings.yml\", serving up files from the this directory at http://#{settings[:server]['hostname']}:#{settings[:server]['port']}"
 end
 
+proj_dir = Dir.pwd
+
+Frank.setup(proj_dir)
 Frank.new do
   settings.each do |name, value|
     set name.to_s, value
   end
-  set :proj_dir, Dir.pwd
+  set :proj_dir, proj_dir
 end

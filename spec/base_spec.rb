@@ -6,6 +6,7 @@ describe Frank::Base do
   def app
     proj_dir = File.join(File.dirname(__FILE__), 'template')
     settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
+    Frank.setup(proj_dir)
     Frank.new do
       settings.each do |name, value|
         set name.to_s, value

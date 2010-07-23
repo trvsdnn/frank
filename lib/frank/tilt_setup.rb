@@ -17,7 +17,7 @@ module Frank
   # Sass templates do not support object scopes, locals, or yield.
   class SassTemplate < Tilt::SassTemplate
     def prepare
-      @engine = ::Sass::Engine.new(data, sass_options.merge(Frank.sass_options).merge(:syntax => :sass))
+      @engine = ::Sass::Engine.new(data, sass_options.merge(Frank.sass_options || {}).merge(:syntax => :sass))
     end
   end
   Tilt.register 'sass', SassTemplate
@@ -28,7 +28,7 @@ module Frank
   # Sass templates do not support object scopes, locals, or yield.
   class ScssTemplate < Tilt::SassTemplate
     def prepare
-      @engine = ::Sass::Engine.new(data, sass_options.merge(Frank.sass_options).merge(:syntax => :scss))
+      @engine = ::Sass::Engine.new(data, sass_options.merge(Frank.sass_options || {}).merge(:syntax => :scss))
     end
   end
   Tilt.register 'scss', ScssTemplate

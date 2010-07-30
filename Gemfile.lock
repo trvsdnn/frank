@@ -43,7 +43,7 @@ GEM
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     subexec (0.0.4)
-    tilt (0.9)
+    tilt (1.0.1)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
 
@@ -68,4 +68,4 @@ DEPENDENCIES
   rake
   rdiscount
   rspec
-  tilt (= 0.9)
+  tilt (>= 1.0.1)

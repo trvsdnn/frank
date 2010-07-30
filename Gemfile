@@ -2,7 +2,7 @@ source :gemcutter
 gem "rack", ">=1.0"
 gem "mongrel", ">=1.0"
 gem "haml", ">=2.2.11"
-gem "tilt", "=0.9"
+gem "tilt", ">=1.0.1"
 
 # dev dependencies
 gem "jeweler"

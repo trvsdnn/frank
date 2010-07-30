@@ -4,15 +4,9 @@ describe Frank::Render do
   include Rack::Test::Methods
 
   def app
-    proj_dir = File.join(File.dirname(__FILE__), 'template')
-    settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-    Frank.setup(proj_dir)
+    Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
     Frank.new do
-      settings.each do |name, value|
-        set name.to_s, value
-      end
       set :environment, :test
-      set :proj_dir, proj_dir
     end
   end
 

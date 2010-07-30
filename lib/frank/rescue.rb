@@ -4,9 +4,9 @@ module Frank
     def render_404
       template = File.expand_path(File.dirname(__FILE__)) + '/templates/404.haml'
       locals = { :request => @env,
-                 :dynamic_folder => @dynamic_folder,
-                 :static_folder => @static_folder,
-                 :environment => @environment }
+                 :dynamic_folder => Frank.dynamic_folder,
+                 :static_folder => Frank.static_folder,
+                 :environment => Frank.environment }
 
       @response['Content-Type'] = 'text/html'
       @response.status          = 404

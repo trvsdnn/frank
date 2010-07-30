@@ -40,17 +40,10 @@ if File.exists? output_folder
 end
 
 begin
-  settings = YAML.load_file('settings.yml')
-  proj_dir = Dir.pwd
-
-  Frank.setup(proj_dir)
+  Frank.bootstrap(Dir.pwd)
   Frank::Output.new do
-    settings.each do |name, value|
-      set name.to_s, value
-    end
     set :environment, :output
     set :output_folder, output_folder
-    set :proj_dir, proj_dir
   end.dump(production)
 
 rescue Errno::ENOENT

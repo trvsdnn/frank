@@ -1,12 +1,12 @@
 module Frank
   module Middleware
     class Refresh
- 
+
       def initialize(app, options={})
         @app     = app
         @folders = options[:watch]
       end
-    
+
       # catch __refrank__ path and
       # return the most recent timestamp
       def call(env)
@@ -16,18 +16,17 @@ module Frank
         else
           @app.call(env)
         end
-      
       end
-    
+
       private
-    
+
       # build list of mtimes for watched files
       # return the most recent
       def get_mtime
         pwd        = Dir.pwd
         timestamps = []
         helpers    = File.join(pwd, 'helpers.rb')
-        
+
         timestamps << File.mtime(helpers).to_i if File.exist? helpers
         @folders.each do |folder|
           Dir[File.join(pwd, folder, '**/*.*')].each do |found|
@@ -36,7 +35,7 @@ module Frank
         end
         timestamps.sort.last
       end
-      
+
     end
   end
 end

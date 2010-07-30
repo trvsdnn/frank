@@ -4,24 +4,24 @@ describe Frank::Base do
   include Rack::Test::Methods
 
   def app
-    proj_dir = File.join(File.dirname(__FILE__), 'template')
-    settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-    Frank.setup(proj_dir)
+    Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
     Frank.new do
-      settings.each do |name, value|
-        set name.to_s, value
-      end
       set :environment, :test
-      set :proj_dir, proj_dir
+
+      # this is just used for a test
+      @blowup_sometimes = true
     end
   end
 
   it 'has all of the required settings set' do
-    app.proj_dir.should_not be_nil
-    app.server.should_not be_nil
-    app.static_folder.should_not be_nil
-    app.dynamic_folder.should_not be_nil
-    app.layouts_folder.should_not be_nil
+    app
+    Frank.root.should_not be_nil
+    Frank.server.handler.should_not be_nil
+    Frank.server.hostname.should_not be_nil
+    Frank.server.port.should_not be_nil
+    Frank.static_folder.should_not be_nil
+    Frank.dynamic_folder.should_not be_nil
+    Frank.layouts_folder.should_not be_nil
   end
 
   it 'renders a dynamic template given a request' do
@@ -62,7 +62,6 @@ describe Frank::Base do
 
   it 'renders a 500 page for error' do
     capture_stdout { get '/500' }
-
     last_response.should_not be_ok
     last_response.content_type.should == 'text/html'
     last_response.body.should =~ /undefined local variable or method `non_method'/

@@ -4,16 +4,10 @@ describe Frank::TemplateHelpers do
   include Rack::Test::Methods
 
   def app
-    proj_dir = File.join(File.dirname(__FILE__), 'template')
-    settings = YAML.load_file(File.join(proj_dir, 'settings.yml'))
-    require File.join(proj_dir, 'helpers')
-    Frank.setup(proj_dir)
+    Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
+    require File.join(Frank.root, 'helpers')
     Frank.new do
-      settings.each do |name, value|
-        set name.to_s, value
-      end
       set :environment, :test
-      set :proj_dir, proj_dir
     end
   end
 

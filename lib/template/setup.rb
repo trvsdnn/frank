@@ -5,10 +5,9 @@
 # 'server' can be any Rack-supported server, e.g.
 #  Mongrel, Thin, WEBrick
 #
-server:
-  handler: mongrel
-  hostname: 0.0.0.0
-  port: 3601
+Frank.server.handler = "mongrel"
+Frank.server.hostname = "0.0.0.0"
+Frank.server.port = "3601"
 
 # ----------------------
 #  Static folder:
@@ -16,7 +15,7 @@ server:
 #  All files in this folder will be served up
 #  directly, without interpretation
 #
-static_folder: static
+Frank.static_folder = "static"
 
 # ----------------------
 #  Dynamic folder:
@@ -24,7 +23,7 @@ static_folder: static
 #  Frank will try to interpret any of the files
 #  in this folder based on their extension
 #
-dynamic_folder: dynamic
+Frank.dynamic_folder = "dynamic"
 
 # ----------------------
 #  Layouts folder:
@@ -36,9 +35,16 @@ dynamic_folder: dynamic
 #  for example: a template: `dynamic_folder/blog/a-blog-post.haml'
 #  would look for a layout: `layouts/blog/default.haml'
 #  and if not found use the default: `layouts/default.haml'
-#  
+#
 #  Frank also supports defining layouts on an
 #  individual template basis using meta data
 #  you can do this by defining a meta field `layout: my_layout.haml'
 #
-layouts_folder: layouts
+Frank.layouts_folder = "layouts"
+
+
+# ----------------------
+# Initializers:
+#
+# Add any other project setup code, or requires here
+# ....

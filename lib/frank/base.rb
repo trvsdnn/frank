@@ -6,7 +6,7 @@ require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.3.2'
+  VERSION = '0.4.0'
 
   module Render; end
 
@@ -16,16 +16,8 @@ module Frank
     include Frank::TemplateHelpers
     include Frank::Render
 
-    attr_accessor :environment
-    attr_accessor :proj_dir
-    attr_accessor :server
-    attr_accessor :static_folder
-    attr_accessor :dynamic_folder
-    attr_accessor :layouts_folder
-    attr_accessor :templates
-
     def initialize(&block)
-      instance_eval &block
+      instance_eval(&block) if block_given?
     end
 
     def call(env)
@@ -70,7 +62,7 @@ module Frank
     end
 
     def load_helpers
-      helpers = File.join(@proj_dir, 'helpers.rb')
+      helpers = File.join(Frank.root, 'helpers.rb')
       if File.exist? helpers
         load helpers
         Frank::TemplateHelpers.class_eval("include FrankHelpers")
@@ -104,7 +96,7 @@ module Frank
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
 
-      template_path = File.join(@proj_dir, @dynamic_folder, path)
+      template_path = File.join(Frank.root, Frank.dynamic_folder, path)
       raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
 
       # read in the template
@@ -122,7 +114,7 @@ module Frank
       if layout.nil?
         tilt(ext, template, locals)
       else
-        layout_path = File.join(@proj_dir, @layouts_folder, layout)
+        layout_path = File.join(Frank.root, Frank.layouts_folder, layout)
         # add layout_path to locals
         raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
 
@@ -136,7 +128,7 @@ module Frank
     def to_file_path(path)
       file_name = File.basename(path, File.extname(path))
       file_ext  = File.extname(path).sub(/^\./, '')
-      folder    = File.join(@proj_dir, @dynamic_folder)
+      folder    = File.join(Frank.root, Frank.dynamic_folder)
       engine    = nil
 
       TMPL_EXTS.each do |ext, engines|
@@ -172,7 +164,7 @@ module Frank
       file_path   = path.sub(/\/[\w-]+\.[\w-]+$/, '')
       folders     = file_path.split('/')
 
-      until File.exist? File.join(@proj_dir, @layouts_folder, folders, default)
+      until File.exist? File.join(Frank.root, Frank.layouts_folder, folders, default)
         break if layout_exts.empty? && folders.empty?
 
         if layout_exts.empty?
@@ -184,7 +176,7 @@ module Frank
         end
       end
 
-      if File.exists? File.join(@proj_dir, @layouts_folder, folders, default)
+      if File.exists? File.join(Frank.root, Frank.layouts_folder, folders, default)
         File.join(folders, default)
       else
         nil
@@ -235,47 +227,38 @@ module Frank
 
       meta
     end
-
   end
 
-  @@root = nil unless defined?(@@root)
-  def self.root
-    @@root
-  end
-
-  def self.root=(new_root)
-    @@root = new_root
-  end
-
-  def self.setup(proj_dir)
-    Frank.root = proj_dir
-
-    initializer = File.join(proj_dir, 'initializers.rb')
-    if File.exists?(initializer)
-      load initializer
+  # Bootstrap will set up Frank up at a root path, and read in the setup.rb
+  def self.bootstrap(new_root = nil)
+    Frank.reset
+    Frank.root = new_root if new_root
+    setup = File.join(Frank.root, 'setup.rb')
+    if File.exists?(setup)
+      load setup
     end
   end
 
   # starts the server
   def self.new(&block)
-    base = Base.new(&block) if block_given?
+    base = Base.new(&block)
 
     builder = Rack::Builder.new do
-      use Frank::Middleware::Statik, :root => base.static_folder
+      use Frank::Middleware::Statik, :root => Frank.static_folder
       use Frank::Middleware::Imager
-      use Frank::Middleware::Refresh, :watch => [ base.dynamic_folder, base.static_folder, base.layouts_folder ]
+      use Frank::Middleware::Refresh, :watch => [ Frank.dynamic_folder, Frank.static_folder, Frank.layouts_folder ]
       run base
     end
 
-    unless base.environment == :test
+    unless Frank.environment == :test
       m = "got it under control \n got your back \n holdin' it down
              takin' care of business \n workin' some magic".split("\n").sort_by{rand}.first.strip
       puts "\n-----------------------\n" +
            " Frank's #{ m }...\n" +
-           " #{base.server['hostname']}:#{base.server['port']} \n\n"
-      server = Rack::Handler.get(base.server['handler'])
+           " #{Frank.server.hostname}:#{Frank.server.port} \n\n"
+      server = Rack::Handler.get(Frank.server.handler)
 
-      server.run(builder, :Port => base.server['port'], :Host => base.server['hostname']) do
+      server.run(builder, :Port => Frank.server.port, :Host => Frank.server.hostname) do
         trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }
       end
     end
@@ -283,7 +266,7 @@ module Frank
     base
 
     rescue Errno::EADDRINUSE
-      puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{base.server['port']}\033[0m\n\n"
+      puts " Hold on a second... Frank works alone.\n \033[31mSomething's already using port #{Frank.server.port}\033[0m\n\n"
   end
 
   # copies over the generic project template

@@ -13,7 +13,7 @@ begin
     gemspec.authors = ["blahed", "nwah"]
     gemspec.add_dependency 'rack', '>=1.0'
     gemspec.add_dependency 'mongrel', '>=1.0'
-    gemspec.add_dependency 'haml', '>=2.0'
+    gemspec.add_dependency 'haml', '>=3.0'
     gemspec.add_dependency 'tilt', '=0.9'
     gemspec.add_development_dependency 'rspec'
     gemspec.add_development_dependency 'rack-test', '>=0.5'

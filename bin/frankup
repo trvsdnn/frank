@@ -39,36 +39,20 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-if File.exist? 'settings.yml'
-  settings = YAML.load_file('settings.yml')
-else
-  settings = {
-    :server => { 'handler' => 'mongrel', 'hostname' => '0.0.0.0', 'port' => 3601 },
-    :static_folder => '.',
-    :dynamic_folder => '.',
-    :environment => :serving
-  }
-end
+Frank.bootstrap(Dir.pwd)
 
-options.each do |opt, val|
-  if opt == :server
-    server = settings['server'] ? settings['server'] : settings[:server]
-    val.each { |sopt, sval| server[sopt] = sval }
-  else
-    settings[opt] = val
-  end
-end
+# setup server from options
+server_options = options[:server]
+Frank.server.handler = server_options['handler'] if server_options['handler']
+Frank.server.hostname = server_options['hostname'] if server_options['hostname']
+Frank.server.port = server_options['port'] if server_options['port']
 
-if settings[:environment] == :serving
-  puts "Could not find \"settings.yml\", serving up files from the this directory at http://#{settings[:server]['hostname']}:#{settings[:server]['port']}"
-end
+# setup folder options
+Frank.dynamic_folder = options[:dynamic_folder] if options[:dynamic_folder]
+Frank.static_folder = options[:static_folder] if options[:static_folder]
 
-proj_dir = Dir.pwd
+# if settings[:environment] == :serving
+#   puts "Could not find \"settings.yml\", serving up files from the this directory at http://#{settings[:server]['hostname']}:#{settings[:server]['port']}"
+# end
 
-Frank.setup(proj_dir)
-Frank.new do
-  settings.each do |name, value|
-    set name.to_s, value
-  end
-  set :proj_dir, proj_dir
-end
+Frank.new

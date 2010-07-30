@@ -46,10 +46,10 @@ describe Frank::Base do
   end
 
   it 'renders dynamic css without a layout' do
-    get '/sass.css'
+    get '/stylesheets/sass.css'
 
     last_response.should be_ok
-    last_response.body.should == "#hello-worlds {\n  background: red; }\n"
+    last_response.body.should include("#hello-worlds {\n  background: red;\n}\n")
   end
 
   it 'renders a 404 page if template not found' do

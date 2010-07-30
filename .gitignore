@@ -2,3 +2,4 @@
 pkg
 lib/frank/output_old.rb
 .rvmrc
+.sass-cache

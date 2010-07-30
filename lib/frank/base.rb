@@ -234,12 +234,6 @@ module Frank
     Frank.reset
     Frank.root = new_root if new_root
 
-    # try to pull in setup
-    setup = File.join(Frank.root, 'setup.rb')
-    if File.exists?(setup)
-      load setup
-    end
-
     # setup compass
     begin
       require 'compass'
@@ -256,6 +250,12 @@ module Frank
       Frank.sass_options = Compass.sass_engine_options
     rescue LoadError
       # ignore if compass is not there
+    end
+
+    # try to pull in setup
+    setup = File.join(Frank.root, 'setup.rb')
+    if File.exists?(setup)
+      load setup
     end
 
   end

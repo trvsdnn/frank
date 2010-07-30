@@ -15,7 +15,7 @@ begin
     gemspec.add_dependency 'mongrel', '>=1.0'
     gemspec.add_dependency 'haml', '>=3.0'
     gemspec.add_dependency 'tilt', '=0.9'
-    gemspec.add_development_dependency 'rspec'
+    gemspec.add_development_dependency 'rspec', ">=2.0.0.beta.19"
     gemspec.add_development_dependency 'rack-test', '>=0.5'
 
   end

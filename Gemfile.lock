@@ -11,6 +11,7 @@ GEM
       haml (>= 3.0.4)
     contest (0.1.2)
     daemons (1.1.0)
+    diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     fastthread (1.0.7)
@@ -43,7 +44,14 @@ GEM
       rack (>= 1.0)
     rake (0.8.7)
     rdiscount (1.6.5)
-    rspec (1.3.0)
+    rspec (2.0.0.beta.19)
+      rspec-core (= 2.0.0.beta.19)
+      rspec-expectations (= 2.0.0.beta.19)
+      rspec-mocks (= 2.0.0.beta.19)
+    rspec-core (2.0.0.beta.19)
+    rspec-expectations (2.0.0.beta.19)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.19)
     ruby-debug (0.10.3)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.3.0)
@@ -77,6 +85,6 @@ DEPENDENCIES
   rack-test (>= 0.5)
   rake
   rdiscount
-  rspec
+  rspec (>= 2.0.0.beta.19)
   ruby-debug
   tilt (= 0.9)

@@ -60,8 +60,20 @@ describe Frank::Render do
    end
 
    it 'renders sass template' do
-     template = @app.render('sass.sass')
-     template.should == "#hello-worlds {\n  background: red; }\n"
+     template = @app.render('stylesheets/sass.sass')
+     template.should include("#hello-worlds {\n  background: red;\n}\n")
+   end
+
+   it 'renders sass with compass reset' do
+     template = @app.render('stylesheets/sass_with_compass.sass')
+     template.should include("h1, h2, h3, h4, h5, h6, p, blockquote, pre,\n")
+   end
+
+   it 'renders scss with compass mixin' do
+     template = @app.render('stylesheets/scss_with_compass.scss')
+     template.should include("-moz-border-radius: 5px;\n")
+     template.should include("-webkit-border-radius: 5px;\n")
+     template.should include("border-radius: 5px;\n")
    end
 
    it 'renders erb template' do

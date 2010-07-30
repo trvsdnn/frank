@@ -6,7 +6,7 @@ gem "tilt", "=0.9"
 
 # dev dependencies
 gem "jeweler"
-gem "rspec"
+gem "rspec", ">=2.0.0.beta.19"
 gem "rack-test", ">=0.5"
 gem "rake"
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-07-29}
+  s.date = %q{2010-07-30}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      "Featurelist",
+     "Gemfile",
+     "Gemfile.lock",
      "LICENSE",
      "README.md",
      "Rakefile",
@@ -35,6 +37,7 @@ Gem::Specification.new do |s|
      "lib/frank/middleware/statik.rb",
      "lib/frank/output.rb",
      "lib/frank/rescue.rb",
+     "lib/frank/settings.rb",
      "lib/frank/template_helpers.rb",
      "lib/frank/templates/404.haml",
      "lib/frank/templates/500.haml",
@@ -50,11 +53,12 @@ Gem::Specification.new do |s|
      "lib/frank/templates/imager/frank7.jpg",
      "lib/frank/templates/imager/frank8.jpg",
      "lib/frank/templates/imager/frank9.jpg",
+     "lib/frank/tilt_setup.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
      "lib/template/helpers.rb",
      "lib/template/layouts/default.haml",
-     "lib/template/settings.yml",
+     "lib/template/setup.rb",
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
      "spec/base_spec.rb",
@@ -81,12 +85,14 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
      "spec/template/dynamic/refresh.haml",
-     "spec/template/dynamic/sass.sass",
+     "spec/template/dynamic/stylesheets/sass.sass",
+     "spec/template/dynamic/stylesheets/sass_with_compass.sass",
+     "spec/template/dynamic/stylesheets/scss_with_compass.scss",
      "spec/template/helpers.rb",
      "spec/template/layouts/default.haml",
      "spec/template/layouts/explicit/layout2.haml",
      "spec/template/layouts/nested/default.haml",
-     "spec/template/settings.yml",
+     "spec/template/setup.rb",
      "spec/template/static/files/static.html",
      "spec/template_helpers_spec.rb"
   ]
@@ -101,6 +107,7 @@ Gem::Specification.new do |s|
      "spec/output_spec.rb",
      "spec/render_spec.rb",
      "spec/template/helpers.rb",
+     "spec/template/setup.rb",
      "spec/template_helpers_spec.rb"
   ]
 
@@ -111,24 +118,24 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 1.0"])
       s.add_runtime_dependency(%q<mongrel>, [">= 1.0"])
-      s.add_runtime_dependency(%q<haml>, [">= 2.0"])
+      s.add_runtime_dependency(%q<haml>, [">= 3.0"])
       s.add_runtime_dependency(%q<tilt>, ["= 0.9"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5"])
     else
       s.add_dependency(%q<rack>, [">= 1.0"])
       s.add_dependency(%q<mongrel>, [">= 1.0"])
-      s.add_dependency(%q<haml>, [">= 2.0"])
+      s.add_dependency(%q<haml>, [">= 3.0"])
       s.add_dependency(%q<tilt>, ["= 0.9"])
-      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
       s.add_dependency(%q<rack-test>, [">= 0.5"])
     end
   else
     s.add_dependency(%q<rack>, [">= 1.0"])
     s.add_dependency(%q<mongrel>, [">= 1.0"])
-    s.add_dependency(%q<haml>, [">= 2.0"])
+    s.add_dependency(%q<haml>, [">= 3.0"])
     s.add_dependency(%q<tilt>, ["= 0.9"])
-    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
     s.add_dependency(%q<rack-test>, [">= 0.5"])
   end
 end

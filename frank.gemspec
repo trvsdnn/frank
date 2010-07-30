@@ -59,6 +59,7 @@ Gem::Specification.new do |s|
      "lib/template/helpers.rb",
      "lib/template/layouts/default.haml",
      "lib/template/setup.rb",
+     "lib/template/static/favicon.ico",
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
      "spec/base_spec.rb",

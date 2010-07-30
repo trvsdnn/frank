@@ -39,6 +39,16 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+# load bundler if applicable
+if File.exists?(File.join(Dir.pwd, "Gemfile"))
+  begin
+    require 'bundler'
+    Bundler.setup
+  rescue LoadError
+    puts "Bundler not installed. Use `gem install bundler` in order to use your Gemfile"
+  end
+end
+
 Frank.bootstrap(Dir.pwd)
 
 # setup server from options

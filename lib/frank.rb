@@ -8,14 +8,7 @@ module Frank
   class ConfigError < StandardError; end
 end
 
-# load bundler if applicable
-begin
-  require 'bundler'
-  Bundler.setup
-rescue LoadError
-  require 'rubygems'
-end
-
+require 'rubygems'
 require 'yaml'
 require 'fileutils'
 require 'rack'

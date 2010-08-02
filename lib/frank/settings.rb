@@ -8,6 +8,7 @@ module Frank
     attr_accessor :root
 
     attr_accessor :server
+    attr_accessor :options
     attr_accessor :static_folder
     attr_accessor :dynamic_folder
     attr_accessor :layouts_folder
@@ -26,6 +27,9 @@ module Frank
       @server.handler = "mongrel"
       @server.hostname = "0.0.0.0"
       @server.port = "3601"
+
+      # reset options
+      @options = OpenStruct.new
 
       # setup folders
       @static_folder = "static"

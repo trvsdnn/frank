@@ -13,6 +13,8 @@ module Frank
     attr_accessor :layouts_folder
     attr_accessor :sass_options
 
+    attr_accessor :production
+
     def initialize
       reset
     end
@@ -32,6 +34,13 @@ module Frank
 
       # setup 3rd party configurations
       @sass_options = {}
+
+      # default to production false
+      @production = false
+    end
+
+    def production?
+      @production
     end
 
   end

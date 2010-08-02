@@ -4,6 +4,8 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require 'optparse'
 require 'frank'
 
+production = false
+
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: frankout [OPTIONS] directory\n",
                 "Compiles and dumps a project and it\'s static files to given directory\n",
@@ -12,7 +14,7 @@ opts = OptionParser.new do |opts|
   opts.separator 'Options:'
 
   opts.on('--production', 'Production ready dump i.e. ([FOLDER]/index.html)') do |handler|
-    Frank.production = true
+    production = true
   end
 
   opts.on( '-h', '--help', 'Display this help' ) do
@@ -49,10 +51,11 @@ end
 
 begin
   Frank.bootstrap(Dir.pwd)
+  Frank.production = production
   Frank::Output.new do
     set :environment, :output
     set :output_folder, output_folder
-  end.dump(Frank.production?)
+  end.dump(production)
 
 rescue Errno::ENOENT
   puts "Frank could not find settings.yml."

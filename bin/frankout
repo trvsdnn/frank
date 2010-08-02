@@ -50,8 +50,8 @@ if File.exists?(File.join(Dir.pwd, "Gemfile"))
 end
 
 begin
+  Frank.production! if production
   Frank.bootstrap(Dir.pwd)
-  Frank.production = production
   Frank::Output.new do
     set :environment, :output
     set :output_folder, output_folder

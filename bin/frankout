@@ -39,16 +39,6 @@ if File.exists? output_folder
   FileUtils.rm_rf(output_folder)
 end
 
-# load bundler if applicable
-if File.exists?(File.join(Dir.pwd, "Gemfile"))
-  begin
-    require 'bundler'
-    Bundler.setup
-  rescue LoadError
-    puts "Bundler not installed. Use `gem install bundler` in order to use your Gemfile"
-  end
-end
-
 begin
   Frank.production! if production
   Frank.bootstrap(Dir.pwd)

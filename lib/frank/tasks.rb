@@ -1,0 +1,1 @@
+load 'frank/tasks/update.rake'

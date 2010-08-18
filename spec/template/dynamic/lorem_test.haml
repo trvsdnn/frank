@@ -4,4 +4,7 @@
 %p.date= lorem.date '%Y-%m-%d', 'replace-this'
 %p.name= lorem.name 'replace-this'
 %p.email= lorem.email 'replace-this'
-%img{:src => lorem.image(400, 300, true, 'replace-this')}
+%img{:src => lorem.image('400x300', :random_color => true)}
+%img{:src => lorem.image('400x300', :background_color => '444', :color => 'eee', :replacement => 'replace-this')}
+%img{:src => lorem.image('400x300', :background_color => '444', :text => 'blah')}
+

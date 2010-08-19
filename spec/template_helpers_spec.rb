@@ -66,10 +66,13 @@ describe Frank::TemplateHelpers do
       template = @app.render('lorem_test.haml')
       reg1 = /<img src='http:\/\/placehold\.it\/400x300\/[a-z0-9]{6}\/[a-z0-9]{6}' \/>/
       reg2 = /<img src='http:\/\/placehold\.it\/400x300\/444\/eee' \/>/
-      reg3 = /<img src='http:\/\/placehold\.it\/400x300\/444(&amp;|&)text=blah' \/>/
+      reg3 = /<img src='http:\/\/placehold\.it\/400x300\/ccc\/aaa' \/>/
+      reg4 = /<img src='http:\/\/placehold\.it\/400x300\/444(&amp;|&)text=blah' \/>/
+
       template.should =~ reg1
       template.should =~ reg2
       template.should =~ reg3
+      template.should =~ reg4
     end
   end
 

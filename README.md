@@ -18,14 +18,14 @@ Create a new project with:
     $ frank <project_name>
 
 Then `cd <project_name>` and start up the server with:
-  
+
     $ frankup
 
     -----------------------
      Frank's holdin' it down...
      0.0.0.0:3601
 
-And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder, 
+And you're ready to get to work. By default, dynamic templates are served from the `dynamic` folder,
 static files are served from the `static` folder, and layouts are served from the `layouts` folder.
 
 When you're done working:
@@ -33,7 +33,7 @@ When you're done working:
     $ frankout <dump_dir>
 
 to compile templates and copy them--along with static your assets--into `<dump_dir>`. Or,
-    
+
     $ frankout --production <dump_dir>
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
@@ -67,13 +67,13 @@ support them--in the view & layout:
       title: My Rad Page
       author: My Rad Self
       ---------------------------------------------META
-      
+
       %h1= title
       %h3= 'By ' + author
-      
+
     layout:
       %title= title + '--My Rad Site'
-    
+
 
 
 Layouts (updated in 0.3)
@@ -171,21 +171,16 @@ This will return 3 sentences of standard [Lorem Ipsum][11]. `lorem` also has all
      lorem.first_name
      lorem.last_name
      lorem.email
-     
+
 
 ### Placeholder Images
 
-Likewise, Frank can generate placeholder images for you, from a selection of 10 pre-made images. For example, to generate `<img />` tag with a random dummy image:
-     
-     %img{:src=> lorem.image( 500, 400 ) }
+Frank now uses [placehold.it][14] for placeholder images, the `lorem.image` helper supports background_color, color, random_color, and text options:
 
-The `lorem.image` helper returns a special Frank image URL. In this case, the returned image will be 500 pixels wide and 400 pixels tall. By default, Frank caches the images returned for each specific size. So every subsequent request for a `500x400` image will return the same thing. If you'd rather have a random image every time, just pass in `true` for the 3rd image:
-     
-     lorem.image( 100, 100, true )    # returns a random 100x100 image every time it's called
-
-( NOTE: Unfortunately, in order to use the placeholder images, you must have a working [ImageMagick][12], and have the `mini_magick` gem installed as well. )
-
-If you would like to use the placeholder images in a context where the helper methods are unavailable (e.g. in static CSS or JavaScript), you can access the URL directly with `/_img/500x400.jpg`, or for random images `/_img/500x400.jpg?random`.
+     lorem.image('300x400')                                               #=> http://placehold.it/300x400
+     lorem.image('300x400', :background_color => '333', :color => 'fff')  #=> http://placehold.it/300x400/333/fff
+     lorem.image('300x400', :random_color => true)                        #=> http://placehold.it/300x400/f47av7/9fbc34d
+     lorem.image('300x400', :text => 'blah')                              #=> http://placehold.it/300x400&text=blah
 
 ### Replacement Text
 
@@ -202,7 +197,7 @@ In `settings.yml`, you can change your folder names, and server port & host name
 Check the comments there if you need help.
 
 (NOTE: In order to reduce confusion, Frank no longer checks for a `~/.frank` folder to copy when you run the `frank` command. Instead, the preferred method is just to create a base Frank project wherever you please, and just `cp -r` to the location of your new project, since this is all the `frank` command did anyway)
-  
+
 Installation
 ------------
 
@@ -224,3 +219,4 @@ Installation
 [11]: http://en.wikipedia.org/wiki/Lorem_ipsum
 [12]: http://www.imagemagick.org/script/binary-releases.php?ImageMagick=4pg9cdfr8e6gn7aru9mtelepr3
 [13]: http://www.yaml.org/start.html
+[14]: http://placehold.it

@@ -113,7 +113,8 @@ module Frank
         end
 
         src << "/#{background_color.sub(/^#/, '')}" if background_color
-        src << "/#{color.sub(/^#/, '')}" if background_color && color
+        src << "/ccc" if background_color.nil? && color
+        src << "/#{color.sub(/^#/, '')}" if color
         src << "&text=#{Rack::Utils::escape(options[:text])}" if options[:text]
 
         src

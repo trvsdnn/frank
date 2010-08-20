@@ -277,7 +277,15 @@ module Frank
       puts "\n-----------------------\n" +
            " Frank's #{ m }...\n" +
            " #{Frank.server.hostname}:#{Frank.server.port} \n\n"
-      server = Rack::Handler.get(Frank.server.handler)
+
+      begin
+        server = Rack::Handler.get(Frank.server.handler)
+      rescue LoadError
+        puts "\n\nUnable to find handler for: #{Frank.server.handler}"
+        puts "\nUse `gem install \"#{Frank.server.handler}\"` to install it"
+        puts "\nDefaulting to using webrick"
+        server = Rack::Handler.get("webrick")
+      end
 
       server.run(builder, :Port => Frank.server.port, :Host => Frank.server.hostname) do
         trap(:INT) { puts "\n\n-----------------------\n Show's over, fellas.\n\n"; exit }

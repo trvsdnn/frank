@@ -12,7 +12,6 @@ begin
     gemspec.homepage = "http://github.com/blahed/frank"
     gemspec.authors = ["blahed", "nwah"]
     gemspec.add_dependency 'rack', '>=1.0'
-    gemspec.add_dependency 'mongrel', '>=1.0'
     gemspec.add_dependency 'haml', '>=3.0'
     gemspec.add_dependency 'tilt', '=0.9'
     gemspec.add_development_dependency 'rspec', ">=2.0.0.beta.19"

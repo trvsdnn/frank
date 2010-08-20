@@ -1,7 +1,20 @@
 #!/usr/bin/env ruby
-$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
-
 require 'optparse'
+
+begin
+  # try to use bundler if its available
+  require 'bundler'
+  begin
+    Bundler.require
+  rescue Bundler::GemfileNotFound
+    # revert to using local frank install
+    $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+  end
+rescue LoadError
+  # revert to using local frank install
+  $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+end
+
 require 'frank'
 
 production = false

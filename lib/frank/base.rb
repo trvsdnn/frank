@@ -109,17 +109,25 @@ module Frank
       # use given layout if defined as a meta field
       layout = locals[:layout] == 'nil' ? nil : locals[:layout] if locals.has_key?(:layout)
 
+      page = setup_page
+
       # let tilt determine the template handler
       # and return some template markup
       if layout.nil?
-        tilt(ext, template, locals)
+        tilt(page, ext, template, locals)
       else
         layout_path = File.join(Frank.root, Frank.layouts_folder, layout)
         # add layout_path to locals
         raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
 
-        tilt(File.extname(layout), layout_path, locals) do
-          tilt(ext, template, locals)
+        # original
+        # tilt(File.extname(layout), layout_path, locals) do
+        #   tilt(ext, template, locals)
+        # end
+
+        page_content = tilt(page, ext, template, locals)
+        tilt(page, File.extname(layout), layout_path, locals) do
+          page_content
         end
       end
     end
@@ -189,15 +197,8 @@ module Frank
       layout_exts.include?(ext) ? layout_exts.delete(ext) : layout_exts.first
     end
 
-    # setup an object and extend it with TemplateHelpers and Render
-    # then send everything to tilt and get some template markup back
-    def tilt(ext, source, locals={}, &block)
-      obj = Object.new.extend(TemplateHelpers).extend(Render)
-      instance_variables.each do |var|
-        unless ['@response', '@env'].include? var
-          obj.instance_variable_set(var.intern, instance_variable_get(var))
-        end
-      end
+    # render a page using tilt and get the result template markup back
+    def tilt(page, ext, source, locals={}, &block)
       Tilt[ext].new do
         source = source.to_str if source.respond_to?(:to_str)
         if source.match(/^[^\n]+$/) && File.exist?(source)
@@ -205,7 +206,18 @@ module Frank
         else
           source
         end
-      end.render(obj, locals=locals, &block)
+      end.render(page, locals=locals, &block)
+    end
+
+    # setup a new page object to be rendered
+    def setup_page
+      page = Object.new.extend(TemplateHelpers).extend(Render)
+      instance_variables.each do |var|
+        unless ['@response', '@env'].include? var
+          page.instance_variable_set(var.intern, instance_variable_get(var))
+        end
+      end
+      page
     end
 
     private

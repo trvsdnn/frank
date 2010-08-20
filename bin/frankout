@@ -48,5 +48,5 @@ begin
   end.dump(production)
 
 rescue Errno::ENOENT
-  puts "Frank could not find settings.yml."
+  puts "Frank could not find setup.rb"
 end

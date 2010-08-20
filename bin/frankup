@@ -8,8 +8,8 @@ options = {:server => {}}
 
 OptionParser.new do |opts|
   opts.banner = "Usage: frankup [OPTIONS]\n",
-                "Starts the frank development server using settings.yml\n",
-                "If settings.yml isn\'t found, a webserver will be started and serve up files from the current directory\n\n"
+                "Starts the frank development server using setup.rb\n",
+                "If setup.rb isn\'t found, a webserver will be started and serve up files from the current directory\n\n"
 
   opts.separator 'Options:'
 
@@ -50,9 +50,5 @@ Frank.server.port = server_options['port'] if server_options['port']
 # setup folder options
 Frank.dynamic_folder = options[:dynamic_folder] if options[:dynamic_folder]
 Frank.static_folder = options[:static_folder] if options[:static_folder]
-
-# if settings[:environment] == :serving
-#   puts "Could not find \"settings.yml\", serving up files from the this directory at http://#{settings[:server]['hostname']}:#{settings[:server]['port']}"
-# end
 
 Frank.new

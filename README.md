@@ -193,10 +193,10 @@ into a framework. (e.g. rails, sinatra, django, etc)
 Configuration
 -------------
 
-In `settings.yml`, you can change your folder names, and server port & host name.
+In `setup.rb`, you can change your folder names, and server port & host name.
 Check the comments there if you need help.
 
-(NOTE: In order to reduce confusion, Frank no longer checks for a `~/.frank` folder to copy when you run the `frank` command. Instead, the preferred method is just to create a base Frank project wherever you please, and just `cp -r` to the location of your new project, since this is all the `frank` command did anyway)
+As of version 0.4, Frank no longer uses settings.yml. However you can use `rake project:update` in order convert your old settings.yml to the new setup.rb format.
 
 Installation
 ------------

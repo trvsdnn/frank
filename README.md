@@ -15,11 +15,11 @@ Overview
 
 Create a new project with:
 
-    $ frank <project_name>
+    $ frank new <project_path>
 
-Then `cd <project_name>` and start up the server with:
+Then `cd <project_path>` and start up the server with:
 
-    $ frankup
+    $ frank server
 
     -----------------------
      Frank's holdin' it down...
@@ -30,11 +30,11 @@ static files are served from the `static` folder, and layouts are served from th
 
 When you're done working:
 
-    $ frankout <dump_dir>
+    $ frank export <export_dir>
 
-to compile templates and copy them--along with static your assets--into `<dump_dir>`. Or,
+to compile templates and copy them--along with static your assets--into `<export_dir>`. Or,
 
-    $ frankout --production <dump_dir>
+    $ frank export --production <export_dir>
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
 
@@ -196,7 +196,7 @@ Configuration
 In `setup.rb`, you can change your folder names, and server port & host name.
 Check the comments there if you need help.
 
-As of version 0.4, Frank no longer uses settings.yml. However you can use `rake project:update` in order convert your old settings.yml to the new setup.rb format.
+As of version 0.4, Frank no longer uses settings.yml. However you can use `frank upgrade` in order convert your old settings.yml to the new setup.rb format.
 
 Installation
 ------------

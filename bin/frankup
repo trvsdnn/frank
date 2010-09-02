@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
+puts "\nthe `frankup' command is deprecated and will be removed in 0.5, use `frank server' or the alias `frank up'"
+
 begin
   # try to use bundler if its available
   require 'bundler'
@@ -55,13 +57,13 @@ end.parse!
 Frank.bootstrap(Dir.pwd)
 
 # setup server from options
-server_options = options[:server]
-Frank.server.handler = server_options['handler'] if server_options['handler']
+server_options        = options[:server]
+Frank.server.handler  = server_options['handler'] if server_options['handler']
 Frank.server.hostname = server_options['hostname'] if server_options['hostname']
-Frank.server.port = server_options['port'] if server_options['port']
+Frank.server.port     = server_options['port'] if server_options['port']
 
 # setup folder options
 Frank.dynamic_folder = options[:dynamic_folder] if options[:dynamic_folder]
-Frank.static_folder = options[:static_folder] if options[:static_folder]
+Frank.static_folder  = options[:static_folder] if options[:static_folder]
 
 Frank.new

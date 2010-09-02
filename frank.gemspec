@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-08-20}
+  s.date = %q{2010-09-01}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
   s.executables = ["frank", "frankout", "frankup"]
@@ -38,8 +38,6 @@ Gem::Specification.new do |s|
      "lib/frank/output.rb",
      "lib/frank/rescue.rb",
      "lib/frank/settings.rb",
-     "lib/frank/tasks.rb",
-     "lib/frank/tasks/update.rake",
      "lib/frank/template_helpers.rb",
      "lib/frank/templates/404.haml",
      "lib/frank/templates/500.haml",
@@ -56,7 +54,7 @@ Gem::Specification.new do |s|
      "lib/frank/templates/imager/frank8.jpg",
      "lib/frank/templates/imager/frank9.jpg",
      "lib/frank/tilt_setup.rb",
-     "lib/template/Rakefile",
+     "lib/frank/upgrades.rb",
      "lib/template/dynamic/css/frank.sass",
      "lib/template/dynamic/index.haml",
      "lib/template/helpers.rb",
@@ -89,6 +87,7 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/partial_test.haml",
      "spec/template/dynamic/redcloth.textile",
      "spec/template/dynamic/refresh.haml",
+     "spec/template/dynamic/setting_in_layout.haml",
      "spec/template/dynamic/stylesheets/sass.sass",
      "spec/template/dynamic/stylesheets/sass_with_compass.sass",
      "spec/template/dynamic/stylesheets/scss_with_compass.scss",

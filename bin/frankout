@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
+puts "\nthe `frankout' command is deprecated and will be removed in 0.5, use `frank export' or the alias `frank out'"
+
 begin
   # try to use bundler if its available
   require 'bundler'

@@ -1,12 +1,13 @@
 require 'frank/tilt_setup'
 require 'frank/template_helpers'
 require 'frank/rescue'
+require 'frank/upgrades'
 require 'frank/middleware/statik'
-require 'frank/middleware/imager'
 require 'frank/middleware/refresh'
 
 module Frank
   VERSION = '0.4.0'
+  extend Frank::Upgrades
 
   module Render; end
 
@@ -278,7 +279,6 @@ module Frank
 
     builder = Rack::Builder.new do
       use Frank::Middleware::Statik, :root => Frank.static_folder
-      use Frank::Middleware::Imager
       use Frank::Middleware::Refresh, :watch => [ Frank.dynamic_folder, Frank.static_folder, Frank.layouts_folder ]
       run base
     end

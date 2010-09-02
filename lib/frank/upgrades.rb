@@ -1,15 +1,20 @@
-namespace :project do
-  task :update do
-    pwd        = Rake.original_dir
-    setup_file = File.join(pwd, 'setup.rb')
+module Frank
+  module Upgrades
 
-    puts "\nFrank is...\n - \033[32mUpdating\033[0m your project"
+    def upgrade!
+      version = detect_version
 
-    if File.exist? setup_file
-      puts "\033[32mLooks like you're already good to go!\033[0m"
-      exit
-    else
-      settings   = YAML.load_file(File.join(pwd, 'settings.yml'))
+      if version == '0.3'
+        upgrade_from_0_3!
+      else
+        puts "\033[32mLooks like you're already good to go!\033[0m"
+      end
+    end
+
+    private
+
+    def upgrade_from_0_3!
+      settings   = YAML.load_file(File.join(Frank.root, 'settings.yml'))
       setup      = <<-SETUP
       # ----------------------
       #  Server settings:
@@ -65,10 +70,20 @@ namespace :project do
 
       puts " - \033[32mConverting\033[0m settings.yml => setup.rb"
 
-      File.open(setup_file, 'w') { |file| file.write(setup.gsub(/^\s+(?=[^\s])/, '')) }
-      File.delete(File.join(pwd, 'settings.yml'))
+      File.open(File.join(Frank.root, 'setup.rb'), 'w') { |file| file.write(setup.gsub(/^\s+(?=[^\s])/, '')) }
+      File.delete(File.join(Frank.root, 'settings.yml'))
 
       puts "\n \033[32mUpdate is complete, enjoy!\033[0m"
+    end
+
+    def detect_version
+      if File.exist? File.join(Frank.root, 'settings.yml')
+        version = '0.3'
+      else
+        version = '<0.3'
+      end
+
+      version
     end
 
   end

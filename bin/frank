@@ -107,10 +107,10 @@ else
   end
 
   case ARGV.first
-  when 'new'
+  when 'new', 'n'
     # stub out the project
     Frank.stub(ARGV[1])
-  when 'server', 'up'
+  when 'server', 's', 'up'
     # setup server from options
     server_options        = options[:server]
     Frank.server.handler  = server_options['handler'] if server_options['handler']
@@ -121,7 +121,7 @@ else
     Frank.dynamic_folder = options[:dynamic_folder] if options[:dynamic_folder]
     Frank.static_folder  = options[:static_folder] if options[:static_folder]
     Frank.new
-  when 'export', 'out'
+  when 'export', 'e', 'out'
     Frank.production! if options[:production]
     Frank::Output.new do
       set :environment, :output

@@ -151,12 +151,12 @@ Frank now has a handy automatic page refreshing helper. Just include `= refresh`
 save a project file. This eliminates the tedium of hundreds of manual refreshes over the course
 of building a project.
 
-When it's time to `frankout`, Frank will leave out the JavasScript bits of the refresher.
+When it's time export with `frank export`, Frank will leave out the JavasScript bits of the refresher.
 
 ### Current Path
 
 Frank now has a `current_path` variable that you can use to set selected states on nav items.
-It will return the path info from the template being processed. You also, have access to the variable from layouts and from the `frankout` command.
+It will return the path info from the template being processed. You also, have access to the variable from layouts and from the `frank export` command.
 
 ### Placeholder Text
 
@@ -189,9 +189,9 @@ Frank now uses [placehold.it][14] for placeholder images, the `lorem.image` help
 
 ### Replacement Text
 
-All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frankout`.
-For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frankup` server.
-However, when you `frankout` the template will render "<%= page.content %>". This is useful if you plan on moving a frank project
+All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frank export`.
+For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frank server` for development.
+However, when you `frank export` the template will render "<%= page.content %>". This is useful if you plan on moving a frank project
 into a framework. (e.g. rails, sinatra, django, etc)
 
 

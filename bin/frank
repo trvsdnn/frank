@@ -98,7 +98,11 @@ else
     begin
       Frank.bootstrap(Dir.pwd)
     rescue Errno::ENOENT
-      puts "Frank could not find setup.rb"
+      if File.exist? File.join(Dir.pwd, 'helpers.rb')
+        puts "Frank could not find setup.rb, perhaps you need to upgrade with the `frank upgrade' command"
+      else
+        puts "Frank could not find setup.rb"
+      end
     end
   end
 

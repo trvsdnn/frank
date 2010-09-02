@@ -38,6 +38,11 @@ to compile templates and copy them--along with static your assets--into `<export
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
 
+Upgrading to 0.4
+-------------------------
+
+As of version 0.4, Frank no longer uses settings.yml. However you can use `frank upgrade` in order convert your old settings.yml to the new setup.rb format.
+
 Views & Meta Data
 -------------------------
 
@@ -195,8 +200,6 @@ Configuration
 
 In `setup.rb`, you can change your folder names, and server port & host name.
 Check the comments there if you need help.
-
-As of version 0.4, Frank no longer uses settings.yml. However you can use `frank upgrade` in order convert your old settings.yml to the new setup.rb format.
 
 Installation
 ------------

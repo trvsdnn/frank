@@ -74,11 +74,11 @@ module Frank
   module Render
 
     TMPL_EXTS = {
-      :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
+      :html => %w[haml erb rhtml builder liquid textile md mkd markdown],
       :css  => %w[sass less scss]
     }
 
-    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
+    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid]
 
     # render request path or template path
     def render(path, partial = false, local_vars = nil)

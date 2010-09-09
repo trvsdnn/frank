@@ -7,8 +7,8 @@ for previewing work as you develop. Frank also has a "dump" command for compilin
 your work out to static html and css.
 
 Frank uses [Tilt][1], so it
-comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
-[Liquid][5], and [Mustache][6].
+comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4], and
+[Liquid][5].
 
 Overview
 --------
@@ -215,7 +215,6 @@ Installation
 [3]: http://builder.rubyforge.org/
 [4]: http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/
 [5]: http://www.liquidmarkup.org/
-[6]: http://github.com/defunkt/mustache
 [8]: http://lesscss.org/
 [9]: http://rack.rubyforge.org/
 [10]: http://lesscss.org/

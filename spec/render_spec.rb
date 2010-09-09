@@ -91,11 +91,6 @@ describe Frank::Render do
      template.should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
-   it 'renders mustache template' do
-     template = @app.render('mustache.mustache')
-     template.should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
-   end
-
    it 'renders liquid template' do
      template = @app.render('liquid.liquid')
      template.should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"

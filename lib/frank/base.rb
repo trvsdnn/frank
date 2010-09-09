@@ -312,11 +312,35 @@ module Frank
 
   # copies over the generic project template
   def self.stub(project)
+    templates_dir = File.join(ENV['HOME'], '.frank_templates')
+
     puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
     Dir.mkdir project
 
-    puts " - \033[32mCopying\033[0m Frank template"
-    FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    # if user has a ~/.frank_templates folder
+    # provide an interface for choosing template
+    if File.exist? templates_dir
+      templates = Dir[File.join(templates_dir, '**')].map { |d| d.split('/').last }
+
+      puts "\nWhich template would you like to use? "
+      puts " * default"
+      templates.each { |t| puts " * #{t}" }
+
+      print ": "
+      choice = STDIN.gets.chomp
+      until templates.include?(choice) || choice == 'default'
+        print " `#{choice}' \033[31mis not a valid template choice\033[0m\n: "
+        choice = STDIN.gets.chomp
+      end
+    end
+
+    puts " - \033[32mCopying\033[0m #{choice} Frank template"
+
+    if choice == 'default'
+      FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    else
+      FileUtils.cp_r( Dir.glob(File.join(templates_dir, "#{choice}/*")), project )
+    end
 
     puts "\n \033[32mCongratulations, '#{project}' is ready to go!\033[0m"
   rescue Errno::EEXIST

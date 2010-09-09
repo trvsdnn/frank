@@ -3,6 +3,7 @@ gem "rack", ">=1.0"
 gem "mongrel", ">=1.0"
 gem "haml", ">=3.0"
 gem "tilt", "=0.9"
+gem "net-scp", ">=1.0"
 
 # dev dependencies
 gem "jeweler"

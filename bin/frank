@@ -94,7 +94,7 @@ if ARGV.empty?
   puts opts
   exit
 else
-  if %w[server up export out upgrade].include? ARGV.first
+  if %w[server up export out publish upgrade].include? ARGV.first
     begin
       Frank.bootstrap(Dir.pwd)
     rescue Errno::ENOENT
@@ -126,7 +126,10 @@ else
     Frank::Output.new do
       set :environment, :output
       set :output_folder, ARGV[1]
-    end.dump(options[:production])
+    end.dump
+  when 'publish'
+    Frank.production!
+    Frank::Publish.execute!
   when 'upgrade'
     Frank.upgrade!
   end

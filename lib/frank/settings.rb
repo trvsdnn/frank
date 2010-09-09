@@ -12,6 +12,7 @@ module Frank
     attr_accessor :static_folder
     attr_accessor :dynamic_folder
     attr_accessor :layouts_folder
+    attr_accessor :publish
     attr_accessor :sass_options
 
     def initialize
@@ -29,6 +30,13 @@ module Frank
       # reset options
       @options = OpenStruct.new
 
+      # publish options
+      @publish = OpenStruct.new
+      @publish.host = nil
+      @publish.path = nil
+      @publish.commit = false
+      @publish.push = false
+
       # setup folders
       @static_folder = "static"
       @dynamic_folder = "dynamic"
@@ -36,6 +44,11 @@ module Frank
 
       # setup 3rd party configurations
       @sass_options = {}
+    end
+
+    # return the proj folder name
+    def proj_name
+      @root.split('/').last
     end
 
     # Check to see if we're in production mode

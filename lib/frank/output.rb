@@ -12,7 +12,7 @@ module Frank
     # if production and template isn't index and is html
     # name a folder based on the template and compile to index.html
     # otherwise compile as is
-    def compile_templates(production)
+    def compile_templates(production, verbose)
       dir = File.join(Frank.root, Frank.dynamic_folder)
 
       Dir[File.join(dir, '**{,/*/**}/*')].each do |path|
@@ -30,7 +30,7 @@ module Frank
 
           create_dirs(new_file)
           File.open(new_file, 'w') {|f| f.write render(path) }
-          puts " - \033[32mCreating\033[0m '#{new_file}'"
+          puts " - \033[32mCreating\033[0m '#{new_file}'" if verbose
         end
       end
     end
@@ -42,21 +42,26 @@ module Frank
     end
 
     # copies over static content
-    def copy_static
-      puts " - \033[32mCopying\033[0m static content"
+    def copy_static(verbose)
+      puts " - \033[32mCopying\033[0m static content" if verbose
       static_folder = File.join(Frank.root, Frank.static_folder)
       FileUtils.cp_r(File.join(static_folder, '/.'), @output_folder)
     end
 
+    # TODO verbose everywhere is lame
     # create the dump dir, compile templates, copy over static assets
-    def dump(production = false)
+    def dump(verbose = true)
       FileUtils.mkdir(@output_folder)
-      puts "\nFrank is..."
-      puts " - \033[32mCreating\033[0m '#{@output_folder}'"
 
-      compile_templates(production)
-      copy_static
-      puts "\n \033[32mCongratulations, project dumped to '#{@output_folder}' successfully!\033[0m"
+      if verbose
+        puts "\nFrank is..."
+        puts " - \033[32mCreating\033[0m '#{@output_folder}'"
+      end
+
+      compile_templates(Frank.production?, verbose)
+      copy_static(verbose)
+
+      puts "\n \033[32mCongratulations, project dumped to '#{@output_folder}' successfully!\033[0m" if verbose
     end
   end
 

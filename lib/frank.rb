@@ -15,6 +15,7 @@ require 'rack'
 require 'frank/settings'
 require 'frank/base'
 require 'frank/output'
+require 'frank/publish'
 
 # relay
 module Frank

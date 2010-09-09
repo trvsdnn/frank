@@ -12,7 +12,7 @@ module Frank
 
       # dump the project in production mode to tmp folder
       # set verbose to false
-      Frank::Output.new do
+      Frank::Compile.new do
         set :environment, :output
         set :output_folder, tmp_folder
       end.dump(verbose = false)

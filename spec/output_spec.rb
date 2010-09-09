@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/helper'
 
-describe Frank::Output do
+describe Frank::Compile do
   include Rack::Test::Methods
 
   context 'default output' do
     before :all do
-      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')
       output_dir = File.join(proj_dir, 'output')
       Dir.chdir proj_dir do
@@ -105,7 +105,7 @@ describe Frank::Output do
 
   context 'productions output' do
     before :all do
-      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')
       output_dir = File.join(proj_dir, 'output')
       Dir.chdir proj_dir do

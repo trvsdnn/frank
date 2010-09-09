@@ -14,7 +14,7 @@ require 'fileutils'
 require 'rack'
 require 'frank/settings'
 require 'frank/base'
-require 'frank/output'
+require 'frank/compile'
 require 'frank/publish'
 
 # relay

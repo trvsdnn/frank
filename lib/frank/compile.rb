@@ -1,5 +1,5 @@
 module Frank
-  class Output < Frank::Base
+  class Compile < Frank::Base
     include Frank::Render
 
     attr_accessor :environment, :output_folder

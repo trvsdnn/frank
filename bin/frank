@@ -123,7 +123,7 @@ else
     Frank.new
   when 'export', 'e', 'out'
     Frank.production! if options[:production]
-    Frank::Output.new do
+    Frank::Compile.new do
       set :environment, :output
       set :output_folder, ARGV[1]
     end.dump

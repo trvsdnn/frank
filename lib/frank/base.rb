@@ -267,8 +267,15 @@ module Frank
 
     # try to pull in setup
     setup = File.join(Frank.root, 'setup.rb')
+
     if File.exists?(setup)
       load setup
+    elsif File.exist? File.join(Dir.pwd, 'settings.yml')
+      puts "\033[31mFrank could not find setup.rb, perhaps you need to upgrade with the `frank upgrade\' command \033[0m"
+      exit
+    else
+      puts " \033[31mFrank could not find setup.rb \033[0m"
+      exit
     end
 
   end
@@ -320,26 +327,29 @@ module Frank
     # if user has a ~/.frank_templates folder
     # provide an interface for choosing template
     if File.exist? templates_dir
-      templates = Dir[File.join(templates_dir, '**')].map { |d| d.split('/').last }
+      templates = %w[default] + Dir[File.join(templates_dir, '**')].map { |d| d.split('/').last }
 
       puts "\nWhich template would you like to use? "
-      puts " * default"
-      templates.each { |t| puts " * #{t}" }
+      templates.each_with_index { |t, i| puts " #{i + 1}. #{t}" }
 
-      print ": "
+      print '> '
+
+      # get input and wait for a valid response
       choice = STDIN.gets.chomp
-      until templates.include?(choice) || choice == 'default'
-        print " `#{choice}' \033[31mis not a valid template choice\033[0m\n: "
+      until ( choice.match(/^\d+$/) && templates[choice.to_i - 1] ) || choice == '1'
+        print " `#{choice}' \033[31mis not a valid template choice\033[0m\n> "
         choice = STDIN.gets.chomp
       end
     end
 
-    puts " - \033[32mCopying\033[0m #{choice} Frank template"
+    template = templates[choice.to_i - 1]
 
-    if choice == 'default'
+    puts " - \033[32mCopying\033[0m #{template} Frank template"
+
+    if template == 'default'
       FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
     else
-      FileUtils.cp_r( Dir.glob(File.join(templates_dir, "#{choice}/*")), project )
+      FileUtils.cp_r( Dir.glob(File.join(templates_dir, "#{template}/*")), project )
     end
 
     puts "\n \033[32mCongratulations, '#{project}' is ready to go!\033[0m"

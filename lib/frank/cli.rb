@@ -113,14 +113,13 @@ module Frank
         when 'export', 'e', 'out'
           # compile the project
           print_usage_and_exit! unless ARGV[1]
+          Frank.exporting!
           Frank.production! if @options[:production]
-          Frank::Compile.new do
-            set :environment, :output
-            set :output_folder, ARGV[1]
-          end.dump
+          Frank.export_path = ARGV[1]
+          Frank::Compile.export!
         when 'publish'
           # compile the project and scp it to server
-          Frank.production!
+          Frank.publishing!
           Frank::Publish.execute!
         when 'upgrade'
           # upgrade if we need to upgrade

@@ -17,10 +17,6 @@ module Frank
     include Frank::TemplateHelpers
     include Frank::Render
 
-    def initialize(&block)
-      instance_eval(&block) if block_given?
-    end
-
     def call(env)
       dup.call!(env)
     end
@@ -35,13 +31,6 @@ module Frank
     end
 
     private
-
-    # setter for options
-    def set(option, value)
-      if respond_to?("#{option}=")
-        send "#{option}=", value
-      end
-    end
 
     # attempt to render with the request path,
     # if it cannot be found, render error page

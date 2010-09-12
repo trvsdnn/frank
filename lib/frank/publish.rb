@@ -11,11 +11,9 @@ module Frank
       FileUtils.rm_rf(tmp_folder) if File.exist?(tmp_folder)
 
       # dump the project in production mode to tmp folder
-      # set verbose to false
-      Frank::Compile.new do
-        set :environment, :output
-        set :output_folder, tmp_folder
-      end.dump(verbose = false)
+      # TODO export should not be verbose
+      Frank.export_path = tmp_folder
+      Frank::Compile.export!
 
       # upload the files and report progress
       Net::SCP.start(Frank.publish.host, Frank.publish.user) do |scp|

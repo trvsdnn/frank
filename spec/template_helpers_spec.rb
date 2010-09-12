@@ -6,9 +6,7 @@ describe Frank::TemplateHelpers do
   def app
     Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
     require File.join(Frank.root, 'helpers')
-    Frank.new do
-      set :environment, :test
-    end
+    Frank.new
   end
 
   before(:all) do

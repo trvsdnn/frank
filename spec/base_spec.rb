@@ -6,8 +6,6 @@ describe Frank::Base do
   def app
     Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
     Frank.new do
-      set :environment, :test
-
       # this is just used for a test
       @blowup_sometimes = true
     end

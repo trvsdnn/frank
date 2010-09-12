@@ -5,9 +5,7 @@ describe Frank::Render do
 
   def app
     Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
-    Frank.new do
-      set :environment, :test
-    end
+    Frank.new
   end
 
   before(:all) do

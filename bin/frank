@@ -94,7 +94,7 @@ if ARGV.empty?
   puts opts
   exit
 else
-  if %w[server up export out upgrade].include? ARGV.first
+  if %w[server up export out upgrade s e].include? ARGV.first
     begin
       Frank.bootstrap(Dir.pwd)
     rescue Errno::ENOENT

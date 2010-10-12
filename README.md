@@ -3,8 +3,9 @@ Frank
 
 Inspired by [Sinatra][0]'s simplicity and ease of use, Frank lets you build
 static sites using your favorite libs. Frank has a built in development server
-for previewing work as you develop. Frank also has a "dump" command for compiling and saving
-your work out to static html and css.
+for previewing work as you develop, an "export" command for compiling and saving
+your work out to static html and css, and a publish command for copying your
+exported pages to a server.
 
 Frank uses [Tilt][1], so it
 comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4], and
@@ -37,6 +38,10 @@ to compile templates and copy them--along with static your assets--into `<export
     $ frank export --production <export_dir>
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
+
+You can also publish directly to a server
+
+    $ frank publish
 
 Upgrading to 0.4
 -------------------------

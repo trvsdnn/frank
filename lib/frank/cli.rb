@@ -7,6 +7,7 @@ module Frank
       frank new PROJECT_PATH
       frank server [options]
       frank export PATH [options]
+      frank publish
 
     Description:
       The `frank new' command generates a frank template project with the default
@@ -25,7 +26,11 @@ module Frank
 
       # do some development
 
+      # export it
       frank export ~/Dev/html/blah.com
+
+      # or publish it
+      frank publish
     USAGE
 
     class << self
@@ -115,9 +120,9 @@ module Frank
           print_usage_and_exit! unless ARGV[1]
           Frank.exporting!
           Frank.production! if @options[:production]
-          Frank.export_path = ARGV[1]
+          Frank.export.path = ARGV[1]
           Frank::Compile.export!
-        when 'publish'
+        when 'publish', 'p'
           # compile the project and scp it to server
           Frank.publishing!
           Frank::Publish.execute!

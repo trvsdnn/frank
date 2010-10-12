@@ -19,14 +19,14 @@ module Frank
             name    = File.basename(path, ext)
 
             if Frank.production? && "#{name}.#{new_ext}" != 'index.html' && new_ext == 'html'
-              new_file = File.join(Frank.export_path, path.sub(/(\/?[\w-]+)\.[\w-]+$/, "\\1/index.#{new_ext}"))
+              new_file = File.join(Frank.export.path, path.sub(/(\/?[\w-]+)\.[\w-]+$/, "\\1/index.#{new_ext}"))
             else
-              new_file = File.join(Frank.export_path, path.sub(/\.[\w-]+$/, ".#{new_ext}"))
+              new_file = File.join(Frank.export.path, path.sub(/\.[\w-]+$/, ".#{new_ext}"))
             end
 
             create_dirs(new_file)
             File.open(new_file, 'w') {|f| f.write render(path) }
-            puts " - \033[32mCreating\033[0m '#{new_file}'" unless Frank.environment == :test
+            puts " - \033[32mCreating\033[0m '#{new_file}'" unless Frank.silent_export?
           end
         end
       end
@@ -39,25 +39,25 @@ module Frank
 
       # copies over static content
       def copy_static
-        puts " - \033[32mCopying\033[0m static content" unless Frank.environment == :test
+        puts " - \033[32mCopying\033[0m static content" unless Frank.silent_export?
         static_folder = File.join(Frank.root, Frank.static_folder)
-        FileUtils.cp_r(File.join(static_folder, '/.'), Frank.export_path)
+        FileUtils.cp_r(File.join(static_folder, '/.'), Frank.export.path)
       end
 
       # TODO verbose everywhere is lame
       # create the dump dir, compile templates, copy over static assets
       def export!
-        FileUtils.mkdir(Frank.export_path)
+        FileUtils.mkdir(Frank.export.path)
 
-        unless Frank.environment == :test
+        unless Frank.silent_export?
           puts "\nFrank is..."
-          puts " - \033[32mCreating\033[0m '#{Frank.export_path}'"
+          puts " - \033[32mCreating\033[0m '#{Frank.export.path}'"
         end
 
         compile_templates
         copy_static
 
-        puts "\n \033[32mCongratulations, project dumped to '#{Frank.export_path}' successfully!\033[0m" unless Frank.environment == :test
+        puts "\n \033[32mCongratulations, project dumped to '#{Frank.export.path}' successfully!\033[0m" unless Frank.silent_export?
       end
     end
 

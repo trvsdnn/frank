@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-09-09}
+  s.date = %q{2010-10-12}
   s.default_executable = %q{frank}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "frank.gemspec",
      "lib/frank.rb",
      "lib/frank/base.rb",
+     "lib/frank/cli.rb",
      "lib/frank/compile.rb",
      "lib/frank/lorem.rb",
      "lib/frank/middleware/imager.rb",
@@ -63,8 +64,8 @@ Gem::Specification.new do |s|
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
      "spec/base_spec.rb",
+     "spec/compile_spec.rb",
      "spec/helper.rb",
-     "spec/output_spec.rb",
      "spec/render_spec.rb",
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",
@@ -104,8 +105,8 @@ Gem::Specification.new do |s|
   s.summary = %q{Static Site Non-Framework}
   s.test_files = [
     "spec/base_spec.rb",
+     "spec/compile_spec.rb",
      "spec/helper.rb",
-     "spec/output_spec.rb",
      "spec/publish_spec.rb",
      "spec/render_spec.rb",
      "spec/template/helpers.rb",

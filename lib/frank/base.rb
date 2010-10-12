@@ -267,6 +267,14 @@ module Frank
       exit
     end
 
+    if Frank.publish.host || Frank.publish.path || Frank.publish.username || Frank.publish.password
+      begin
+        require 'net/scp'
+      rescue LoadError
+        puts "\033[31m`frank publish' requires the 'net-scp' gem. `gem install net-scp'\033[0m"
+      end
+    end
+
   end
 
   # starts the server

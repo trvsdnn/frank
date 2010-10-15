@@ -69,15 +69,17 @@ describe Frank::TemplateHelpers do
 
     it 'render image url using imager' do
       template = @app.render('lorem_test.haml')
-      reg1 = /<img src='http:\/\/placehold\.it\/400x300\/[a-z0-9]{6}\/[a-z0-9]{6}' \/>/
-      reg2 = /<img src='http:\/\/placehold\.it\/400x300\/444\/eee' \/>/
-      reg3 = /<img src='http:\/\/placehold\.it\/400x300\/ccc\/aaa' \/>/
-      reg4 = /<img src='http:\/\/placehold\.it\/400x300\/444(&amp;|&)text=blah' \/>/
+      reg1 = /<img src='http:\/\/placehold\.it\/400x300' \/>/
+      reg2 = /<img src='http:\/\/placehold\.it\/400x300\/[a-z0-9]{6}\/[a-z0-9]{6}' \/>/      
+      reg3 = /<img src='http:\/\/placehold\.it\/400x300\/444\/eee' \/>/
+      reg4 = /<img src='http:\/\/placehold\.it\/400x300\/ccc\/aaa' \/>/
+      reg5 = /<img src='http:\/\/placehold\.it\/400x300\/444(&amp;|&)text=blah' \/>/
 
       template.should =~ reg1
       template.should =~ reg2
       template.should =~ reg3
       template.should =~ reg4
+      template.should =~ reg5
     end
   end
 

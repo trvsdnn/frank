@@ -98,7 +98,7 @@ module Frank
       end
     end
 
-    def image(size, options)
+    def image(size, options={})
       if @environment == :output && options[:replacement]
         options[:replacement]
       else

@@ -6,7 +6,7 @@ require 'frank/middleware/statik'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.4.0'
+  VERSION = '0.4.1'
   extend Frank::Upgrades
 
   module Render; end

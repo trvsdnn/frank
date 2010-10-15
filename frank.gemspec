@@ -108,7 +108,6 @@ Gem::Specification.new do |s|
     "spec/base_spec.rb",
      "spec/helper.rb",
      "spec/output_spec.rb",
-     "spec/publish_spec.rb",
      "spec/render_spec.rb",
      "spec/template/helpers.rb",
      "spec/template/setup.rb",

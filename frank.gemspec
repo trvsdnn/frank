@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-10-12}
+  s.date = %q{2010-11-05}
   s.default_executable = %q{frank}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.md",
      "Rakefile",
+     "autotest/discover.rb",
      "bin/frank",
      "frank.gemspec",
      "lib/frank.rb",
@@ -66,6 +67,7 @@ Gem::Specification.new do |s|
      "spec/base_spec.rb",
      "spec/compile_spec.rb",
      "spec/helper.rb",
+     "spec/publish_spec.rb",
      "spec/render_spec.rb",
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",

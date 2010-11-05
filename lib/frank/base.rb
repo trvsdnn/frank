@@ -272,6 +272,7 @@ module Frank
         require 'net/scp'
       rescue LoadError
         puts "\033[31m`frank publish' requires the 'net-scp' gem. `gem install net-scp'\033[0m"
+        exit
       end
     end
 
@@ -319,7 +320,6 @@ module Frank
     templates_dir = File.join(ENV['HOME'], '.frank_templates')
 
     puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
-    Dir.mkdir project
 
     # if user has a ~/.frank_templates folder
     # provide an interface for choosing template
@@ -332,6 +332,7 @@ module Frank
       print '> '
 
       # get input and wait for a valid response
+      trap(:INT) { puts "\nbye"; exit }
       choice = STDIN.gets.chomp
       until ( choice.match(/^\d+$/) && templates[choice.to_i - 1] ) || choice == '1'
         print " `#{choice}' \033[31mis not a valid template choice\033[0m\n> "
@@ -339,6 +340,7 @@ module Frank
       end
     end
 
+    Dir.mkdir project
     template = templates[choice.to_i - 1]
 
     puts " - \033[32mCopying\033[0m #{template} Frank template"

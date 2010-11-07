@@ -39,14 +39,22 @@ to compile templates and copy them--along with static your assets--into `<export
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
 
-You can also publish directly to a server
+You can add publish settings in setup.rb and publish directly to a server via scp.
 
     $ frank publish
 
-Upgrading to 0.4
+Upgrading
 -------------------------
 
 As of version 0.4, Frank no longer uses settings.yml. However you can use `frank upgrade` in order convert your old settings.yml to the new setup.rb format.
+
+
+Frank Templates
+-------------------------
+
+Frank (as of 1.0) has support for saving "templates" in `~/.frank_templates`. This is very handy if find yourself wanting a custom starting point. All you have to do to use the feature is create a `~/.frank_templates` folder and start putting templates in it.
+
+Once you have a few templates saved you can simply run `frank new` to be presented with a list of templates to choose from as the starting point for the project.
 
 Views & Meta Data
 -------------------------
@@ -151,7 +159,7 @@ Built-in Helpers
 
 ### Auto-Refresh
 
-Frank now has a handy automatic page refreshing helper. Just include `= refresh`
+Frank has a handy automatic page refreshing helper. Just include `= refresh`
 (or equivalent) in your view, and Frank will automatically refresh the page for you whenever you
 save a project file. This eliminates the tedium of hundreds of manual refreshes over the course
 of building a project.

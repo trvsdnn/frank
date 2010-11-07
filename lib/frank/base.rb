@@ -110,11 +110,6 @@ module Frank
         # add layout_path to locals
         raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
 
-        # original
-        # tilt(File.extname(layout), layout_path, locals) do
-        #   tilt(ext, template, locals)
-        # end
-
         page_content = tilt(page, ext, template, locals)
         tilt(page, File.extname(layout), layout_path, locals) do
           page_content

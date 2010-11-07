@@ -203,6 +203,7 @@ Frank now uses [placehold.it][14] for placeholder images, the `lorem.image` help
 ### Replacement Text
 
 All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frank export`.
+
 For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frank server` for development.
 However, when you `frank export` the template will render "<%= page.content %>". This is useful if you plan on moving a frank project
 into a framework. (e.g. rails, sinatra, django, etc)
@@ -216,8 +217,6 @@ Check the comments there if you need help.
 
 Installation
 ------------
-
-### [Gemcutter](http://gemcutter.org/)
 
     $ gem install frank
 

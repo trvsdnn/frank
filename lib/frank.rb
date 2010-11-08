@@ -12,9 +12,12 @@ require 'rubygems'
 require 'yaml'
 require 'fileutils'
 require 'rack'
+require 'net/ssh'
 require 'frank/settings'
 require 'frank/base'
-require 'frank/output'
+require 'frank/compile'
+require 'frank/publish'
+require 'frank/cli'
 
 # relay
 module Frank

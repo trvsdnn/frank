@@ -3,20 +3,20 @@ require 'frank/lorem'
 module Frank
   module TemplateHelpers
     include FrankHelpers if defined? FrankHelpers
-  
+
     def render_partial(path, *locals)
       pieces = path.split('/')
       partial = '_' + pieces.pop
       locals = locals.empty? ? nil : locals[0]
       render(File.join(pieces.join('/'), partial), partial = true, locals)
     end
-    
+
     def lorem
-      Frank::Lorem.new(@environment)
+      Frank::Lorem.new
     end
-    
+
     def refresh
-      if @environment == :output
+      if Frank.exporting?
         nil
       else
         <<-JS
@@ -30,9 +30,9 @@ module Frank
             }
 
             (function poll(){
-              var req = new XMLHttpRequest();  
-              req.open('GET', '/__refresh__', true);  
-              req.onreadystatechange = function (aEvt) {  
+              var req = new XMLHttpRequest();
+              req.open('GET', '/__refresh__', true);
+              req.onreadystatechange = function (aEvt) {
                 if ( req.readyState == 4 && req.status == 200 )
                   process(req.responseText);
               };
@@ -45,6 +45,6 @@ module Frank
         JS
       end
     end
-    
+
   end
 end

@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/helper'
 
-describe Frank::Output do
+describe Frank::Compile do
   include Rack::Test::Methods
 
   context 'default output' do
     before :all do
-      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')
       output_dir = File.join(proj_dir, 'output')
       Dir.chdir proj_dir do
@@ -62,11 +62,6 @@ describe Frank::Output do
       File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
-    it 'creates mustache.html' do
-      output = File.join(File.dirname(__FILE__), 'template/output/mustache.html')
-      File.read(output).should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
-    end
-
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid.html')
       File.read(output).should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
@@ -110,7 +105,7 @@ describe Frank::Output do
 
   context 'productions output' do
     before :all do
-      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frankout')
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')
       output_dir = File.join(proj_dir, 'output')
       Dir.chdir proj_dir do
@@ -165,11 +160,6 @@ describe Frank::Output do
     it 'creates markdown.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/markdown/index.html')
       File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
-    end
-
-    it 'creates mustache.html' do
-      output = File.join(File.dirname(__FILE__), 'template/output/mustache/index.html')
-      File.read(output).should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'creates liquid.html' do

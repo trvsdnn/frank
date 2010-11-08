@@ -6,7 +6,7 @@ require 'frank/middleware/statik'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '0.4.1'
+  VERSION = '1.0.0'
   extend Frank::Upgrades
 
   module Render; end
@@ -16,10 +16,6 @@ module Frank
     include Frank::Rescue
     include Frank::TemplateHelpers
     include Frank::Render
-
-    def initialize(&block)
-      instance_eval(&block) if block_given?
-    end
 
     def call(env)
       dup.call!(env)
@@ -35,13 +31,6 @@ module Frank
     end
 
     private
-
-    # setter for options
-    def set(option, value)
-      if respond_to?("#{option}=")
-        send "#{option}=", value
-      end
-    end
 
     # attempt to render with the request path,
     # if it cannot be found, render error page
@@ -74,11 +63,11 @@ module Frank
   module Render
 
     TMPL_EXTS = {
-      :html => %w[haml erb rhtml builder liquid mustache textile md mkd markdown],
+      :html => %w[haml erb rhtml builder liquid textile md mkd markdown],
       :css  => %w[sass less scss]
     }
 
-    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .mustache]
+    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid]
 
     # render request path or template path
     def render(path, partial = false, local_vars = nil)
@@ -120,11 +109,6 @@ module Frank
         layout_path = File.join(Frank.root, Frank.layouts_folder, layout)
         # add layout_path to locals
         raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
-
-        # original
-        # tilt(File.extname(layout), layout_path, locals) do
-        #   tilt(ext, template, locals)
-        # end
 
         page_content = tilt(page, ext, template, locals)
         tilt(page, File.extname(layout), layout_path, locals) do
@@ -267,8 +251,24 @@ module Frank
 
     # try to pull in setup
     setup = File.join(Frank.root, 'setup.rb')
+
     if File.exists?(setup)
       load setup
+    elsif File.exist? File.join(Dir.pwd, 'settings.yml')
+      puts "\033[31mFrank could not find setup.rb, perhaps you need to upgrade with the `frank upgrade\' command \033[0m"
+      exit
+    else
+      puts " \033[31mFrank could not find setup.rb \033[0m"
+      exit
+    end
+
+    if Frank.publish.host || Frank.publish.path || Frank.publish.username || Frank.publish.password
+      begin
+        require 'net/scp'
+      rescue LoadError
+        puts "\033[31m`frank publish' requires the 'net-scp' gem. `gem install net-scp'\033[0m"
+        exit
+      end
     end
 
   end
@@ -312,11 +312,39 @@ module Frank
 
   # copies over the generic project template
   def self.stub(project)
-    puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
-    Dir.mkdir project
+    templates_dir = File.join(ENV['HOME'], '.frank_templates')
 
-    puts " - \033[32mCopying\033[0m Frank template"
-    FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
+
+    # if user has a ~/.frank_templates folder
+    # provide an interface for choosing template
+    if File.exist? templates_dir
+      templates = %w[default] + Dir[File.join(templates_dir, '**')].map { |d| d.split('/').last }
+
+      puts "\nWhich template would you like to use? "
+      templates.each_with_index { |t, i| puts " #{i + 1}. #{t}" }
+
+      print '> '
+
+      # get input and wait for a valid response
+      trap(:INT) { puts "\nbye"; exit }
+      choice = STDIN.gets.chomp
+      until ( choice.match(/^\d+$/) && templates[choice.to_i - 1] ) || choice == '1'
+        print " `#{choice}' \033[31mis not a valid template choice\033[0m\n> "
+        choice = STDIN.gets.chomp
+      end
+    end
+
+    Dir.mkdir project
+    template = templates[choice.to_i - 1]
+
+    puts " - \033[32mCopying\033[0m #{template} Frank template"
+
+    if template == 'default'
+      FileUtils.cp_r( Dir.glob(File.join(LIBDIR, 'template/*')), project )
+    else
+      FileUtils.cp_r( Dir.glob(File.join(templates_dir, "#{template}/*")), project )
+    end
 
     puts "\n \033[32mCongratulations, '#{project}' is ready to go!\033[0m"
   rescue Errno::EEXIST

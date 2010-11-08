@@ -3,12 +3,13 @@ Frank
 
 Inspired by [Sinatra][0]'s simplicity and ease of use, Frank lets you build
 static sites using your favorite libs. Frank has a built in development server
-for previewing work as you develop. Frank also has a "dump" command for compiling and saving
-your work out to static html and css.
+for previewing work as you develop, an "export" command for compiling and saving
+your work out to static html and css, and a publish command for copying your
+exported pages to a server.
 
 Frank uses [Tilt][1], so it
-comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4],
-[Liquid][5], and [Mustache][6].
+comes with support for [Haml & Sass][2], [LESS][10], [Builder][3], [ERB][4], and
+[Liquid][5].
 
 Overview
 --------
@@ -38,10 +39,22 @@ to compile templates and copy them--along with static your assets--into `<export
 
 to compile & copy over, but organized to work as a static website in production. (e.g. folders named after your views, with an `index.html` inside)
 
-Upgrading to 0.4
+You can add publish settings in setup.rb and publish directly to a server via scp.
+
+    $ frank publish
+
+Upgrading
 -------------------------
 
 As of version 0.4, Frank no longer uses settings.yml. However you can use `frank upgrade` in order convert your old settings.yml to the new setup.rb format.
+
+
+Frank Templates
+-------------------------
+
+Frank (as of 1.0) has support for saving "templates" in `~/.frank_templates`. This is very handy if find yourself wanting a custom starting point. All you have to do to use the feature is create a `~/.frank_templates` folder and start putting templates in it.
+
+Once you have a few templates saved you can simply run `frank new` to be presented with a list of templates to choose from as the starting point for the project.
 
 Views & Meta Data
 -------------------------
@@ -146,7 +159,7 @@ Built-in Helpers
 
 ### Auto-Refresh
 
-Frank now has a handy automatic page refreshing helper. Just include `= refresh`
+Frank has a handy automatic page refreshing helper. Just include `= refresh`
 (or equivalent) in your view, and Frank will automatically refresh the page for you whenever you
 save a project file. This eliminates the tedium of hundreds of manual refreshes over the course
 of building a project.
@@ -190,6 +203,7 @@ Frank now uses [placehold.it][14] for placeholder images, the `lorem.image` help
 ### Replacement Text
 
 All of the lorem helpers accept an optional "replacement" argument. This will be the text rendered when you `frank export`.
+
 For example `lorem.sentence("<%= page.content %>")` will generate a lorem sentence when you view the page using the `frank server` for development.
 However, when you `frank export` the template will render "<%= page.content %>". This is useful if you plan on moving a frank project
 into a framework. (e.g. rails, sinatra, django, etc)
@@ -204,8 +218,6 @@ Check the comments there if you need help.
 Installation
 ------------
 
-### [Gemcutter](http://gemcutter.org/)
-
     $ gem install frank
 
 
@@ -215,7 +227,6 @@ Installation
 [3]: http://builder.rubyforge.org/
 [4]: http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/
 [5]: http://www.liquidmarkup.org/
-[6]: http://github.com/defunkt/mustache
 [8]: http://lesscss.org/
 [9]: http://rack.rubyforge.org/
 [10]: http://lesscss.org/

@@ -42,6 +42,23 @@ Frank.dynamic_folder = "dynamic"
 #
 Frank.layouts_folder = "layouts"
 
+# ----------------------
+#  Publish settings:
+#
+#  Frank can publish your exported project to
+#  a server. All you have to do is tell Frank what host, path, and username.
+#  If you have ssh keys setup there is no need for a password.
+#  Just uncomment the Publish settings below and
+#  make the appropriate changes.
+#
+#  Frank.publish.host = "example.com"
+#  Frank.publish.path = "/www"
+#  Frank.publish.username = 'me'
+#  Frank.publish.password = 'secret'
+#  Frank.publish.port = 22
+#
+
+
 
 # ----------------------
 # Initializers:

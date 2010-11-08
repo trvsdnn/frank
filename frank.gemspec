@@ -5,37 +5,37 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "0.4.1"
-
+  s.version = "1.0.0"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-10-15}
+  s.date = %q{2010-11-05}
+  s.default_executable = %q{frank}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
-  s.executables = ["frank", "frankout", "frankup"]
+  s.executables = ["frank"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
   ]
   s.files = [
     ".gitignore",
-     "Featurelist",
      "Gemfile",
      "Gemfile.lock",
      "LICENSE",
      "README.md",
      "Rakefile",
+     "autotest/discover.rb",
      "bin/frank",
-     "bin/frankout",
-     "bin/frankup",
      "frank.gemspec",
      "lib/frank.rb",
      "lib/frank/base.rb",
+     "lib/frank/cli.rb",
+     "lib/frank/compile.rb",
      "lib/frank/lorem.rb",
      "lib/frank/middleware/imager.rb",
      "lib/frank/middleware/refresh.rb",
      "lib/frank/middleware/statik.rb",
-     "lib/frank/output.rb",
+     "lib/frank/publish.rb",
      "lib/frank/rescue.rb",
      "lib/frank/settings.rb",
      "lib/frank/template_helpers.rb",
@@ -64,8 +64,9 @@ Gem::Specification.new do |s|
      "lib/template/static/images/frank-med.png",
      "lib/template/static/js/frank.js",
      "spec/base_spec.rb",
+     "spec/compile_spec.rb",
      "spec/helper.rb",
-     "spec/output_spec.rb",
+     "spec/publish_spec.rb",
      "spec/render_spec.rb",
      "spec/template/dynamic/500.haml",
      "spec/template/dynamic/_partial.haml",
@@ -79,7 +80,6 @@ Gem::Specification.new do |s|
      "spec/template/dynamic/lorem_test.haml",
      "spec/template/dynamic/markdown.md",
      "spec/template/dynamic/markdown_in_haml.md",
-     "spec/template/dynamic/mustache.mustache",
      "spec/template/dynamic/nested/child.haml",
      "spec/template/dynamic/nested/deeper/deep.haml",
      "spec/template/dynamic/no_layout.haml",
@@ -106,8 +106,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Static Site Non-Framework}
   s.test_files = [
     "spec/base_spec.rb",
+     "spec/compile_spec.rb",
      "spec/helper.rb",
-     "spec/output_spec.rb",
+     "spec/publish_spec.rb",
      "spec/render_spec.rb",
      "spec/template/helpers.rb",
      "spec/template/setup.rb",

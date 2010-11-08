@@ -12,6 +12,8 @@ module Frank
     attr_accessor :static_folder
     attr_accessor :dynamic_folder
     attr_accessor :layouts_folder
+    attr_accessor :export
+    attr_accessor :publish
     attr_accessor :sass_options
 
     def initialize
@@ -29,6 +31,18 @@ module Frank
       # reset options
       @options = OpenStruct.new
 
+      # export settings
+      @export = OpenStruct.new
+      @export.path = nil
+      @export.silent = false
+
+      # publish options
+      @publish = OpenStruct.new
+      @publish.host = nil
+      @publish.path = nil
+      @publish.username = nil
+      @publish.password = nil
+
       # setup folders
       @static_folder = "static"
       @dynamic_folder = "dynamic"
@@ -38,6 +52,26 @@ module Frank
       @sass_options = {}
     end
 
+    # return the proj folder name
+    def proj_name
+      @root.split('/').last
+    end
+
+    # Check to see if we're compiling
+    def exporting?
+      @exporting
+    end
+
+    # Mark this Frank run as compiling
+    def exporting!
+      @exporting = true
+    end
+
+    # Silent export if set or in test
+    def silent_export?
+      @environment == :test || @export.silent
+    end
+
     # Check to see if we're in production mode
     def production?
       @production
@@ -45,6 +79,12 @@ module Frank
 
     # Mark this Frank run as production
     def production!
+      @production = true
+    end
+
+    # Mark this Frank run as publishing
+    def publishing!
+      @exporting  = true
       @production = true
     end
 

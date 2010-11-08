@@ -1,6 +1,0 @@
-- DONE - support layouts of a different type than the rendered template
-dynamically reload template changes using javascript and a slick url
-dynamically reload helpers and settings
-- DONE - support yaml variable definition at the top of templates
-- DONE - add helper for "selected" css class, this should work with frankup and frankout
-- DONE - add frankout replacement fields to lorem helpers 

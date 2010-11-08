@@ -5,9 +5,7 @@ describe Frank::Render do
 
   def app
     Frank.bootstrap(File.join(File.dirname(__FILE__), 'template'))
-    Frank.new do
-      set :environment, :test
-    end
+    Frank.new
   end
 
   before(:all) do
@@ -89,11 +87,6 @@ describe Frank::Render do
    it 'renders rdiscount template' do
      template = @app.render('markdown.md')
      template.should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
-   end
-
-   it 'renders mustache template' do
-     template = @app.render('mustache.mustache')
-     template.should == "<div id='p'>/mustache</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'renders liquid template' do

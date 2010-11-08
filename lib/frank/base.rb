@@ -6,7 +6,7 @@ require 'frank/middleware/statik'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
   extend Frank::Upgrades
 
   module Render; end
@@ -313,6 +313,7 @@ module Frank
   # copies over the generic project template
   def self.stub(project)
     templates_dir = File.join(ENV['HOME'], '.frank_templates')
+    choice = nil
 
     puts "\nFrank is...\n - \033[32mCreating\033[0m your project '#{project}'"
 
@@ -336,7 +337,7 @@ module Frank
     end
 
     Dir.mkdir project
-    template = templates[choice.to_i - 1]
+    template = choice.nil? ? 'default': templates[choice.to_i - 1]
 
     puts " - \033[32mCopying\033[0m #{template} Frank template"
 

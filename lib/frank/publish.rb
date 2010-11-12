@@ -26,7 +26,7 @@ module Frank
         current = nil
 
         # upload the files and report progress
-        Net::SSH.start(Frank.publish.host, Frank.publish.user, ssh_options) do |ssh|
+        Net::SSH.start(Frank.publish.host, Frank.publish.username, ssh_options) do |ssh|
           ssh.scp.upload!(tmp_folder, Frank.publish.path, :recursive => true, :chunk_size => 2048) do |ch, name, sent, total|
 
             puts "   - #{name[tmp_folder.length..-1]}" unless name == current

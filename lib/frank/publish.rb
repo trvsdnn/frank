@@ -3,6 +3,8 @@ module Frank
 
     class SCP
       def self.execute!
+        exit_unless_configured
+
         puts "\nFrank is..."
         puts " - \033[32mExporting templates\033[0m"
 
@@ -27,7 +29,7 @@ module Frank
 
         # upload the files and report progress
         Net::SSH.start(Frank.publish.host, Frank.publish.username, ssh_options) do |ssh|
-          ssh.scp.upload!(tmp_folder, Frank.publish.path, :recursive => true, :chunk_size => 2048) do |ch, name, sent, total|
+          ssh.scp.upload!("#{tmp_folder}/", Frank.publish.path, :recursive => true, :chunk_size => 2048) do |ch, name, sent, total|
 
             puts "   - #{name[tmp_folder.length..-1]}" unless name == current
 
@@ -40,6 +42,18 @@ module Frank
 
         puts "\n\033[32mPublish complete!\033[0m"
       end
+
+      def self.exit_unless_configured
+        required_settings = { :host => Frank.publish.host, :path => Frank.publish.path, :username => Frank.publish.username }
+        message             = "\033[31m"
+
+        required_settings.each {|name, value| message << "Frank.publish.#{name} is required to publish. You can configure it in setup.rb\n" if value.nil? }
+        message << "\033[0m"
+
+        puts message
+        exit!
+      end
+
     end
 
   end

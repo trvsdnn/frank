@@ -129,6 +129,9 @@ module Frank
         when 'upgrade'
           # upgrade if we need to upgrade
           Frank.upgrade!
+        else
+          puts "frank doesn't know that one... `frank --help' for usage"
+          exit
         end
       end
 

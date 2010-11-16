@@ -58,6 +58,9 @@ Frank.layouts_folder = "layouts"
 #  Frank.publish.port = 22
 #
 
+# ----------------------
+# Sass Options:
+# Frank.sass_options = { :load_paths => [ File.join(File.dirname(__FILE__), 'dynamic/css') ] }
 
 
 # ----------------------

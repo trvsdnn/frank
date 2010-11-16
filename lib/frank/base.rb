@@ -256,10 +256,7 @@ module Frank
       load setup
     elsif File.exist? File.join(Dir.pwd, 'settings.yml')
       puts "\033[31mFrank could not find setup.rb, perhaps you need to upgrade with the `frank upgrade\' command \033[0m"
-      exit
-    else
-      puts " \033[31mFrank could not find setup.rb \033[0m"
-      exit
+      exit!
     end
 
     if Frank.publish.host || Frank.publish.path || Frank.publish.username || Frank.publish.password
@@ -284,11 +281,15 @@ module Frank
     end
 
     unless Frank.environment == :test
-      m = "got it under control \n got your back \n holdin' it down
-             takin' care of business \n workin' some magic".split("\n").sort_by{rand}.first.strip
-      puts "\n-----------------------\n" +
-           " Frank's #{ m }...\n" +
-           " #{Frank.server.hostname}:#{Frank.server.port} \n\n"
+      message = ['got it under control', 'got your back', 'holdin\' it down', 'takin\' care of business', 'workin\' some magic'].sort_by{rand}.first.strip
+
+      puts "\n-----------------------"
+      if Frank.serving_static?
+        puts " This doesn't look like a frank project. Frank's serving this folder up his way..."
+      else
+        puts " Frank's #{ message }..."
+      end
+      puts " #{Frank.server.hostname}:#{Frank.server.port} \n\n"
 
       begin
         server = Rack::Handler.get(Frank.server.handler)

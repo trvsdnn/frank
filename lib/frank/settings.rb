@@ -57,6 +57,16 @@ module Frank
       @root.split('/').last
     end
 
+    # Are we serving up a raw static folder?
+    def serving_static?
+      @serving_static
+    end
+
+    # Mark this Frank run as serving static
+    def serving_static!
+      @serving_static = true
+    end
+
     # Check to see if we're compiling
     def exporting?
       @exporting

@@ -110,10 +110,16 @@ module Frank
           Frank.server.handler  = server_options['handler'] if server_options['handler']
           Frank.server.hostname = server_options['hostname'] if server_options['hostname']
           Frank.server.port     = server_options['port'] if server_options['port']
-
-          # setup folder options
-          Frank.dynamic_folder = @options[:dynamic_folder] if @options[:dynamic_folder]
-          Frank.static_folder  = @options[:static_folder] if @options[:static_folder]
+          if File.exist? 'setup.rb'
+            # setup folder options if we have setup.rb
+            Frank.dynamic_folder = @options[:dynamic_folder] if @options[:dynamic_folder]
+            Frank.static_folder  = @options[:static_folder] if @options[:static_folder]
+          else
+            # let frank act like a real grown up server
+            Frank.serving_static!
+            Frank.dynamic_folder = '.'
+            Frank.static_folder = '.'
+          end
           Frank.new
         when 'export', 'e', 'out'
           # compile the project

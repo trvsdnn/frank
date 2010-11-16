@@ -14,18 +14,18 @@
     #wrapper
       %img{:src=>'/__frank__/frank-404.png'}
       %h1= "Not Found&mdash;"
-      - unless environment == :serving
+      - unless Frank.serving_static?
         %p
           - if request['REQUEST_PATH']
             - path = request['REQUEST_PATH'][1..-1]
             = "Try creating"
-          
+
             - if path.match(/\.css$/)
               = "<tt>#{path.match(/([\w\/]+)\./)[1]}.sass</tt>"
             - else
               = "<tt>#{path.gsub(/\/$/, '')}.haml</tt>"
             = "in the <tt>#{dynamic_folder}</tt> folder, or"
-          
+
             - if path.match(/\.\w+/)
               = "<tt>#{path}</tt>"
             - else

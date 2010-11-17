@@ -231,6 +231,16 @@ module Frank
     Frank.reset
     Frank.root = new_root if new_root
 
+    if %w[publish p].include? ARGV.first
+      begin
+        require 'net/ssh'
+        require 'net/scp'
+      rescue LoadError
+        puts "\033[31mpublish requires the 'net-scp' gem. `gem install net-scp'\033[0m"
+        exit!
+      end
+    end
+
     # setup compass
     begin
       require 'compass'
@@ -257,15 +267,6 @@ module Frank
     elsif File.exist? File.join(Dir.pwd, 'settings.yml')
       puts "\033[31mFrank could not find setup.rb, perhaps you need to upgrade with the `frank upgrade\' command \033[0m"
       exit!
-    end
-
-    if Frank.publish.host || Frank.publish.path || Frank.publish.username || Frank.publish.password
-      begin
-        require 'net/scp'
-      rescue LoadError
-        puts "\033[31m`frank publish' requires the 'net-scp' gem. `gem install net-scp'\033[0m"
-        exit
-      end
     end
 
   end
@@ -295,7 +296,7 @@ module Frank
         server = Rack::Handler.get(Frank.server.handler)
       rescue LoadError
         puts "\n\nUnable to find handler for: #{Frank.server.handler}"
-        puts "\nUse `gem install \"#{Frank.server.handler}\"` to install it"
+        puts "\nUse `gem install #{Frank.server.handler}' to install it"
         puts "\nDefaulting to using webrick"
         server = Rack::Handler.get("webrick")
       end

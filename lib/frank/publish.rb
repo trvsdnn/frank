@@ -45,13 +45,19 @@ module Frank
 
       def self.exit_unless_configured
         required_settings = { :host => Frank.publish.host, :path => Frank.publish.path, :username => Frank.publish.username }
-        message             = "\033[31m"
+        should_exit       = false
+        message           = "\033[31m"
 
-        required_settings.each {|name, value| message << "Frank.publish.#{name} is required to publish. You can configure it in setup.rb\n" if value.nil? }
+        required_settings.each do |name, value|
+          if value.nil?
+            message << "Frank.publish.#{name} is required to publish. You can configure it in setup.rb\n"
+            exiting = true
+          end
+        end
+
         message << "\033[0m"
 
-        puts message
-        exit!
+        puts message and exit! if should_exit
       end
 
     end

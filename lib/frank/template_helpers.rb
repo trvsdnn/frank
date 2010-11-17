@@ -25,19 +25,21 @@ module Frank
             var when = #{Time.now.to_i};
 
             function process( raw ){
-              if( eval(raw)[0] > when )
+              if( parseInt(raw) > when ) {
                 window.location.reload();
+              }
             }
-
-            (function poll(){
-              var req = new XMLHttpRequest();
-              req.open('GET', '/__refresh__', true);
+            
+            (function (){
+              var req = (typeof XMLHttpRequest !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
               req.onreadystatechange = function (aEvt) {
-                if ( req.readyState == 4 && req.status == 200 )
-                  process(req.responseText);
+                if ( req.readyState === 4 ) {
+                  process( req.responseText );
+                }
               };
-              req.send(null);
-              setTimeout( poll, 1000 );
+              req.open('GET', '/__refresh__', true);
+              req.send( null );
+              setTimeout( arguments.callee, 1000 );
             })();
 
           })();

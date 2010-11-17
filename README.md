@@ -54,7 +54,7 @@ Frank Templates
 
 Frank (as of 1.0) has support for saving "templates" in `~/.frank_templates`. This is very handy if find yourself wanting a custom starting point. All you have to do to use the feature is create a `~/.frank_templates` folder and start putting templates in it.
 
-Once you have a few templates saved you can simply run `frank new` to be presented with a list of templates to choose from as the starting point for the project.
+Once you have a few templates saved, when you run `frank new <project_path>` you'll be presented with a list of templates to choose from as the starting point for the project.
 
 Views & Meta Data
 -------------------------

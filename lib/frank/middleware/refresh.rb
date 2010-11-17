@@ -12,7 +12,7 @@ module Frank
       def call(env)
         request = Rack::Request.new(env)
         if request.path_info.match /^\/__refresh__$/
-          [ 200, { 'Content-Type' => 'application/json' }, "[#{get_mtime}]" ]
+          [ 200, { 'Content-Type' => 'application/json', 'Connection' => 'Keep-Alive', 'Keep-Alive' => 'timeout=60', 'Cache-Control' => 'max-age=0' }, "#{get_mtime}" ]
         else
           @app.call(env)
         end

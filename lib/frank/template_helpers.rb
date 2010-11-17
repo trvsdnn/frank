@@ -25,7 +25,6 @@ module Frank
             var when = #{Time.now.to_i};
 
             function process( raw ){
-              var num = parseInt(raw);
               if( parseInt(raw) > when ) {
                 window.location.reload();
               }

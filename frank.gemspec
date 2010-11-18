@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "1.0.3"
+  s.version = "1.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-11-16}
+  s.date = %q{2010-11-18}
   s.default_executable = %q{frank}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
@@ -72,6 +72,7 @@ Gem::Specification.new do |s|
     "spec/template/dynamic/_partial.haml",
     "spec/template/dynamic/_partial_with_locals.haml",
     "spec/template/dynamic/builder.builder",
+    "spec/template/dynamic/coffee.coffee",
     "spec/template/dynamic/erb.erb",
     "spec/template/dynamic/helper_test.haml",
     "spec/template/dynamic/index.haml",

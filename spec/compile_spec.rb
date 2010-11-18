@@ -47,6 +47,11 @@ describe Frank::Compile do
       File.read(output).should == "<h1>i have no layout</h1>\n"
     end
 
+    it 'creates coffee.js' do
+      output = File.join(File.dirname(__FILE__), 'template/output/coffee.js')
+      File.read(output).should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
+    end
+
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
       File.read(output).should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
@@ -145,6 +150,11 @@ describe Frank::Compile do
     it 'creates no_layout.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/no_layout/index.html')
       File.read(output).should == "<h1>i have no layout</h1>\n"
+    end
+
+    it 'creates	coffee.js' do
+      output = File.join(File.dirname(__FILE__), 'template/output/coffee.js')
+      File.read(output).should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
     end
 
     it 'creates erb.html' do

@@ -64,7 +64,8 @@ module Frank
 
     TMPL_EXTS = {
       :html => %w[haml erb rhtml builder liquid textile md mkd markdown],
-      :css  => %w[sass less scss]
+      :css  => %w[sass less scss],
+      :js   => %w[coffee]
     }
 
     LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid]
@@ -81,7 +82,7 @@ module Frank
 
       # regex for kinds that don't support meta
       # and define the meta delimiter
-      nometa, delimiter  = /\/_|\.(scss|sass|less)$/, /^META-{3,}\s*$|^-{3,}META\s*$/
+      nometa, delimiter  = /\/_|\.(scss|sass|less|coffee)$/, /^META-{3,}\s*$|^-{3,}META\s*$/
 
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)

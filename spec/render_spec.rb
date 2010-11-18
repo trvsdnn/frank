@@ -74,6 +74,11 @@ describe Frank::Render do
      template.should include("border-radius: 5px;\n")
    end
 
+   it 'renders coffee template' do
+      template = @app.render('coffee.coffee')
+      template.should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
+   end
+
    it 'renders erb template' do
      template = @app.render('erb.erb')
      template.should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"

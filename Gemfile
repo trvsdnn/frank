@@ -6,21 +6,21 @@ gem 'tilt', '=0.9'
 gem 'net-ssh', '>=2.0'
 gem 'net-scp', '>=1.0'
 
-# dev dependencies
-gem 'jeweler'
-gem 'rspec', '>=2.0.0.beta.19'
-gem 'rack-test', '>=0.5'
-gem 'rake'
+group :development do
+  gem 'jeweler'
+  gem 'rspec', '>=2.0.0.beta.19'
+  gem 'rack-test', '>=0.5'
+  gem 'rake'
 
-# tilt dev dependencies
-gem 'contest'
-gem 'builder'
-gem 'erubis'
-gem 'compass', '>= 0.10.2'
-gem 'rdiscount'
-gem 'liquid'
-gem 'less'
-gem 'coffee-script'
-gem 'RedCloth'
-
-gem 'ruby-debug'
+  # tilt dev dependencies
+  gem 'contest'
+  gem 'builder'
+  gem 'erubis'
+  gem 'compass', '>= 0.10.2'
+  gem 'rdiscount'
+  gem 'liquid'
+  gem 'less'
+  gem 'coffee-script'
+  gem 'RedCloth'
+  gem 'ruby-debug'
+end

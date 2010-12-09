@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{frank}
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["blahed", "nwah"]
-  s.date = %q{2010-12-07}
+  s.date = %q{2010-12-09}
   s.default_executable = %q{frank}
   s.description = %q{Rapidly develop static sites using any supported templating language}
   s.email = %q{travis.dunn@thisismedium.com}
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 1.0"])
-      s.add_runtime_dependency(%q<mongrel>, [">= 1.0"])
+      s.add_runtime_dependency(%q<mongrel>, [">= 1.2.0.pre2"])
       s.add_runtime_dependency(%q<haml>, [">= 3.0"])
       s.add_runtime_dependency(%q<tilt>, ["= 0.9"])
       s.add_runtime_dependency(%q<net-ssh>, [">= 2.0"])
@@ -142,7 +142,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<ruby-debug>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 1.0"])
-      s.add_dependency(%q<mongrel>, [">= 1.0"])
+      s.add_dependency(%q<mongrel>, [">= 1.2.0.pre2"])
       s.add_dependency(%q<haml>, [">= 3.0"])
       s.add_dependency(%q<tilt>, ["= 0.9"])
       s.add_dependency(%q<net-ssh>, [">= 2.0"])
@@ -164,7 +164,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 1.0"])
-    s.add_dependency(%q<mongrel>, [">= 1.0"])
+    s.add_dependency(%q<mongrel>, [">= 1.2.0.pre2"])
     s.add_dependency(%q<haml>, [">= 3.0"])
     s.add_dependency(%q<tilt>, ["= 0.9"])
     s.add_dependency(%q<net-ssh>, [">= 2.0"])

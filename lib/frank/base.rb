@@ -6,7 +6,7 @@ require 'frank/middleware/statik'
 require 'frank/middleware/refresh'
 
 module Frank
-  VERSION = '1.0.5'
+  VERSION = '1.0.6'
   extend Frank::Upgrades
 
   module Render; end
@@ -39,9 +39,9 @@ module Frank
       @response['Content-Type'] = Rack::Mime.mime_type(File.extname(@request.path), 'text/html')
       @response.write render(@request.path)
     rescue Frank::TemplateError
-      render_404
+      @response.write render_404
     rescue Exception => e
-      render_500 e
+      @response.write render_500(e)
     end
 
     # prints requests and errors to STDOUT

@@ -1,6 +1,6 @@
 source :gemcutter
 gem 'rack', '>=1.0'
-gem 'mongrel', '>=1.0'
+gem 'mongrel', '>=1.2.0.pre2'
 gem 'haml', '>=3.0'
 gem 'tilt', '=0.9'
 gem 'net-ssh', '>=2.0'

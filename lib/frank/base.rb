@@ -185,10 +185,12 @@ module Frank
 
     # render a page using tilt and get the result template markup back
     def tilt(page, ext, source, locals={}, &block)
-      Tilt[ext].new do
-        source = source.to_str if source.respond_to?(:to_str)
-        if source.match(/^[^\n]+$/) && File.exist?(source)
-          File.read(source)
+      source = source.to_str if source.respond_to?(:to_str)
+      filename = source if source.match(/^[^\n]+$/) && File.exist?(source)
+
+      Tilt[ext].new(filename) do
+        if filename
+          File.read(filename)
         else
           source
         end

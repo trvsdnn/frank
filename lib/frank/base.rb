@@ -105,14 +105,14 @@ module Frank
       # let tilt determine the template handler
       # and return some template markup
       if layout.nil?
-        tilt(page, ext, template, locals)
+        tilt(page, ext, template, template_path, locals)
       else
         layout_path = File.join(Frank.root, Frank.layouts_folder, layout)
         # add layout_path to locals
         raise Frank::TemplateError, "Layout not found #{layout_path}" unless File.exist? layout_path
 
-        page_content = tilt(page, ext, template, locals)
-        tilt(page, File.extname(layout), layout_path, locals) do
+        page_content = tilt(page, ext, template, template_path, locals)
+        tilt(page, File.extname(layout), nil, layout_path, locals) do
           page_content
         end
       end
@@ -184,14 +184,9 @@ module Frank
     end
 
     # render a page using tilt and get the result template markup back
-    def tilt(page, ext, source, locals={}, &block)
-      Tilt[ext].new do
-        source = source.to_str if source.respond_to?(:to_str)
-        if source.match(/^[^\n]+$/) && File.exist?(source)
-          File.read(source)
-        else
-          source
-        end
+    def tilt(page, ext, source, filename, locals={}, &block)
+      Tilt[ext].new(filename) do
+        source || File.read(filename)
       end.render(page, locals=locals, &block)
     end
 

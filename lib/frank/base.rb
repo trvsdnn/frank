@@ -139,15 +139,12 @@ module Frank
     end
 
     # lookup the original ext for given template path
-    # TODO: make non-ugly
     def ext_from_handler(extension)
-      orig_ext = nil
-      TMPL_EXTS.each do |ext, engines|
-        orig_ext = ext.to_s if engines.include? extension[1..-1]
+      ext = extension[1..-1]
+      TMPL_EXTS.each do |orig_ext, engines|
+        return orig_ext.to_s if engines.include? ext
       end
-      orig_ext
     end
-
 
     # reverse walks the layouts folder until we find a layout
     # returns nil if layout is not found

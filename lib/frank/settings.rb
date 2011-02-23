@@ -15,6 +15,7 @@ module Frank
     attr_accessor :export
     attr_accessor :publish
     attr_accessor :sass_options
+    attr_accessor :haml_options
 
     def initialize
       reset
@@ -50,6 +51,7 @@ module Frank
 
       # setup 3rd party configurations
       @sass_options = {}
+      @haml_options = {}
     end
 
     # return the proj folder name

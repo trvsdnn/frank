@@ -24,6 +24,16 @@ module Frank
   end
   Tilt.register 'scss', ScssTemplate
 
+  # Haml template implementation. See:
+  # http://haml.hamptoncatlin.com/
+  class HamlTemplate < Tilt::HamlTemplate
+    def prepare
+      options = @options.merge(:filename => eval_file, :line => line)
+      @engine = ::Haml::Engine.new(data, options.merge(Frank.haml_options || {}))
+    end
+  end
+  Tilt.register 'haml', HamlTemplate
+
   # Radius Template
   # http://github.com/jlong/radius/
   class RadiusTemplate < Tilt::Template

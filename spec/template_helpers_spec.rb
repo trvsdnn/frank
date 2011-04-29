@@ -65,6 +65,12 @@ describe Frank::TemplateHelpers do
       template.should =~ reg
     end
 
+    it 'render haml with lorem date between 1910 and 1919' do
+      template = @app.render('lorem_test.haml')
+      reg = /<p class='date'>191(\d{1})-\d{2}-\d{2}<\/p>/m
+      template.should =~ reg
+    end
+
     it 'render image url using imager' do
       template = @app.render('lorem_test.haml')
       reg1 = /<img src='http:\/\/placehold\.it\/400x300' \/>/

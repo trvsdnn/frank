@@ -45,11 +45,11 @@ module Frank
       end
     end
 
-    def date(fmt = '%a %b %d, %Y', replacement = nil)
+    def date(fmt = '%a %b %d, %Y', range = 1950..2010, replacement = nil)
       if Frank.exporting? && replacement
         replacement
       else
-        y = rand(20) + 1990
+        y = rand(range.last - range.first) + range.first
         m = rand(12) + 1
         d = rand(31) + 1
         Time.local(y,m,d).strftime(fmt)

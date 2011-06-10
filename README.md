@@ -33,7 +33,9 @@ When you're done working:
 
     $ frank export <export_dir>
 
-to compile templates and copy them--along with static your assets--into `<export_dir>`. Or,
+to compile templates and copy them--along with static your assets--into `<export_dir>` (or to `export/` if you don't specify an `<export_dir>`).
+
+Or,
 
     $ frank export --production <export_dir>
 

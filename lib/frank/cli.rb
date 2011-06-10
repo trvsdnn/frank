@@ -123,10 +123,9 @@ module Frank
           Frank.new
         when 'export', 'e', 'out'
           # compile the project
-          print_usage_and_exit! unless ARGV[1]
           Frank.exporting!
           Frank.production! if @options[:production]
-          Frank.export.path = ARGV[1]
+          Frank.export.path = ARGV[1] if ARGV[1]
           Frank::Compile.export!
         when 'publish', 'p'
           # compile the project and scp it to server

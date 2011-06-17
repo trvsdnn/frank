@@ -121,7 +121,7 @@ module Frank
             Frank.static_folder = '.'
           end
           Frank.new
-        when 'export', 'e', 'out'
+        when 'export', 'e', 'out', 'compile'
           # compile the project
           Frank.exporting!
           Frank.production! if @options[:production]

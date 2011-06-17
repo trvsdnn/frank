@@ -223,6 +223,18 @@ Installation
     $ gem install frank
 
 
+Contributors (in no particular order)
+-------------------------------------
+
+* railsjedi (Jacques Crocker)
+* asymmetric (Lorenzo Manacorda)
+* timmywil (timmywil)
+* sce (Sten Christoffer Eliesen)
+* btelles (Bernie Telles)
+* mitchellbryson (Mitchell Bryson)
+* nwah (Noah Burney)
+
+
 [0]: http://www.sinatrarb.com/
 [1]: http://github.com/rtomayko/tilt
 [2]: http://haml-lang.com/

@@ -43,10 +43,30 @@ module Frank
         static_folder = File.join(Frank.root, Frank.static_folder)
         FileUtils.cp_r(File.join(static_folder, '/.'), Frank.export.path)
       end
+      
+      # ask the user if they want to overwrite the folder
+      # get the input and return it
+      def ask_nicely
+        print "\033[31mA folder named `#{Frank.export.path}' already exists, overwrite it?\033[0m [y/n] "
+        STDIN.gets.chomp.downcase
+      end
+      
+      # verify that the user wants to overwrite the folder
+      # remove it if so, exit if not
+      def verify_overwriting
+        overwrite = ask_nicely
+        
+        while overwrite.empty?
+          overwrite = ask_nicely
+        end
+        
+        overwrite == 'y' ? FileUtils.rm_rf(Frank.export.path) : exit
+      end
 
       # TODO verbose everywhere is lame
       # create the dump dir, compile templates, copy over static assets
       def export!
+        verify_overwriting if File.exist?(Frank.export.path)
         FileUtils.mkdir(Frank.export.path)
 
         unless Frank.silent_export?

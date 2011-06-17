@@ -4,6 +4,26 @@ describe Frank::Compile do
   include Rack::Test::Methods
 
   context 'default output' do
+    context 'without specifying an export dir' do
+
+      bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin')
+      command    = File.join(bin_dir, 'frank export')
+      proj_dir   = File.join(File.dirname(__FILE__), 'template')
+      export_dir = File.join(proj_dir, 'export')
+
+      after do
+        FileUtils.rm_r export_dir
+      end
+
+      it 'creates the default export dir' do
+        Dir.chdir proj_dir do
+          system "#{command} > /dev/null"
+
+          File.directory?(export_dir).should be_true
+        end
+      end
+    end
+
     before :all do
       bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin', 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')

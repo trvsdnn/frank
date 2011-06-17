@@ -43,6 +43,13 @@ Frank.dynamic_folder = "dynamic"
 Frank.layouts_folder = "layouts"
 
 # ----------------------
+# Export settings:
+#
+# Projects will be exported to default to the following directory
+#
+Frank.export.path = "export"
+
+# ----------------------
 #  Publish settings:
 #
 #  Frank can publish your exported project to

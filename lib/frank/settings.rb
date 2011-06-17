@@ -34,7 +34,7 @@ module Frank
 
       # export settings
       @export = OpenStruct.new
-      @export.path = "export"
+      @export.path = "exported"
       @export.silent = false
 
       # publish options

@@ -47,7 +47,7 @@ Frank.layouts_folder = "layouts"
 #
 # Projects will be exported to default to the following directory
 #
-Frank.export.path = "export"
+Frank.export.path = "exported"
 
 # ----------------------
 #  Publish settings:

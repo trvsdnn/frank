@@ -9,7 +9,7 @@ describe Frank::Compile do
       bin_dir    = File.join(File.dirname(File.dirname(__FILE__)), 'bin')
       command    = File.join(bin_dir, 'frank export')
       proj_dir   = File.join(File.dirname(__FILE__), 'template')
-      export_dir = File.join(proj_dir, 'export')
+      export_dir = File.join(proj_dir, 'exported')
 
       after do
         FileUtils.rm_r export_dir

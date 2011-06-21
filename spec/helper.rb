@@ -19,3 +19,21 @@ module Kernel
    $stdout = STDOUT
  end
 end
+
+module Frank
+  module Spec
+    module Helpers
+      BIN_DIR = File.join(File.dirname(File.dirname(__FILE__)), 'bin')
+
+      def frank(command, *args)
+        result = system "#{BIN_DIR}/frank #{command} #{args * ' '}"
+
+        if $?.success?
+          result
+        else
+          exit 1
+        end
+      end
+    end
+  end
+end

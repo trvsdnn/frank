@@ -14,6 +14,32 @@ module Frank
     def lorem
       Frank::Lorem.new
     end
+    
+    def content_for(name, &block)
+      @content_for ||= {}
+      
+      if block_given?
+        @content_for[name.to_sym] = capture(&block)
+      else
+        @content_for[name.to_sym]
+      end
+    end
+    
+    def content_for?(name)
+      !@content_for[name.to_sym].nil?
+    end
+    
+    def capture(&block)
+      erbout        = eval('_erbout', block.binding)
+      erbout_length = erbout.length
+
+      block.call
+      
+      erbout_addition = erbout[erbout_length..-1]
+      erbout[erbout_length..-1] = ''
+
+      erbout_addition
+    end
 
     def refresh
       if Frank.exporting?

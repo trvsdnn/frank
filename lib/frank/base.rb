@@ -332,7 +332,7 @@ module Frank
     end
 
     Dir.mkdir project
-    template = choice.nil? ? 'default': templates[choice.to_i - 1]
+    template = choice.nil? ? 'default' : templates[choice.to_i - 1]
 
     puts " - \033[32mCopying\033[0m #{template} Frank template"
 

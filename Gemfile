@@ -22,5 +22,4 @@ group :development do
   gem 'less'
   gem 'coffee-script'
   gem 'RedCloth'
-  gem 'ruby-debug19'
 end

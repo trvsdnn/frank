@@ -3,10 +3,8 @@ GEM
   specs:
     RedCloth (4.2.3)
     abstract (1.0.0)
-    archive-tar-minitar (0.5.2)
     builder (2.1.2)
     coffee-script (0.3.2)
-    columnize (0.3.2)
     compass (0.10.2)
       haml (>= 3.0.4)
     contest (0.1.2)
@@ -26,8 +24,6 @@ GEM
     less (1.2.21)
       mutter (>= 0.4.2)
       treetop (>= 1.4.2)
-    linecache19 (0.5.12)
-      ruby_core_source (>= 0.1.4)
     liquid (2.1.2)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
@@ -50,16 +46,6 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     tilt (0.9)
@@ -88,5 +74,4 @@ DEPENDENCIES
   rake
   rdiscount
   rspec (>= 2.0.0.beta.19)
-  ruby-debug19
   tilt (= 0.9)

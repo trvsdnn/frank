@@ -15,17 +15,27 @@ describe Frank::TemplateHelpers do
 
   it 'render haml and use hello_helper' do
     template = @app.render('helper_test.haml')
-    template.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
+    template.should == "\n<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
   end
 
   it 'sets an instance variable, which the layout should render correctly' do
     template = @app.render('setting_in_layout.haml')
-    template.should == "<div id='title'>BLAH!</div>\n<div id='p'>/setting_in_layout</div>\n<div id='layout'>\n  <h1>hello</h1>\n</div>\n"
+    template.should == "<div id='title'>BLAH!</div>\n\n<div id='p'>/setting_in_layout</div>\n<div id='layout'>\n  <h1>hello</h1>\n</div>\n"
   end
 
   it 'should render the refresh javascript' do
     template = @app.render('refresh.haml')
     template.should include("<script type=\"text/javascript\">\n            (function(){")
+  end
+  
+  it 'renders content_for haml in the layout' do
+    template = @app.render('content_for_haml.haml')
+    template.should == "<meta foo='content' />\n<div id='p'>/content_for_haml</div>\n<div id='layout'>\n  \n</div>\n"
+  end
+  
+  it 'renders content_for erb in the layout' do
+    template = @app.render('content_for_erb.erb')
+    template.should == "\n  <meta foo='content' />\n<div id='p'>/content_for_erb</div>\n<div id='layout'>\n  \n</div>\n"
   end
 
   context 'Lorem' do

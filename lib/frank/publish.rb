@@ -5,8 +5,10 @@ module Frank
       def self.execute!
         exit_unless_configured
 
-        puts "\nFrank is..."
-        puts " - \033[32mExporting templates\033[0m"
+        unless Frank.silent_export?
+          puts "\nFrank is..."
+          puts " - \033[32mExporting templates\033[0m"
+        end
 
         tmp_folder = "/tmp/frankexp-#{Frank.proj_name}"
 
@@ -18,7 +20,7 @@ module Frank
         Frank.export.silent = true
         Frank::Compile.export!
 
-        puts " - \033[32mPublishing to:\033[0m `#{Frank.publish.host}:#{Frank.publish.path}'"
+        puts " - \033[32mPublishing to:\033[0m `#{Frank.publish.host}:#{Frank.publish.path}'" unless Frank.silent_export?
 
         ssh_options = {
           :password => Frank.publish.password,
@@ -31,7 +33,7 @@ module Frank
         Net::SSH.start(Frank.publish.host, Frank.publish.username, ssh_options) do |ssh|
           ssh.scp.upload!("#{tmp_folder}/", Frank.publish.path, :recursive => true, :chunk_size => 2048) do |ch, name, sent, total|
 
-            puts "   - #{name[tmp_folder.length..-1]}" unless name == current
+            puts "   - #{name[tmp_folder.length..-1]}" unless name == current || Frank.silent_export?
 
             current = name
           end
@@ -40,7 +42,7 @@ module Frank
         # cleanup by removing tmp folder
         FileUtils.rm_rf(tmp_folder)
 
-        puts "\n\033[32mPublish complete!\033[0m"
+        puts "\n\033[32mPublish complete!\033[0m" unless Frank.silent_export?
       end
 
       def self.exit_unless_configured

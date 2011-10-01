@@ -35,7 +35,7 @@ describe Frank::TemplateHelpers do
   
   it 'renders content_for erb in the layout' do
     template = @app.render('content_for_erb.erb')
-    template.should == "\n  <meta foo='content' />\n<div id='p'>/content_for_erb</div>\n<div id='layout'>\n  \n</div>\n"
+    template.should == "  <meta foo='content' />\n<div id='p'>/content_for_erb</div>\n<div id='layout'>\n  \n</div>\n"
   end
 
   context 'Lorem' do

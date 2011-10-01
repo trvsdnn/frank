@@ -14,7 +14,7 @@ describe Frank::Render do
 
   it 'renders a template using layout' do
     template = @app.render('index.haml')
-    template.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+    template.should == "\n<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
   end
 
   it 'renders a template using layout2' do
@@ -24,7 +24,7 @@ describe Frank::Render do
 
   it 'renders a markdown template inside haml layout' do
     template = @app.render('markdown_in_haml.md')
-    template.should == "<div id='p'>/markdown_in_haml</div>\n<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n"
+    template.should == "\n<div id='p'>/markdown_in_haml</div>\n<div id='layout'>\n  <h1>hi inside layout</h1>\n</div>\n"
   end
 
   it 'renders a nested template with a nested layout' do
@@ -44,17 +44,22 @@ describe Frank::Render do
 
    it 'renders haml template' do
      template = @app.render('index.haml')
-     template.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+     template.should == "\n<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
    end
 
    it 'renders haml template with a haml partial' do
      template = @app.render('partial_test.haml')
-     template.should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
+     template.should == "\n<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
    end
 
    it 'renders a partial with locals' do
      template = @app.render('partial_locals_test.haml')
-     template.should == "<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
+     template.should == "\n<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
+   end
+   
+   it 'renders less template' do
+     template = @app.render('stylesheets/less.less')
+     template.should include("#hello-worlds { background: red; }")
    end
 
    it 'renders sass template' do
@@ -76,32 +81,32 @@ describe Frank::Render do
 
    it 'renders coffee template' do
       template = @app.render('coffee.coffee')
-      template.should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
+      template.should == "(function() {\n  ({\n    greeting: \"Hello CoffeeScript\"\n  });\n}).call(this);\n"
    end
 
    it 'renders erb template' do
      template = @app.render('erb.erb')
-     template.should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+     template.should == "\n<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'renders redcloth template' do
      template = @app.render('redcloth.textile')
-     template.should == "<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+     template.should == "\n<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'renders rdiscount template' do
      template = @app.render('markdown.md')
-     template.should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+     template.should == "\n<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'renders liquid template' do
      template = @app.render('liquid.liquid')
-     template.should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+     template.should == "\n<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'renders builder template' do
      template = @app.render('builder.builder')
-     template.should == "<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+     template.should == "\n<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
    end
 
    it 'raise template error' do

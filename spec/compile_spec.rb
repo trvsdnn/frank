@@ -41,17 +41,17 @@ describe Frank::Compile do
 
       it 'creates index.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/index.html')
-        File.read(output).should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
       end
 
       it 'creates partial_test.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/partial_test.html')
-        File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
       end
 
       it 'creates partial_locals_test.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/partial_locals_test.html')
-        File.read(output).should == "<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
       end
 
       it 'creates child.html' do
@@ -71,32 +71,32 @@ describe Frank::Compile do
 
       it 'creates coffee.js' do
         output = File.join(File.dirname(__FILE__), 'template/output/coffee.js')
-        File.read(output).should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
+        File.read(output).should == "(function() {\n  ({\n    greeting: \"Hello CoffeeScript\"\n  });\n}).call(this);\n"
       end
 
       it 'creates erb.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/erb.html')
-        File.read(output).should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
       end
 
       it 'creates redcloth.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/redcloth.html')
-        File.read(output).should == "<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
       end
 
       it 'creates markdown.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/markdown.html')
-        File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
       end
 
       it 'creates liquid.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/liquid.html')
-        File.read(output).should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
       end
 
       it 'creates builder.html' do
         output = File.join(File.dirname(__FILE__), 'template/output/builder.html')
-        File.read(output).should == "<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+        File.read(output).should == "\n<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
       end
 
       it 'copies static.html' do
@@ -121,7 +121,7 @@ describe Frank::Compile do
 
       it 'should not render the refresh js' do
         output = File.join(File.dirname(__FILE__), 'template/output/refresh.html')
-        File.read(output).should == "<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
+        File.read(output).should == "\n<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
       end
     end
 
@@ -147,17 +147,17 @@ describe Frank::Compile do
 
     it 'creates index.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/index.html')
-      File.read(output).should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
     end
 
     it 'creates partial_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_test/index.html')
-      File.read(output).should == "<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/partial_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_test</h2>\n  <p>hello from partial</p>\n</div>\n"
     end
 
     it 'creates partial_locals_test.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/partial_locals_test/index.html')
-      File.read(output).should == "<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
     end
 
     it 'creates child.html' do
@@ -177,32 +177,32 @@ describe Frank::Compile do
 
     it 'creates	coffee.js' do
       output = File.join(File.dirname(__FILE__), 'template/output/coffee.js')
-      File.read(output).should == "(function(){\n  var greeting;\n  greeting = \"Hello CoffeeScript\";\n})();"
+      File.read(output).should == "(function() {\n  ({\n    greeting: \"Hello CoffeeScript\"\n  });\n}).call(this);\n"
     end
 
     it 'creates erb.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/erb/index.html')
-      File.read(output).should == "<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/erb</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'creates redcloth.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/redcloth/index.html')
-      File.read(output).should == "<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/redcloth</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'creates markdown.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/markdown/index.html')
-      File.read(output).should == "<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/markdown</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'creates liquid.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/liquid/index.html')
-      File.read(output).should == "<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/liquid</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'creates builder.html' do
       output = File.join(File.dirname(__FILE__), 'template/output/builder/index.html')
-      File.read(output).should == "<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
+      File.read(output).should == "\n<div id='p'>/builder</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n</div>\n"
     end
 
     it 'copies static.html' do
@@ -227,7 +227,7 @@ describe Frank::Compile do
 
     it 'should not render the refresh js' do
       output = File.join(File.dirname(__FILE__), 'template/output/refresh/index.html')
-      File.read(output).should == "<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
+      File.read(output).should == "\n<div id='p'>/refresh</div>\n<div id='layout'>\n  \n</div>\n"
     end
 
   end

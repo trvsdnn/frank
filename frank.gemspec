@@ -18,11 +18,9 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_runtime_dependency 'rack', '~> 1.1'
-  s.add_runtime_dependency 'mongrel', '~> 1.2.0.pre2'
+  s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'haml', '~> 3.0'
   s.add_runtime_dependency 'tilt', '~> 1.3'
-  s.add_runtime_dependency 'net-ssh', '~> 2.0'
-  s.add_runtime_dependency 'net-scp', '~> 1.0'
   
   s.add_development_dependency 'rspec', '~> 2.6.0'
   s.add_development_dependency 'rack-test', '~> 0.5'

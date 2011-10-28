@@ -48,11 +48,12 @@ module Frank
   #
   # Examples:
   #
-  # <tt>Frank.server.hander #=> "mongrel"</tt>
-  # <tt>Frank.static_folder #=> "static"</tt>
+  # <tt>Frank.site_folder #=> "site"</tt>
   Frank::Settings.public_instance_methods(false).each do |name|
-    define_method name.to_sym do
-      configure.send(name, *args)
-    end
+    (class << self; self; end).class_eval <<-EOT
+      def #{name}(*args)
+        configure.send("#{name}", *args)
+      end
+    EOT
   end
 end

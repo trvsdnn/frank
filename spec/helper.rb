@@ -2,8 +2,9 @@ testdir = File.dirname(__FILE__)
 $:.unshift testdir unless $LOAD_PATH.include?(testdir)
 
 require 'bundler'
-Bundler.setup
+Bundler.require
 
+require 'rspec'
 require 'stringio'
 require 'rack/test'
 require 'template/helpers'

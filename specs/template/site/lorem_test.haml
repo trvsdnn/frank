@@ -1,0 +1,12 @@
+%p.words= lorem.words 3, 'replace-this'
+%p.sentences= lorem.sentences 2, 'replace-this'
+%p.paragraphs= lorem.paragraphs 1, 'replace-this'
+%p.date= lorem.date '%Y-%m-%d', 1910..1919, 'replace-this'
+%p.name= lorem.name 'replace-this'
+%p.email= lorem.email 'replace-this'
+%img{:src => lorem.image('400x300')}
+%img{:src => lorem.image('400x300', :random_color => true)}
+%img{:src => lorem.image('400x300', :background_color => '444', :color => 'eee', :replacement => 'replace-this')}
+%img{:src => lorem.image('400x300', :color => 'aaa')}
+%img{:src => lorem.image('400x300', :background_color => '444', :text => 'blah')}
+

@@ -85,7 +85,7 @@ module Frank
       # set the layout
       layout = path.match(nometa) ? nil : layout_for(path)
 
-      template_path = File.join(Frank.root, Frank.dynamic_folder, path)
+      template_path = File.join(Frank.root, Frank.site_folder, path)
       raise Frank::TemplateError, "Template not found #{template_path}" unless File.exist? template_path
 
       # read in the template
@@ -120,7 +120,7 @@ module Frank
     def to_file_path(path)
       file_name = File.basename(path, File.extname(path))
       file_ext  = File.extname(path).sub(/^\./, '')
-      folder    = File.join(Frank.root, Frank.dynamic_folder)
+      folder    = File.join(Frank.root, Frank.site_folder)
       engine    = nil
 
       TMPL_EXTS.each do |ext, engines|
@@ -130,10 +130,12 @@ module Frank
           end.first
         end
       end
-
-      raise Frank::TemplateError, "Template not found #{path}" if engine.nil?
-
-      path.sub(/\.[\w-]+$/, ".#{engine}")
+      
+      if engine.nil?
+        path.sub(/\.[\w-]+$/, ".#{file_ext}")
+      else
+        path.sub(/\.[\w-]+$/, ".#{engine}")
+      end
     end
 
     # lookup the original ext for given template path
@@ -142,6 +144,7 @@ module Frank
       TMPL_EXTS.each do |orig_ext, engines|
         return orig_ext.to_s if engines.include? ext
       end
+      nil
     end
 
     # reverse walks the layouts folder until we find a layout
@@ -267,7 +270,7 @@ module Frank
     base = Base.new(&block)
 
     builder = Rack::Builder.new do
-      use Frank::Middleware::Statik, :root => Frank.static_folder
+      use Frank::Middleware::Statik, :root => Frank.site_folder
       run base
     end
 

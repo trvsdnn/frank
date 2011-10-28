@@ -5,8 +5,7 @@ module Frank
       log_request('404')
       template = File.expand_path(File.dirname(__FILE__)) + '/templates/404.haml'
       locals = { :request => @env,
-                 :dynamic_folder => Frank.dynamic_folder,
-                 :static_folder => Frank.static_folder,
+                 :site_folder => Frank.site_folder,
                  :environment => Frank.environment }
 
       @response['Content-Type'] = 'text/html'

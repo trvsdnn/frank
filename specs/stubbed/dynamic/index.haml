@@ -1,0 +1,16 @@
+#tooltip
+  Click for help.
+
+#header
+  %img{:src=>'/images/frank-med.png'}
+  %h1 Frank
+  %h2 Relax, fella. Frank's got it under control.
+
+%ol#help
+  %li
+    %p= "Edit <em>setup.rb</em> to set your server options, folder names for static/dynamic content, and layouts for your views."
+  %li
+    %p= "Stash your static files (images, flash movies, etc) in the folder that you set as <em>[static_folder]</em>."
+  %li
+    %p= "Frank will look for files in the <em>[dynamic_folder]</em> first and try to compile them."
+    %p= "Example: a request for <em>/css/blah.css</em> will look for a file in <em>[dynamic_folder]/css/</em> named <em>blah</em>. Frank uses the file extension to determine the correct compiler."

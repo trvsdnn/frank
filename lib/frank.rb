@@ -51,10 +51,8 @@ module Frank
   # <tt>Frank.server.hander #=> "mongrel"</tt>
   # <tt>Frank.static_folder #=> "static"</tt>
   Frank::Settings.public_instance_methods(false).each do |name|
-    (class << self; self; end).class_eval <<-EOT
-      def #{name}(*args)
-        configure.send("#{name}", *args)
-      end
-    EOT
+    define_method name.to_sym do
+      configure.send(name, *args)
+    end
   end
 end

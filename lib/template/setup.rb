@@ -2,28 +2,18 @@
 #  Server settings:
 #
 #  Change the server host/port to bind rack to.
-# 'server' can be any Rack-supported server, e.g.
-#  Mongrel, Thin, WEBrick
 #
-Frank.server.handler = "mongrel"
 Frank.server.hostname = "0.0.0.0"
 Frank.server.port = "3601"
 
 # ----------------------
-#  Static folder:
+#  Markup folder:
 #
-#  All files in this folder will be served up
-#  directly, without interpretation
+# Your templates (haml, erb, sass, less, html, css, js, etc)
+# Frank 2 allows you to put dynamic templates and 
+# static assets in the same folder.
 #
-Frank.static_folder = "static"
-
-# ----------------------
-#  Dynamic folder:
-#
-#  Frank will try to interpret any of the files
-#  in this folder based on their extension
-#
-Frank.dynamic_folder = "dynamic"
+Frank.site_folder = "site"
 
 # ----------------------
 #  Layouts folder:

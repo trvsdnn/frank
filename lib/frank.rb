@@ -26,12 +26,10 @@ module Frank
   # Example:
   #
   #   Frank.configure do |settings|
-  #     settings.server.handler = "mongrel"
   #     settings.server.hostname = "0.0.0.0"
   #     settings.server.port = "3601"
   #
-  #     settings.static_folder = "static"
-  #     settings.dynamic_folder = "dynamic"
+  #     settings.site_folder = "site"
   #     settings.layouts_folder = "layouts"
   #   end
   #

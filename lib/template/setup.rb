@@ -53,7 +53,8 @@ Frank.export.path = "exported"
 #  Publish settings:
 #
 #  Frank can publish your exported project to
-#  a server. All you have to do is tell Frank what host, path, and username.
+#  a remote server via scp (default) or ftp. All you have to do is tell Frank what host, path, and username.
+#  Depending on the chosen mode, you may need to install net-scp or net-sftp.
 #  If you have ssh keys setup there is no need for a password.
 #  Just uncomment the Publish settings below and
 #  make the appropriate changes.
@@ -63,6 +64,8 @@ Frank.export.path = "exported"
 #  Frank.publish.username = 'me'
 #  Frank.publish.password = 'secret'
 #  Frank.publish.port = 22
+#  Frank.publish.mode = :scp (or :ftp, :ftptls, :sftp)  #no ftptls in ruby 1.9
+#
 #
 
 # ----------------------

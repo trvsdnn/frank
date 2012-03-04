@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Frank::Base do
   include Rack::Test::Methods

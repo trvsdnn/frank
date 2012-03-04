@@ -43,6 +43,7 @@ module Frank
       @publish.path = nil
       @publish.username = nil
       @publish.password = nil
+      @publish.mode = nil
 
       # setup folders
       @static_folder = "static"

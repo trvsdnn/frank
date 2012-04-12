@@ -223,15 +223,6 @@ module Frank
     Frank.reset
     Frank.root = new_root if new_root
 
-    if %w[publish p].include? ARGV.first
-      begin
-        require 'net/ssh'
-        require 'net/scp'
-      rescue LoadError
-        puts "\033[31mpublish requires the 'net-scp' gem. `gem install net-scp'\033[0m"
-        exit!
-      end
-    end
 
     # setup compass
     begin

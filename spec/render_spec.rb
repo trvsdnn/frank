@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Frank::Render do
   include Rack::Test::Methods
@@ -56,7 +56,7 @@ describe Frank::Render do
      template = @app.render('partial_locals_test.haml')
      template.should == "\n<div id='p'>/partial_locals_test</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/partial_locals_test</h2>\n  <p>hello from local</p>\n</div>\n"
    end
-   
+
    it 'renders less template' do
      template = @app.render('stylesheets/less.less')
      template.should include("#hello-worlds { background: red; }")

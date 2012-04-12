@@ -130,7 +130,7 @@ module Frank
         when 'publish', 'p'
           # compile the project and scp it to server
           Frank.publishing!
-          Frank::Publish::SCP.execute!
+          Frank::Publish.execute!
         when 'upgrade'
           # upgrade if we need to upgrade
           Frank.upgrade!

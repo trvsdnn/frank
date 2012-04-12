@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Frank::TemplateHelpers do
   include Rack::Test::Methods
@@ -27,12 +27,12 @@ describe Frank::TemplateHelpers do
     template = @app.render('refresh.haml')
     template.should include("<script type=\"text/javascript\">\n            (function(){")
   end
-  
+
   it 'renders content_for haml in the layout' do
     template = @app.render('content_for_haml.haml')
     template.should == "<meta foo='content' />\n<div id='p'>/content_for_haml</div>\n<div id='layout'>\n  \n</div>\n"
   end
-  
+
   it 'renders content_for erb in the layout' do
     template = @app.render('content_for_erb.erb')
     template.should == "  <meta foo='content' />\n<div id='p'>/content_for_erb</div>\n<div id='layout'>\n  \n</div>\n"
@@ -84,7 +84,7 @@ describe Frank::TemplateHelpers do
     it 'render image url using imager' do
       template = @app.render('lorem_test.haml')
       reg1 = /<img src='http:\/\/placehold\.it\/400x300' \/>/
-      reg2 = /<img src='http:\/\/placehold\.it\/400x300\/[a-z0-9]{6}\/[a-z0-9]{6}' \/>/      
+      reg2 = /<img src='http:\/\/placehold\.it\/400x300\/[a-z0-9]{6}\/[a-z0-9]{6}' \/>/
       reg3 = /<img src='http:\/\/placehold\.it\/400x300\/444\/eee' \/>/
       reg4 = /<img src='http:\/\/placehold\.it\/400x300\/ccc\/aaa' \/>/
       reg5 = /<img src='http:\/\/placehold\.it\/400x300\/444(&amp;|&)text=blah' \/>/

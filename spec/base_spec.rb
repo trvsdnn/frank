@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Frank::Base do
   include Rack::Test::Methods
@@ -26,14 +26,14 @@ describe Frank::Base do
     get '/'
 
     last_response.should be_ok
-    last_response.body.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>\n"
+    last_response.body.strip.should == "<div id='p'>/</div>\n<div id='layout'>\n  <h1>hello worlds</h1>\n  <h2>/</h2>\n</div>"
   end
 
   it 'renders a page and uses a helper' do
     get '/helper_test'
 
     last_response.should be_ok
-    last_response.body.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>\n"
+    last_response.body.strip.should == "<div id='p'>/helper_test</div>\n<div id='layout'>\n  <h1>hello from helper</h1>\n</div>"
   end
 
   it 'renders a nested template given a request' do
@@ -51,7 +51,7 @@ describe Frank::Base do
   end
 
   it 'renders a 404 page if template not found' do
-    get '/not_here.css'
+    capture_stdout { get '/not_here.css' }
 
     last_response.should_not be_ok
     last_response.content_type.should == 'text/html'
@@ -68,7 +68,7 @@ describe Frank::Base do
   it 'stubs out a project' do
     out = capture_stdout { Frank.stub('stubbed') }
     Dir.entries('stubbed').should == Dir.entries(File.join(LIBDIR, 'template'))
-    response = "\nFrank is...\n - \e[32mCreating\e[0m your project 'stubbed'\n - \e[32mCopying\e[0m Frank template\n\n \e[32mCongratulations, 'stubbed' is ready to go!\e[0m\n"
+    response = "\nFrank is...\n - \e[32mCreating\e[0m your project 'stubbed'\n - \e[32mCopying\e[0m default Frank template\n\n \e[32mCongratulations, 'stubbed' is ready to go!\e[0m\n"
     out.string.should == response
   end
 

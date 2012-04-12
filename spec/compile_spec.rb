@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/helper'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe Frank::Compile do
   include Rack::Test::Methods
@@ -14,6 +14,8 @@ describe Frank::Compile do
       end
 
       it 'creates the default export dir' do
+        Frank.bootstrap(proj_dir)
+
         Dir.chdir proj_dir do
           frank 'export'
 

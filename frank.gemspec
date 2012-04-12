@@ -16,18 +16,18 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  
+
   s.add_runtime_dependency 'rack', '~> 1.1'
   s.add_runtime_dependency 'mongrel', '~> 1.2.0.pre2'
   s.add_runtime_dependency 'haml', '~> 3.0'
   s.add_runtime_dependency 'tilt', '~> 1.3'
   s.add_runtime_dependency 'net-ssh', '~> 2.0'
-  s.add_runtime_dependency 'net-scp', '~> 1.0'
-  
+
   s.add_development_dependency 'rspec', '~> 2.6.0'
   s.add_development_dependency 'rack-test', '~> 0.5'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'builder'
+  s.add_development_dependency 'mocha'
   s.add_development_dependency 'erubis'
   s.add_development_dependency 'compass', '~> 0.10.2'
   s.add_development_dependency 'rdiscount'
@@ -35,4 +35,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'less'
   s.add_development_dependency 'coffee-script', '~> 2.2.0'
   s.add_development_dependency 'RedCloth'
+  s.add_development_dependency 'net-scp'
+  s.add_development_dependency 'net-sftp'
 end

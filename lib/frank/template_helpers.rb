@@ -50,8 +50,8 @@ module Frank
           (function(){
             var when = #{Time.now.to_i};
 
-            function process( raw ){
-              if( parseInt(raw) > when ) {
+            function process( raw ) {
+              if ( parseInt(raw) > when ) {
                 window.location.reload();
               }
             }

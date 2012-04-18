@@ -30,10 +30,19 @@ module Frank
         timestamps << File.mtime(helpers).to_i if File.exist? helpers
         @folders.each do |folder|
           Dir[File.join(pwd, folder, '**/*.*')].each do |found|
-            timestamps << File.mtime(found).to_i unless File.directory?(found)
+            timestamps << File.mtime(found).to_i unless (File.directory?(found) || is_font?( found ))
           end
         end
         timestamps.sort.last
+      end
+      
+      def is_font?( file )
+        case File.extname( file )
+        when '.eot', '.ttf', '.woff', '.svg', '.otf'
+          true
+        else
+          false
+        end
       end
 
     end

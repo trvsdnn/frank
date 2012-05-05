@@ -269,7 +269,13 @@ module Frank
 
     builder = Rack::Builder.new do
       use Frank::Middleware::Statik, :root => Frank.static_folder
-      use Frank::Middleware::Refresh, :watch => [ Frank.dynamic_folder, Frank.static_folder, Frank.layouts_folder ]
+      watch_dirs = [ Frank.dynamic_folder, Frank.static_folder, Frank.layouts_folder ]
+      unless ENV['FRANK_REFRESH_DIRS'].nil?
+        watch_dirs.concat ENV['FRANK_REFRESH_DIRS'].split(/,/) unless ENV['FRANK_REFRESH_DIRS'].nil?
+        watch_dirs.uniq!
+        puts "Watching directories #{watch_dirs.join(', ')}"
+      end
+      use Frank::Middleware::Refresh, :watch => watch_dirs
       run base
     end
 

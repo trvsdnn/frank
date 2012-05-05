@@ -49,10 +49,22 @@ module Frank
           <script type="text/javascript">
           (function(){
             var when = #{Time.now.to_i};
+            var loading = false
+            function addLoadingIndicator() {
+              var body = document.getElementsByTagName("body")[0]
+              var div = document.createElement('div')
+              div.innerHTML = 'Change detected. Reloading. Please wait ...'
+              div.setAttribute('style', 'z-index: 1000; position: fixed; top: 0; right: 40%; background: #901010; font-weight: bold; color: white; font-size: 16px; text-align: center; padding-top: 10px; width: 400px; font-family: sans; height: 30px; opacity: 0.8; border: 1px solid #601010')
+              body.appendChild(div)
+            }
 
             function process( raw ){
               if( parseInt(raw) > when ) {
-                window.location.reload();
+                if (!loading) {
+                  loading = true
+                  addLoadingIndicator();
+                  window.location.reload();
+                }
               }
             }
             
@@ -65,7 +77,8 @@ module Frank
               };
               req.open('GET', '/__refresh__', true);
               req.send( null );
-              setTimeout( arguments.callee, 1000 );
+              if (!loading)
+                setTimeout( arguments.callee, 1000 );
             })();
 
           })();

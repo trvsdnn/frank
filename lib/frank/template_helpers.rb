@@ -53,8 +53,16 @@ module Frank
             function addLoadingIndicator() {
               var body = document.getElementsByTagName("body")[0]
               var div = document.createElement('div')
-              div.innerHTML = 'Change detected. Reloading. Please wait ...'
-              div.setAttribute('style', 'z-index: 1000; position: fixed; top: 0; right: 40%; background: #901010; font-weight: bold; color: white; font-size: 16px; text-align: center; padding-top: 10px; width: 400px; font-family: sans; height: 30px; opacity: 0.8; border: 1px solid #601010')
+              div.innerHTML = '<p style="margin: 2px 0; padding: 2px 0"><div style="cursor: pointer; background: #f00; color: #faa;' + 
+                                             'float: right; margin-right: 5px;width: 1em; height; 1ex"' + 
+                                      'onclick="this.parentNode.style.display=\\'none\\'; return false">x</div>' + 
+                                  'Change detected at ' + new Date() +
+                              '</p><p style="margin: 2px 0; padding: 2px 0">Reloading. Please wait ...</p>'
+              div.setAttribute('style', 'z-index: 1000; position: fixed; top: 0; right: 40%;width: 400px; height: 100px;' +
+                                        'background: #308030; color: white; opacity: 0.8; ' +
+                                        'font-family: sans; font-weight: bold; font-size: 16px;' +
+                                        'text-align: center; padding: 2px 5px 5px 5px' +
+                                        'border: 1px solid #104010')
               body.appendChild(div)
             }
 

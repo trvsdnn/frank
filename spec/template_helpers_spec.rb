@@ -27,6 +27,16 @@ describe Frank::TemplateHelpers do
     template = @app.render('refresh.haml')
     template.should include("<script type=\"text/javascript\">\n            (function(){")
   end
+
+  it 'should have provision for a loading indicator in the refresh javascript' do
+    template = @app.render('refresh.haml')
+    template.should include("addLoadingIndicator()")
+  end
+
+  it 'should have provision for stopping automatic refresh in the refresh javascript' do
+    template = @app.render('refresh.haml')
+    template.should include("!window.stop_refresh_check")
+  end
   
   it 'renders content_for haml in the layout' do
     template = @app.render('content_for_haml.haml')

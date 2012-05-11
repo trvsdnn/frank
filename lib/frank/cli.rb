@@ -68,6 +68,10 @@ module Frank
             @options[:production] = true
           end
 
+          opts.on('-f', 'Overwrite existing folder on export (frank export)') do |handler|
+            @options[:force_export] = true
+          end
+
           opts.on('-v', '--version', 'Show the frank version and exit') do
             puts "Frank v#{Frank::VERSION}"
             exit
@@ -125,6 +129,7 @@ module Frank
           # compile the project
           Frank.exporting!
           Frank.production! if @options[:production]
+          Frank.force_export! if @options[:force_export]
           Frank.export.path = ARGV[1] if ARGV[1]
           Frank::Compile.export!
         when 'publish', 'p'

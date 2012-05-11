@@ -55,18 +55,23 @@ module Frank
       # remove it if so, exit if not
       def verify_overwriting
         overwrite = ask_nicely
-        
+
         while overwrite.empty?
           overwrite = ask_nicely
         end
-        
+
         overwrite == 'y' ? FileUtils.rm_rf(Frank.export.path) : exit
       end
 
       # TODO verbose everywhere is lame
       # create the dump dir, compile templates, copy over static assets
       def export!
-        verify_overwriting if File.exist?(Frank.export.path)
+        if File.exist?(Frank.export.path) && !Frank.export.force
+          verify_overwriting
+        else
+          FileUtils.rm_rf(Frank.export.path)
+        end
+
         FileUtils.mkdir(Frank.export.path)
 
         unless Frank.silent_export?

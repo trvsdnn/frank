@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    frank (1.0.9)
+    frank (1.0.11)
       haml (~> 3.0)
       mongrel (~> 1.2.0.pre2)
       net-ssh (~> 2.0)

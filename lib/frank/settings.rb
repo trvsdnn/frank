@@ -36,6 +36,7 @@ module Frank
       @export = OpenStruct.new
       @export.path = "exported"
       @export.silent = false
+      @export.force = false
 
       # publish options
       @publish = OpenStruct.new
@@ -93,6 +94,11 @@ module Frank
     # Mark this Frank run as production
     def production!
       @production = true
+    end
+
+    # Force overwrite export folder if it exists
+    def force_export!
+      @export.force = true
     end
 
     # Mark this Frank run as publishing

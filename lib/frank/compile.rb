@@ -66,10 +66,12 @@ module Frank
       # TODO verbose everywhere is lame
       # create the dump dir, compile templates, copy over static assets
       def export!
-        if File.exist?(Frank.export.path) && !Frank.export.force
-          verify_overwriting
-        else
+        folder_exists = File.exist?(Frank.export.path)
+
+        if folder_exists && Frank.export.force
           FileUtils.rm_rf(Frank.export.path)
+        elsif folder_exists
+          verify_overwriting
         end
 
         FileUtils.mkdir(Frank.export.path)

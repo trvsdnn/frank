@@ -11,7 +11,7 @@ module Frank
       def compile_templates
         dir = File.join(Frank.root, Frank.dynamic_folder)
 
-        Dir[File.join(dir, '**{,/*/**}/*')].each do |path|
+        Dir[File.join(dir, '**{,/*/**/*}')].each do |path|
           if File.file?(path) && !File.basename(path).match(/^(\.|_)/)
             path    = path[ (dir.size + 1)..-1 ]
             ext     = File.extname(path)

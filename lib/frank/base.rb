@@ -67,7 +67,7 @@ module Frank
       :js   => %w[coffee]
     }
 
-    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid]
+    LAYOUT_EXTS = %w[.haml .erb .rhtml .liquid .slim]
 
     # render request path or template path
     def render(path, partial = false, local_vars = nil)
